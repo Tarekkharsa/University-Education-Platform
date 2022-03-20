@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import * as React from 'react'
+import {useAuth} from './context/auth-context'
+// theme
+import ThemeConfig from './theme'
+import GlobalStyles from './theme/globalStyles'
+// components
+import ScrollToTop from './components/ScrollToTop'
+import {BaseOptionChartStyle} from './components/charts/BaseOptionChart'
+import {FullPageSpinner} from 'components/lib'
+
+const AuthenticatedApp = React.lazy(() =>
+  import(/* webpackPrefetch: true */ './authenticated-app'),
+)
+const UnauthenticatedApp = React.lazy(() => import('./unauthenticated-app'))
 
 function App() {
+  const {user} = useAuth()
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ThemeConfig>
+      <ScrollToTop />
+      <GlobalStyles />
+      <BaseOptionChartStyle />
+      <React.Suspense fallback={<FullPageSpinner />}>
+        {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+      </React.Suspense>
+    </ThemeConfig>
+  )
 }
 
-export default App;
+export {App}
