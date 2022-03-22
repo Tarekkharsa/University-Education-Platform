@@ -1,9 +1,9 @@
-import {Link as RouterLink} from 'react-router-dom'
-import styled from '@emotion/styled/macro'
+/** @jsxImportSource @emotion/react */
 import {keyframes} from '@emotion/react'
+import styled from '@emotion/styled/macro'
 import {FaSpinner} from 'react-icons/fa'
 import * as colors from 'styles/colors'
-import * as mq from 'styles/media-queries'
+
 const spin = keyframes({
   '0%': {transform: 'rotate(0deg)'},
   '100%': {transform: 'rotate(360deg)'},
@@ -33,31 +33,6 @@ function FullPageSpinner() {
   )
 }
 
-const errorMessageVariants = {
-  stacked: {display: 'block'},
-  inline: {display: 'inline-block'},
-}
-
-function ErrorMessage({error, variant = 'stacked', ...props}) {
-  return (
-    <div
-      role="alert"
-      css={[{color: colors.danger}, errorMessageVariants[variant]]}
-      {...props}
-    >
-      <span>There was an error: </span>
-      <pre
-        css={[
-          {whiteSpace: 'break-spaces', margin: '0', marginBottom: -5},
-          errorMessageVariants[variant],
-        ]}
-      >
-        {error.message}
-      </pre>
-    </div>
-  )
-}
-
 function FullPageErrorFallback({error}) {
   return (
     <div
@@ -77,4 +52,4 @@ function FullPageErrorFallback({error}) {
   )
 }
 
-export {FullPageErrorFallback, ErrorMessage, FullPageSpinner}
+export {FullPageErrorFallback, FullPageSpinner}

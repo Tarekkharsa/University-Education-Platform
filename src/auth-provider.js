@@ -15,9 +15,8 @@ function handleUserResponse(user) {
   return user
 }
 
-function login({username, password}) {
-  // return client('login', {username, password}).then(handleUserResponse)
-  return GETClient('', {username, password}).then(handleUserResponse)
+function login({email, password}) {
+  return client('login', {email, password}).then(handleUserResponse)
 }
 
 function register({username, password}) {
@@ -49,23 +48,4 @@ async function client(endpoint, data) {
   })
 }
 
-async function GETClient(endpoint, data) {
-  const config = {
-    method: 'GET',
-  }
-
-  return window
-    .fetch(
-      `${authURL}?username=${data.username}&password=${data.password}&service=moodle_mobile_app`,
-      config,
-    )
-    .then(async response => {
-      const data = await response.json()
-      if (response.ok) {
-        return data
-      } else {
-        return Promise.reject(data)
-      }
-    })
-}
 export {getToken, login, register, logout, localStorageKey}

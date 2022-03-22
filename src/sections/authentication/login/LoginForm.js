@@ -1,35 +1,33 @@
-import * as Yup from 'yup'
-import {useState} from 'react'
-import {Link as RouterLink, useNavigate} from 'react-router-dom'
-import {Controller, useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup' // material
+import {LoadingButton} from '@mui/lab'
 import {
-  Link,
-  Stack,
+  Alert,
   Checkbox,
-  TextField,
+  FormControlLabel,
   IconButton,
   InputAdornment,
-  FormControlLabel,
+  Link,
+  Stack,
+  TextField,
 } from '@mui/material'
-import {LoadingButton} from '@mui/lab'
+import {useState} from 'react'
+import {Controller, useForm} from 'react-hook-form'
+import {Link as RouterLink} from 'react-router-dom'
+import {useAsync} from 'utils/hooks'
+import * as Yup from 'yup'
 // component
 import Iconify from '../../../components/Iconify'
-import {ErrorMessage} from 'components/lib'
-import {useAsync} from 'utils/hooks'
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm({onSubmit}) {
-  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const {isLoading, isError, error, run} = useAsync()
 
   const LoginSchema = Yup.object().shape({
-    // email: Yup.string()
-    //   .email('Email must be a valid email address')
-    //   .required('Email is required'),
-    username: Yup.string().required('User Name is required'),
+    email: Yup.string()
+      .email('Email must be a valid email address')
+      .required('Email is required'),
     password: Yup.string().required('Password is required'),
   })
 
@@ -40,15 +38,15 @@ export default function LoginForm({onSubmit}) {
   } = useForm({
     resolver: yupResolver(LoginSchema),
     defaultValues: {
-      username: '',
+      email: '',
       password: '',
       remember: true,
     },
   })
 
   const onSubmitForm = data => {
-    const {username, password} = data
-    run(onSubmit({username, password}))
+    const {email, password} = data
+    run(onSubmit({email, password}))
   }
 
   const handleShowPassword = () => {
@@ -58,6 +56,7 @@ export default function LoginForm({onSubmit}) {
   return (
     <form autoComplete="off" noValidate onSubmit={handleSubmit(onSubmitForm)}>
       <Stack spacing={3}>
+        {isError ? <Alert severity="error">{error.message}</Alert> : null}
         <Controller
           render={({
             field: {onChange, onBlur, value, name, ref},
@@ -69,14 +68,14 @@ export default function LoginForm({onSubmit}) {
               onBlur={onBlur} // notify when input is touched
               inputRef={ref} // wire up the input ref
               fullWidth
-              autoComplete="username"
+              autoComplete="email"
               type="text"
               label="Email address"
               error={Boolean(errors.email && errors.email)}
               helperText={errors.email && errors.email.message}
             />
           )}
-          name="username"
+          name="email"
           control={control}
         />
 
@@ -157,7 +156,6 @@ export default function LoginForm({onSubmit}) {
       >
         Login
       </LoadingButton>
-      {isError ? <ErrorMessage error={error} /> : null}
     </form>
   )
 }
