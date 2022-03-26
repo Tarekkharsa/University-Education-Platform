@@ -11,6 +11,7 @@
     "@iconify/react": "^3.2.0",
     "@mui/lab": "^5.0.0-alpha.73",
     "@mui/material": "^5.5.1",
+    "@mui/styles": "^5.5.1",
     "@reach/tabs": "^0.16.4",
     "@reach/tooltip": "^0.16.2",
     "@testing-library/jest-dom": "^5.16.2",
@@ -31,6 +32,7 @@
     "react-query-devtools": "^2.6.3",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
+    "react-table": "^7.7.0",
     "simplebar-react": "^2.3.6",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"

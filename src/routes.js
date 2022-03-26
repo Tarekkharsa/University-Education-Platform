@@ -9,6 +9,7 @@ import Products from 'screens/Products'
 import Blog from 'screens/Blog'
 import User from 'screens/User'
 import NotFound from 'screens/Page404'
+import Users from 'screens/Users'
 
 // ----------------------------------------------------------------------
 
@@ -20,6 +21,7 @@ export default function Router() {
       children: [
         {path: 'app', element: <DashboardApp />},
         {path: 'user', element: <User />},
+        {path: 'users', element: <Users />},
         {path: 'products', element: <Products />},
         {path: 'blog', element: <Blog />},
       ],
