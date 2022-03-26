@@ -23,6 +23,7 @@ export default function Users() {
   const fetchData = useCallback(({pageSize, pageIndex}) => {
     console.log('pageIndex', pageIndex)
   }, [])
+
   const getSelectedRows = useCallback(({selectedFlatRows}) => {
     selectedRowsIds = []
     selectedFlatRows.length > 0 &&
@@ -31,6 +32,10 @@ export default function Users() {
       })
     setRows(selectedRowsIds)
   }, [])
+
+  const onDelete = selectedRows => {
+    console.log('selectedRows', selectedRows)
+  }
   return (
     <Page title="User | Minimal-UI">
       <Container>
@@ -58,9 +63,11 @@ export default function Users() {
           data={USERLIST}
           fetchData={fetchData}
           getSelectedRows={getSelectedRows}
+          onDelete={onDelete}
           loading={loading}
           pageCount={1}
           totalRecords={USERLIST.length}
+          isPaginated={false}
         />
       </Container>
     </Page>

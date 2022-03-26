@@ -1,37 +1,30 @@
 // material
 import {
-  Avatar,
   Card,
   Checkbox,
   FormControl,
   MenuItem,
   Select,
-  Stack,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableFooter,
   TableHead,
-  TablePagination,
   TableRow,
-  Typography,
 } from '@mui/material'
-import {sentenceCase} from 'change-case'
-import React, {useState} from 'react'
-import {usePagination, useRowSelect, useTable} from 'react-table'
-import Label from '../Label'
-import Scrollbar from '../Scrollbar'
-import SearchNotFound from '../SearchNotFound'
-import {
-  UserListHead,
-  UserListToolbar,
-  UserMoreMenu,
-} from 'sections/@dashboard/user'
-import CustomToolbar from './Partials/CustomToolbar'
-import TablePaginationActions from './TablePaginationActions'
 import {FullPageSpinner} from 'components/lib'
+import React, {useState} from 'react'
+import {
+  usePagination,
+  useRowSelect,
+  useTable,
+  useGlobalFilter,
+} from 'react-table'
+import SearchNotFound from '../SearchNotFound'
+import CustomToolbar from './Partials/CustomToolbar'
 import useStyles from './styles'
+import TablePaginationActions from './TablePaginationActions'
 
 const IndeterminateCheckbox = React.forwardRef(
   ({indeterminate, ...rest}, ref) => {
@@ -55,26 +48,23 @@ function ReactTable({
   pageCount: controlledPageCount,
   totalRecords,
   getSelectedRows,
+  onDelete,
   isPaginated = true,
 }) {
   const classes = useStyles()
-  const [filterName, setFilterName] = useState('')
 
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    preGlobalFilteredRows,
+    setGlobalFilter,
     prepareRow,
     page,
-    canPreviousPage,
-    canNextPage,
     pageOptions,
-    pageCount,
     gotoPage,
-    nextPage,
-    previousPage,
     setPageSize,
-    state: {pageIndex, pageSize, selectedRowIds},
+    state: {pageIndex, pageSize, selectedRowIds, globalFilter},
     selectedFlatRows,
   } = useTable(
     {
@@ -85,6 +75,7 @@ function ReactTable({
       pageCount: controlledPageCount,
       autoResetPage: false,
     },
+    useGlobalFilter,
     usePagination,
     useRowSelect,
     hooks => {
@@ -137,9 +128,11 @@ function ReactTable({
   return (
     <Card>
       <CustomToolbar
-        numSelected={selectedFlatRows.length}
-        filterName={filterName}
-        onFilterName={setFilterName}
+        selectedRows={selectedFlatRows}
+        onDelete={onDelete}
+        preGlobalFilteredRows={preGlobalFilteredRows}
+        globalFilter={globalFilter}
+        setGlobalFilter={setGlobalFilter}
       />
 
       <TableContainer sx={{minWidth: 800}}>
@@ -161,7 +154,6 @@ function ReactTable({
           <TableBody {...getTableBodyProps()}>
             {page.map((row, i) => {
               prepareRow(row)
-              console.log('row', row)
               return (
                 <TableRow {...row.getRowProps()}>
                   {row.cells.map(cell => {
@@ -179,11 +171,11 @@ function ReactTable({
               )
             })}
           </TableBody>
-          {totalRecords === 0 && (
+          {page.length === 0 && (
             <TableBody>
               <TableRow>
                 <TableCell align="center" colSpan={6} sx={{py: 3}}>
-                  <SearchNotFound searchQuery={'data'} />
+                  <SearchNotFound searchQuery={globalFilter} />
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -204,7 +196,6 @@ function ReactTable({
                 <Select
                   value={pageIndex + 1}
                   onChange={e => {
-                    console.log('e', e.value)
                     gotoPage(e.target.value ? Number(e.target.value) - 1 : 0)
                   }}
                 >

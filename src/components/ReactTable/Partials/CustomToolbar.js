@@ -1,16 +1,10 @@
-import PropTypes from 'prop-types'
+import {IconButton, Toolbar, Tooltip, Typography} from '@mui/material'
 // material
 import {styled} from '@mui/material/styles'
-import {
-  Toolbar,
-  Tooltip,
-  IconButton,
-  Typography,
-  OutlinedInput,
-  InputAdornment,
-} from '@mui/material'
+import PropTypes from 'prop-types'
 // component
 import Iconify from '../../Iconify'
+import {GlobalFilter} from './ReactTableFilters'
 
 // ----------------------------------------------------------------------
 
@@ -21,29 +15,24 @@ const RootStyle = styled(Toolbar)(({theme}) => ({
   padding: theme.spacing(0, 1, 0, 3),
 }))
 
-const SearchStyle = styled(OutlinedInput)(({theme}) => ({
-  width: 240,
-  transition: theme.transitions.create(['box-shadow', 'width'], {
-    easing: theme.transitions.easing.easeInOut,
-    duration: theme.transitions.duration.shorter,
-  }),
-  '&.Mui-focused': {width: 320, boxShadow: theme.customShadows.z8},
-  '& fieldset': {
-    borderWidth: `1px !important`,
-    borderColor: `${theme.palette.grey[500_32]} !important`,
-  },
-}))
-
 // ----------------------------------------------------------------------
 
 CustomToolbar.propTypes = {
-  numSelected: PropTypes.number,
-  filterName: PropTypes.string,
-  onFilterName: PropTypes.func,
+  selectedRows: PropTypes.array,
+  onDelete: PropTypes.func,
 }
 
-export default function CustomToolbar({numSelected, filterName, onFilterName}) {
-  console.log('numSelected', numSelected)
+export default function CustomToolbar({
+  selectedRows,
+  onDelete,
+  preGlobalFilteredRows,
+  globalFilter,
+  setGlobalFilter,
+}) {
+  let numSelected = selectedRows?.length
+  const handleDelete = () => {
+    onDelete && onDelete(selectedRows)
+  }
   return (
     <RootStyle
       sx={{
@@ -58,21 +47,16 @@ export default function CustomToolbar({numSelected, filterName, onFilterName}) {
           {numSelected} selected
         </Typography>
       ) : (
-        <SearchStyle
-          value={filterName}
-          onChange={onFilterName}
-          placeholder="Search..."
-          startAdornment={
-            <InputAdornment position="start">
-              <Iconify icon="eva:search-fill" sx={{color: 'text.disabled'}} />
-            </InputAdornment>
-          }
+        <GlobalFilter
+          preGlobalFilteredRows={preGlobalFilteredRows}
+          globalFilter={globalFilter}
+          setGlobalFilter={setGlobalFilter}
         />
       )}
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton onClick={handleDelete}>
             <Iconify icon="eva:trash-2-fill" />
           </IconButton>
         </Tooltip>
