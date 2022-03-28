@@ -10,6 +10,9 @@ import Blog from 'screens/Blog'
 import User from 'screens/User'
 import NotFound from 'screens/Page404'
 import Users from 'screens/Users'
+import Categories from 'screens/Categories'
+import Courses from 'screens/Courses'
+import Permissions from 'screens/Users/Permissions'
 
 // ----------------------------------------------------------------------
 
@@ -20,8 +23,9 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         {path: 'app', element: <DashboardApp />},
-        {path: 'user', element: <User />},
-        {path: 'users', element: <Users />},
+        {path: 'courses', element: <Courses />},
+        {path: 'categories', element: <Categories />},
+        {path: 'users/permissions', element: <Permissions />},
         {path: 'products', element: <Products />},
         {path: 'blog', element: <Blog />},
       ],

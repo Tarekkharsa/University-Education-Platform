@@ -3,17 +3,18 @@ import {Button, Container, Stack, Typography} from '@mui/material'
 import ReactTable from 'components/ReactTable'
 import {useCallback, useMemo, useState} from 'react'
 import {Link as RouterLink} from 'react-router-dom'
-import Iconify from '../../components/Iconify'
+import Iconify from 'components/Iconify'
 // components
-import Page from '../../components/Page'
-import {UserMoreMenu} from '../../sections/@dashboard/user'
+import Page from 'components/Page'
+import {UserMoreMenu} from 'sections/@dashboard/user'
 //
-import USERLIST from '../../_mocks_/user'
+import USERLIST from '_mocks_/user'
+import categoriesLIST from '_mocks_/categories'
 import {tableColumns, tableHiddenColumns} from './data'
 
 // ----------------------------------------------------------------------
 
-export default function Users() {
+export default function Categories() {
   const columns = useMemo(() => tableColumns, [])
   const hiddenColumns = useMemo(() => tableHiddenColumns, [])
   const [loading, setLoading] = useState(false)
@@ -37,7 +38,7 @@ export default function Users() {
     console.log('selectedRows', selectedRows)
   }
   return (
-    <Page title="User | Minimal-UI">
+    <Page title="Category">
       <Container>
         <Stack
           direction="row"
@@ -46,7 +47,7 @@ export default function Users() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            User
+            Category
           </Typography>
           <Button
             variant="contained"
@@ -54,19 +55,19 @@ export default function Users() {
             to="#"
             startIcon={<Iconify icon="eva:plus-fill" />}
           >
-            New User
+            New Category
           </Button>
         </Stack>
         <ReactTable
           columns={columns}
           hiddenColumns={hiddenColumns}
-          data={USERLIST}
+          data={categoriesLIST}
           fetchData={fetchData}
           getSelectedRows={getSelectedRows}
           onDelete={onDelete}
           loading={loading}
           pageCount={2}
-          totalRecords={USERLIST.length}
+          totalRecords={categoriesLIST.length}
           isPaginated={false}
         />
       </Container>

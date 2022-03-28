@@ -12,14 +12,29 @@ const sidebarConfig = [
     icon: getIcon('eva:pie-chart-2-fill'),
   },
   {
-    title: 'user',
-    path: '/dashboard/user',
-    icon: getIcon('eva:people-fill'),
-  },
-  {
     title: 'users',
     path: '/dashboard/users',
     icon: getIcon('eva:people-fill'),
+    children: [
+      {
+        title: 'Accounts',
+        path: '/dashboard/users/accounts',
+      },
+      {
+        title: 'Permissions',
+        path: '/dashboard/users/permissions',
+      },
+    ],
+  },
+  {
+    title: 'Courses',
+    path: '/dashboard/courses',
+    icon: getIcon('fluent:learning-app-20-regular'),
+  },
+  {
+    title: 'Categories',
+    path: '/dashboard/categories',
+    icon: getIcon('carbon:categories'),
   },
   {
     title: 'product',

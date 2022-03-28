@@ -70,7 +70,7 @@ function ReactTable({
     {
       columns,
       data: tableData,
-      initialState: {pageIndex: 0, hiddenColumns, pageSize: 50},
+      initialState: {pageIndex: 0, hiddenColumns, pageSize: 10},
       manualPagination: true,
       pageCount: controlledPageCount,
       autoResetPage: false,
