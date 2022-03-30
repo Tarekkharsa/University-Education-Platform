@@ -9,10 +9,11 @@ import Products from 'screens/Products'
 import Blog from 'screens/Blog'
 import User from 'screens/User'
 import NotFound from 'screens/Page404'
-import Users from 'screens/Users'
 import Categories from 'screens/Categories'
 import Courses from 'screens/Courses'
 import Permissions from 'screens/Users/Permissions'
+import Accounts from 'screens/Users/Accounts'
+import AddAccount from 'screens/Users/Accounts/Add'
 
 // ----------------------------------------------------------------------
 
@@ -26,6 +27,8 @@ export default function Router() {
         {path: 'courses', element: <Courses />},
         {path: 'categories', element: <Categories />},
         {path: 'users/permissions', element: <Permissions />},
+        {path: 'users/accounts', element: <Accounts />},
+        {path: 'users/accounts/add', element: <AddAccount />},
         {path: 'products', element: <Products />},
         {path: 'blog', element: <Blog />},
       ],

@@ -3,17 +3,17 @@ import {Button, Container, Stack, Typography} from '@mui/material'
 import ReactTable from 'components/ReactTable'
 import {useCallback, useMemo, useState} from 'react'
 import {Link as RouterLink} from 'react-router-dom'
-import Iconify from '../../components/Iconify'
+import Iconify from 'components/Iconify'
 // components
-import Page from '../../components/Page'
-import {UserMoreMenu} from '../../sections/@dashboard/user'
+import Page from 'components/Page'
+import {UserMoreMenu} from 'sections/@dashboard/user'
 //
-import USERLIST from '../../_mocks_/user'
+import USERLIST from '_mocks_/user'
 import {tableColumns, tableHiddenColumns} from './data'
 
 // ----------------------------------------------------------------------
 
-export default function Users() {
+export default function Accounts() {
   const columns = useMemo(() => tableColumns, [])
   const hiddenColumns = useMemo(() => tableHiddenColumns, [])
   const [loading, setLoading] = useState(false)
@@ -51,7 +51,7 @@ export default function Users() {
           <Button
             variant="contained"
             component={RouterLink}
-            to="#"
+            to="/dashboard/users/accounts/add"
             startIcon={<Iconify icon="eva:plus-fill" />}
           >
             New User
