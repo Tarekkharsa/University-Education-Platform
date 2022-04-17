@@ -1,22 +1,22 @@
 // material
-import { alpha, styled } from '@mui/material/styles';
-import { Card, Typography } from '@mui/material';
+import {alpha, styled} from '@mui/material/styles'
+import {Card, Typography} from '@mui/material'
 // utils
-import { fShortenNumber } from '../../../utils/formatNumber';
+import {fShortenNumber} from '../../../utils/formatNumber'
 //
-import Iconify from '../../../components/Iconify';
+import Iconify from '../../../components/Iconify'
 
 // ----------------------------------------------------------------------
 
-const RootStyle = styled(Card)(({ theme }) => ({
+const RootStyle = styled(Card)(({theme}) => ({
   boxShadow: 'none',
   textAlign: 'center',
   padding: theme.spacing(5, 0),
   color: theme.palette.warning.darker,
-  backgroundColor: theme.palette.warning.lighter
-}));
+  backgroundColor: theme.palette.warning.lighter,
+}))
 
-const IconWrapperStyle = styled('div')(({ theme }) => ({
+const IconWrapperStyle = styled('div')(({theme}) => ({
   margin: 'auto',
   display: 'flex',
   borderRadius: '50%',
@@ -26,15 +26,15 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
   justifyContent: 'center',
   marginBottom: theme.spacing(3),
   color: theme.palette.warning.dark,
-  backgroundImage: `linear-gradient(135deg, ${alpha(theme.palette.warning.dark, 0)} 0%, ${alpha(
+  backgroundImage: `linear-gradient(135deg, ${alpha(
     theme.palette.warning.dark,
-    0.24
-  )} 100%)`
-}));
+    0,
+  )} 0%, ${alpha(theme.palette.warning.dark, 0.24)} 100%)`,
+}))
 
 // ----------------------------------------------------------------------
 
-const TOTAL = 1723315;
+const TOTAL = 1723315
 
 export default function AppItemOrders() {
   return (
@@ -43,9 +43,9 @@ export default function AppItemOrders() {
         <Iconify icon="ant-design:windows-filled" width={24} height={24} />
       </IconWrapperStyle>
       <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
-      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Item Orders
+      <Typography variant="subtitle2" sx={{opacity: 0.72}}>
+        courses
       </Typography>
     </RootStyle>
-  );
+  )
 }

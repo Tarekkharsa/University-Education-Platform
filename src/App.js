@@ -15,6 +15,7 @@ const UnauthenticatedApp = React.lazy(() => import('./unauthenticated-app'))
 
 function App() {
   const {user} = useAuth()
+  console.log('user', user)
   return (
     <ThemeConfig>
       <ScrollToTop />

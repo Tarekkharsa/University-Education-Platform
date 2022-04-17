@@ -1,115 +1,104 @@
-import React, {useRef} from 'react'
-import {Editor} from '@tinymce/tinymce-react'
-
-// import ApiConfigs from '~/Configs/Api'
-// import {StorageKeys} from '~/Configs/Storage'
-// import {
-//   getStorage,
-//   handleChange as handleUploadChange,
-// } from '~/Services/Helpers'
 import useStyles from './styles'
-
-export default function RichText({
+import React, {useState, useRef, useMemo} from 'react'
+import JoditEditor from 'jodit-react'
+const RichText = ({
   editDisabled,
   errorText,
-  placeholder,
   InputChange,
-  width,
-  height,
   name,
   label,
   editValue,
-  customOptions,
-}) {
-  const editorRef = useRef(null)
+}) => {
   const classes = useStyles()
+  const editor = useRef(null)
+  const [content, setContent] = useState(editValue)
 
-  // let token = getStorage(StorageKeys.token);
-  // const url = `${ApiConfigs.apiUrl}admin/media-upload`;
+  const config = useMemo(
+    () => ({
+      readonly: editDisabled,
+      showPlaceholder: false,
+      // placeholder: "",
+      uploader: {
+        insertImageAsBase64URI: true, // set false if you want to load images via ajax
+        // imagesExtensions: ['jpg', 'png', 'jpeg', 'gif'],
+        // url: url,  // url to upload image
+        // i18n: 'en',
+        // withCredentials: false,
+        // pathVariableName: 'path',
+        // format: 'json',
+        // method: 'POST',
+        // headers: {
+        //   Authorization: token, // set token in header
+        // },
+        // filesVariableName(i) {
+        //   return `file`   // set name of file variable
+        // },
+        // isSuccess: function (resp) {
+        //   return resp
+        // },
+        // process: function (resp) {
+        //   return {
+        //     files: resp.content,
+        //     path: `${resp.images_prefix}${resp.content}`,
+        //     baseurl: resp.images_prefix,
+        //     error: resp.error_des,
+        //     // message: resp.data.message
+        //   }
+        // },
+        // defaultHandlerSuccess: function (data) {
+        //   this.s.insertImage(data.path) // insert image to editor
+        // },
+      },
+      toolbarButtonSize: 'large',
+      removeButtons: [
+        'video',
+        'table',
+        'file',
+        'source',
+        'about',
+        'fullsize',
+        'hr',
+        'link',
+        // "selectall",
+        'spellcheck',
+        'copyformat',
+        'spellcheck',
+        'brush',
+        'font',
+        'classSpan',
+      ],
+      showPlaceholder: false,
+      statusbar: false,
+      // toolbarInlineForSelection: true,
+      // iframe: true,
+      style: {
+        width: '100%',
+      },
+    }),
+    [editDisabled],
+  )
 
-  const log = () => {
-    if (editorRef.current) {
-      InputChange(name, editorRef.current.getContent())
-    }
+  const onEditorStateChange = value => {
+    // InputChange(name, value)
   }
-
-  // function image_upload_handler(blobInfo, success, failure, progress) {
-  //   let token = getStorage(StorageKeys.token);
-  //   const url = `${ApiConfigs.apiUrl}admin/media-upload`;
-
-  //   var xhr, formData;
-
-  //   xhr = new XMLHttpRequest();
-  //   xhr.withCredentials = false;
-  //   xhr.open("POST", url);
-  //   xhr.setRequestHeader("Authorization", token);
-
-  //   xhr.upload.onprogress = function (e) {
-  //     progress((e.loaded / e.total) * 100);
-  //   };
-
-  //   xhr.onload = function () {
-  //     var json;
-
-  //     if (xhr.status === 403) {
-  //       failure("HTTP Error: " + xhr.status, { remove: true });
-  //       return;
-  //     }
-
-  //     if (xhr.status < 200 || xhr.status >= 300) {
-  //       failure("HTTP Error: " + xhr.status);
-  //       return;
-  //     }
-  //     console.log("xhr.responseText", xhr.responseText);
-  //     json = JSON.parse(xhr.responseText);
-
-  //     if (!json || typeof json.content != "string") {
-  //       failure("Invalid JSON: " + xhr.responseText);
-  //       return;
-  //     }
-
-  //     success(`${json.images_prefix}${json.content}`);
-  //   };
-
-  //   xhr.onerror = function () {
-  //     failure(
-  //       "Image upload failed due to a XHR Transport error. Code: " + xhr.status
-  //     );
-  //   };
-
-  //   formData = new FormData();
-  //   formData.append("file", blobInfo.blob(), blobInfo.filename());
-
-  //   xhr.send(formData);
-  // }
-
   return (
-    <div className={classes.rootEditor}>
-      <Editor
-        apiKey="crjlhre6yw15pg2e6vme2jti2lb3pv8uqts06uz0s39mgtdx"
-        onInit={(evt, editor) => (editorRef.current = editor)}
-        initialValue={editValue ? editValue : '<p></p>'}
-        init={{
-          height: 400,
-          skin: 'oxide-dark',
-          content_css: 'dark',
-          // automatic_uploads: true,
-          // images_upload_handler: image_upload_handler,
-          plugins: [
-            'advlist autolink lists link image charmap print preview anchor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste code help wordcount',
-          ],
-          toolbar:
-            'undo redo | formatselect | ' +
-            'bold italic backcolor | alignleft aligncenter ' +
-            'alignright alignjustify | bullist numlist outdent indent | ' +
-            'removeformat | help',
-          content_style:
-            'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+    <div>
+      <div
+        style={{
+          borderColor: errorText ? 'red' : '',
         }}
-        onChange={log}
-      />
+      >
+        <JoditEditor
+          ref={editor}
+          value={content}
+          config={config}
+          tabIndex={1} // tabIndex of textarea
+          onChange={newContent => onEditorStateChange(newContent)}
+        />
+      </div>
+      <div className={classes.errorText}>{!!errorText ? errorText : ''}</div>
     </div>
   )
 }
+
+export default RichText

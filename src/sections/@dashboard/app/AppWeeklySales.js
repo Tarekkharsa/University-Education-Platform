@@ -1,22 +1,22 @@
 // material
-import { alpha, styled } from '@mui/material/styles';
-import { Card, Typography } from '@mui/material';
+import {alpha, styled} from '@mui/material/styles'
+import {Card, Typography} from '@mui/material'
 // utils
-import { fShortenNumber } from '../../../utils/formatNumber';
+import {fShortenNumber} from '../../../utils/formatNumber'
 // component
-import Iconify from '../../../components/Iconify';
+import Iconify from '../../../components/Iconify'
 
 // ----------------------------------------------------------------------
 
-const RootStyle = styled(Card)(({ theme }) => ({
+const RootStyle = styled(Card)(({theme}) => ({
   boxShadow: 'none',
   textAlign: 'center',
   padding: theme.spacing(5, 0),
   color: theme.palette.primary.darker,
-  backgroundColor: theme.palette.primary.lighter
-}));
+  backgroundColor: theme.palette.primary.lighter,
+}))
 
-const IconWrapperStyle = styled('div')(({ theme }) => ({
+const IconWrapperStyle = styled('div')(({theme}) => ({
   margin: 'auto',
   display: 'flex',
   borderRadius: '50%',
@@ -26,15 +26,15 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
   justifyContent: 'center',
   marginBottom: theme.spacing(3),
   color: theme.palette.primary.dark,
-  backgroundImage: `linear-gradient(135deg, ${alpha(theme.palette.primary.dark, 0)} 0%, ${alpha(
+  backgroundImage: `linear-gradient(135deg, ${alpha(
     theme.palette.primary.dark,
-    0.24
-  )} 100%)`
-}));
+    0,
+  )} 0%, ${alpha(theme.palette.primary.dark, 0.24)} 100%)`,
+}))
 
 // ----------------------------------------------------------------------
 
-const TOTAL = 714000;
+const TOTAL = 714000
 
 export default function AppWeeklySales() {
   return (
@@ -43,9 +43,9 @@ export default function AppWeeklySales() {
         <Iconify icon="ant-design:android-filled" width={24} height={24} />
       </IconWrapperStyle>
       <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
-      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Weekly Sales
+      <Typography variant="subtitle2" sx={{opacity: 0.72}}>
+        Weekly visited
       </Typography>
     </RootStyle>
-  );
+  )
 }
