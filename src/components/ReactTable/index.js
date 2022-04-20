@@ -44,7 +44,6 @@ function ReactTable({
   hiddenColumns,
   data: tableData,
   fetchData,
-  loading,
   pageCount: controlledPageCount,
   totalRecords,
   getSelectedRows,
@@ -71,8 +70,8 @@ function ReactTable({
       columns,
       data: tableData,
       initialState: {pageIndex: 0, hiddenColumns, pageSize: 10},
-      manualPagination: true,
-      pageCount: controlledPageCount,
+      // manualPagination: true,
+      // pageCount: controlledPageCount,
       autoResetPage: false,
     },
     useGlobalFilter,
@@ -111,10 +110,6 @@ function ReactTable({
   React.useEffect(() => {
     getSelectedRows && getSelectedRows({selectedRowIds, selectedFlatRows})
   }, [getSelectedRows, selectedRowIds, selectedFlatRows])
-
-  if (loading) {
-    return <FullPageSpinner />
-  }
 
   const handleChangePage = (event, newPage) => {
     gotoPage(newPage)

@@ -75,11 +75,11 @@ const RichText = ({
         width: '100%',
       },
     }),
-    [editDisabled],
+    [editDisabled, editValue],
   )
 
   const onEditorStateChange = value => {
-    // InputChange(name, value)
+    InputChange(name, value)
   }
   return (
     <div>

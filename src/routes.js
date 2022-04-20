@@ -14,6 +14,9 @@ import Courses from 'screens/Courses'
 import Permissions from 'screens/Users/Permissions'
 import Accounts from 'screens/Users/Accounts'
 import AddAccount from 'screens/Users/Accounts/Add'
+import Cohorts from 'screens/Cohorts'
+import AddCohort from 'screens/Cohorts/Add'
+import EditCohort from 'screens/Cohorts/Edit'
 
 // ----------------------------------------------------------------------
 
@@ -26,6 +29,9 @@ export default function Router() {
         {path: 'app', element: <DashboardApp />},
         {path: 'courses', element: <Courses />},
         {path: 'categories', element: <Categories />},
+        {path: 'cohorts', element: <Cohorts />},
+        {path: 'cohorts/add', element: <AddCohort />},
+        {path: 'cohorts/:id', element: <EditCohort />},
         {path: 'users/permissions', element: <Permissions />},
         {path: 'users/accounts', element: <Accounts />},
         {path: 'users/accounts/add', element: <AddAccount />},

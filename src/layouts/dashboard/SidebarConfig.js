@@ -36,6 +36,11 @@ const sidebarConfig = [
     path: '/dashboard/categories',
     icon: getIcon('carbon:categories'),
   },
+  {
+    title: 'Cohorts',
+    path: '/dashboard/cohorts',
+    icon: getIcon('ic:outline-groups'),
+  },
   // {
   //   title: 'product',
   //   path: '/dashboard/products',
