@@ -26,11 +26,11 @@ const sidebarConfig = [
       },
     ],
   },
-  {
-    title: 'Courses',
-    path: '/dashboard/courses',
-    icon: getIcon('fluent:learning-app-20-regular'),
-  },
+  // {
+  //   title: 'Courses',
+  //   path: '/dashboard/courses',
+  //   icon: getIcon('fluent:learning-app-20-regular'),
+  // },
   {
     title: 'Categories',
     path: '/dashboard/categories',

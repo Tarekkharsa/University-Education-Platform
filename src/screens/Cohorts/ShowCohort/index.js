@@ -1,3 +1,9 @@
+import * as React from 'react'
+import PropTypes from 'prop-types'
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 import {
   Button,
   Container,
@@ -6,29 +12,53 @@ import {
   ListItem,
   ListItemIcon,
   Stack,
-  Typography,
 } from '@mui/material'
-import Iconify from 'components/Iconify'
-import {FullPageSpinner} from 'components/lib'
-import Page from 'components/Page'
-import {useClient} from 'context/auth-context'
-import React from 'react'
-import ReactHtmlParser from 'react-html-parser'
-import {useQuery} from 'react-query'
 import {Link as RouterLink, useParams} from 'react-router-dom'
-import useStyles from './styles'
+import Iconify from 'components/Iconify'
+import Page from 'components/Page'
+import ShowCohort from './showCohortDetails'
+import Members from '../Partials/Members'
 
-export default function ShowCohort() {
-  const classes = useStyles()
+function TabPanel(props) {
+  const {children, value, index, ...other} = props
+
+  return (
+    <div
+      style={{width: '100%'}}
+      role="tabpanel"
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      aria-labelledby={`vertical-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{p: 3}}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  )
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+}
+
+function a11yProps(index) {
+  return {
+    id: `vertical-tab-${index}`,
+    'aria-controls': `vertical-tabpanel-${index}`,
+  }
+}
+
+export default function VerticalTabs() {
+  const [value, setValue] = React.useState(0)
   const {id} = useParams()
-  const client = useClient()
-  const {isLoading, error, data} = useQuery({
-    queryKey: 'cohort',
-    queryFn: () => client(`cohorts/${id}`).then(data => data),
-  })
 
-  if (isLoading) {
-    return <FullPageSpinner />
+  const handleChange = (event, newValue) => {
+    setValue(newValue)
   }
 
   return (
@@ -53,20 +83,30 @@ export default function ShowCohort() {
             Edit Cohort
           </Button>
         </Stack>
-
-        <List className={classes.root}>
-          <ListItem button className={classes.li}>
-            <ListItemIcon>Name</ListItemIcon>
-            <div>{data?.name}</div>
-          </ListItem>
-          <Divider variant="inset" component="li" />
-
-          <ListItem button className={classes.descLi}>
-            <ListItemIcon>Description</ListItemIcon>
-            <div>{ReactHtmlParser(data?.description)}</div>
-          </ListItem>
-          <Divider variant="inset" component="li" />
-        </List>
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+          }}
+        >
+          <Tabs
+            orientation="vertical"
+            variant="scrollable"
+            value={value}
+            onChange={handleChange}
+            aria-label="Vertical tabs example"
+            sx={{borderRight: 1, borderColor: 'divider'}}
+          >
+            <Tab label="Cohort Info" {...a11yProps(0)} />
+            <Tab label="Members" {...a11yProps(1)} />
+          </Tabs>
+          <TabPanel value={value} index={0}>
+            <ShowCohort />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <Members />
+          </TabPanel>
+        </Box>
       </Container>
     </Page>
   )
