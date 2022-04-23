@@ -8,17 +8,22 @@ import {useClient} from 'context/auth-context'
 import {useEffect, useState} from 'react'
 import {useForm} from 'react-hook-form'
 import {useMutation, useQuery, useQueryClient} from 'react-query'
-import {useNavigate, useParams} from 'react-router-dom'
+import {useLocation, useNavigate, useParams} from 'react-router-dom'
 import * as Yup from 'yup'
 
 // ----------------------------------------------------------------------
 
-export default function CohortForm({onSubmit}) {
+export default function CategoryForm({onSubmit}) {
   const {id} = useParams()
+  const {state} = useLocation()
+
+  console.log('state', state)
+
   const client = useClient()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const CohortSchema = Yup.object().shape({
+
+  const CategorySchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     description: Yup.string(),
   })
@@ -32,44 +37,45 @@ export default function CohortForm({onSubmit}) {
     reset,
     formState: {errors, isSubmitting},
   } = useForm({
-    resolver: yupResolver(CohortSchema),
+    resolver: yupResolver(CategorySchema),
     defaultValues: {name: '', description: ''},
   })
 
   const {
     isLoading: fetchLoading,
     error: getOneError,
-    data: cohort,
+    data: category,
   } = useQuery({
-    queryKey: 'cohort',
-    queryFn: () => client(`cohorts/${id}`).then(data => data),
+    queryKey: 'category',
+    queryFn: () => client(`categories/${id}`).then(data => data),
     enabled: id !== undefined,
   })
 
   useEffect(() => {
-    if (cohort && id !== undefined) {
-      setRitchText(cohort.description)
-      reset(cohort)
+    if (category && id !== undefined) {
+      setRitchText(category.description)
+      reset(category)
     }
-  }, [cohort])
+  }, [category])
 
   const {mutate, isError, error, isLoading} = useMutation(
     data =>
-      client(id ? `cohorts/${id}` : `cohorts`, {
+      client(id ? `categories/${id}` : `categories`, {
         method: id ? 'PATCH' : 'POST',
         data: data,
       }),
     {
       onSuccess: data => {
-        queryClient.invalidateQueries('cohorts')
-        navigate(-1)
+        queryClient.invalidateQueries('categories')
+        navigate('/dashboard/categories')
         reset()
       },
     },
   )
 
   const onSubmitForm = data => {
-    mutate(data)
+    let {name, description} = data
+    mutate({name, description, parent: state !== null ? state.id : 0})
   }
 
   if (fetchLoading) {
@@ -82,7 +88,7 @@ export default function CohortForm({onSubmit}) {
         {isError ? <Alert severity="error">{error.message}</Alert> : null}
 
         <CustomInput
-          label="Cohort Name"
+          label="Category Name"
           name="name"
           control={control}
           errors={errors}
@@ -103,7 +109,7 @@ export default function CohortForm({onSubmit}) {
         sx={{my: 2}}
       >
         <LoadingButton
-          onClick={() => navigate('/dashboard/cohorts')}
+          onClick={() => navigate('/dashboard/categories')}
           size="large"
           type="submit"
           variant="contained"
@@ -117,7 +123,7 @@ export default function CohortForm({onSubmit}) {
           variant="contained"
           loading={isLoading}
         >
-          {id ? 'Update Cohort' : 'Create Cohort'}
+          {id ? 'Update Category' : 'Create Category'}
         </LoadingButton>
       </Stack>
     </form>

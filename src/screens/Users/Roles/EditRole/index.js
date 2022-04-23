@@ -2,12 +2,12 @@ import {Button, Container, Stack, Typography} from '@mui/material'
 import Iconify from 'components/Iconify'
 import Page from 'components/Page'
 import React from 'react'
-import {Link as RouterLink} from 'react-router-dom'
-import CohortForm from '../Partials/CohortForm'
+import {Link as RouterLink, useParams} from 'react-router-dom'
+import RoleForm from '../Partials/RoleForm'
 
-export default function EditCohort() {
+export default function EditRole() {
   return (
-    <Page title="Cohort">
+    <Page title="Role">
       <Container>
         <Stack
           direction="row"
@@ -16,10 +16,10 @@ export default function EditCohort() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Update Cohort
+            Edit Role
           </Typography>
         </Stack>
-        <CohortForm />
+        <RoleForm />
       </Container>
     </Page>
   )

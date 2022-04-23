@@ -1,6 +1,6 @@
 import {Avatar, Stack, Typography} from '@mui/material'
 import {sentenceCase} from 'change-case'
-import {UserMoreMenu} from 'sections/@dashboard/user'
+import {CohortMoreMenu} from 'sections/@dashboard/user'
 import Label from 'components/Label'
 
 export const tableHiddenColumns = ['id']
@@ -21,7 +21,7 @@ export const tableColumns = [
   {
     accessor: 'actions',
     Cell: ({row}) => {
-      return <UserMoreMenu id={row.values.id} />
+      return <CohortMoreMenu id={row.values.id} />
     },
     style: {
       textAlign: 'right',

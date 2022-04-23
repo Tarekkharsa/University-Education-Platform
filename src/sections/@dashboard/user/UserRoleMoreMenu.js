@@ -13,7 +13,7 @@ import Iconify from '../../../components/Iconify'
 
 // ----------------------------------------------------------------------
 
-export default function UserMoreMenu({id}) {
+export default function UserRoleMoreMenu({id}) {
   const ref = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
@@ -34,19 +34,6 @@ export default function UserMoreMenu({id}) {
         anchorOrigin={{vertical: 'top', horizontal: 'right'}}
         transformOrigin={{vertical: 'top', horizontal: 'right'}}
       >
-        <MenuItem
-          sx={{color: 'text.secondary'}}
-          onClick={() => navigate(`${id}/show`)}
-        >
-          <ListItemIcon>
-            <Iconify icon="carbon:view" width={24} height={24} />
-          </ListItemIcon>
-          <ListItemText
-            primary="Show"
-            primaryTypographyProps={{variant: 'body2'}}
-          />
-        </MenuItem>
-
         <MenuItem
           sx={{color: 'text.secondary'}}
           onClick={() => navigate(`${id}/edit`)}

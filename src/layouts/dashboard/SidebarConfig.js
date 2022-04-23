@@ -21,8 +21,8 @@ const sidebarConfig = [
         path: '/dashboard/users/accounts',
       },
       {
-        title: 'Permissions',
-        path: '/dashboard/users/permissions',
+        title: 'Roles',
+        path: '/dashboard/users/roles',
       },
     ],
   },

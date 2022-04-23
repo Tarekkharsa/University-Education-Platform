@@ -1,14 +1,11 @@
-// material
 import {Button, Container, Stack, Typography} from '@mui/material'
 import Iconify from 'components/Iconify'
-// components
 import Page from 'components/Page'
+import React from 'react'
 import {Link as RouterLink} from 'react-router-dom'
-import Table from './Table'
+import CategoryForm from '../Partials/CategoryForm'
 
-// ----------------------------------------------------------------------
-
-export default function Categories() {
+export default function AddCategory() {
   return (
     <Page title="Category">
       <Container>
@@ -19,18 +16,10 @@ export default function Categories() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Category
+            Create New Category
           </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="/dashboard/categories/add"
-            startIcon={<Iconify icon="eva:plus-fill" />}
-          >
-            New Parent Category
-          </Button>
         </Stack>
-        <Table />
+        <CategoryForm />
       </Container>
     </Page>
   )

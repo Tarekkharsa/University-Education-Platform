@@ -13,7 +13,8 @@ import Iconify from '../../../components/Iconify'
 
 // ----------------------------------------------------------------------
 
-export default function UserMoreMenu({id}) {
+export default function CohortMoreMenu({id}) {
+  console.log('id', id)
   const ref = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()

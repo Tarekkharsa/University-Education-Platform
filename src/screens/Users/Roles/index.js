@@ -13,7 +13,7 @@ import {tableColumns, tableHiddenColumns} from './data'
 
 // ----------------------------------------------------------------------
 
-export default function Permissions() {
+export default function Roles() {
   const columns = useMemo(() => tableColumns, [])
   const hiddenColumns = useMemo(() => tableHiddenColumns, [])
   const [loading, setLoading] = useState(false)
@@ -37,7 +37,7 @@ export default function Permissions() {
     console.log('selectedRows', selectedRows)
   }
   return (
-    <Page title="Permissions">
+    <Page title="Roles">
       <Container>
         <Stack
           direction="row"
@@ -46,16 +46,8 @@ export default function Permissions() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Permissions
+            Assign / UnAssign Role
           </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="#"
-            startIcon={<Iconify icon="eva:plus-fill" />}
-          >
-            New Permission
-          </Button>
         </Stack>
         <ReactTable
           columns={columns}

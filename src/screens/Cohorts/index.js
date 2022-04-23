@@ -23,7 +23,7 @@ export default function Cohorts() {
   const hiddenColumns = useMemo(() => tableHiddenColumns, [])
   const [rows, setRows] = useState([])
   let selectedRowsIds = []
-  const {user} = useAuth()
+
   const client = useClient()
   const queryClient = useQueryClient()
 
