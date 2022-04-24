@@ -42,7 +42,8 @@ export default function CohortForm({onSubmit}) {
     data: cohort,
   } = useQuery({
     queryKey: 'cohort',
-    queryFn: () => client(`cohorts/${id}`).then(data => data),
+    queryFn: () =>
+      client(`cohort/getCohortById?cohort_id=${id}`).then(data => data.data[0]),
     enabled: id !== undefined,
   })
 
@@ -55,8 +56,8 @@ export default function CohortForm({onSubmit}) {
 
   const {mutate, isError, error, isLoading} = useMutation(
     data =>
-      client(id ? `cohorts/${id}` : `cohorts`, {
-        method: id ? 'PATCH' : 'POST',
+      client(id ? 'cohort/update' : `cohort/create`, {
+        method: 'POST',
         data: data,
       }),
     {
@@ -69,7 +70,14 @@ export default function CohortForm({onSubmit}) {
   )
 
   const onSubmitForm = data => {
-    mutate(data)
+    let {name, description} = data
+    mutate({
+      name,
+      description,
+      visible: 1,
+      is_system: true,
+      cohort_id: id ? id : undefined,
+    })
   }
 
   if (fetchLoading) {

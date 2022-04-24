@@ -2,7 +2,7 @@
 import {Button, Container, Stack, Typography} from '@mui/material'
 import ReactTable from 'components/ReactTable'
 import {useCallback, useEffect, useMemo, useState} from 'react'
-import {Link as RouterLink} from 'react-router-dom'
+import {Link as RouterLink, useParams} from 'react-router-dom'
 import Iconify from 'components/Iconify'
 // components
 import Page from 'components/Page'
@@ -20,6 +20,7 @@ import AddMemberModal from './Add'
 // ----------------------------------------------------------------------
 
 export default function Members() {
+  const {id} = useParams()
   const columns = useMemo(() => tableColumns, [])
   const hiddenColumns = useMemo(() => tableHiddenColumns, [])
   const [rows, setRows] = useState([])
@@ -29,15 +30,18 @@ export default function Members() {
   const queryClient = useQueryClient()
 
   const {isLoading, error, data, refetch} = useQuery({
-    queryKey: 'users-data',
-    queryFn: () => client('users-data').then(data => data),
+    queryKey: 'members',
+    queryFn: () =>
+      client(`cohort/getAllCohortMembers?cohort_id=${id}`).then(data =>
+        data.data.filter(x => x !== null),
+      ),
   })
 
   const {mutate: handleRemoveClick} = useMutation(
-    ({id}) => client(`users-data/${id}`, {method: 'DELETE'}),
+    data => client(`cohort/deleteMember`, {method: 'POST', data}),
     {
       onSuccess: data => {
-        queryClient.invalidateQueries('users-data')
+        queryClient.invalidateQueries('members')
       },
     },
   )
@@ -61,7 +65,7 @@ export default function Members() {
       selectedRows.map((row, i) => {
         selectedRowsIds.push(row.values.id)
       })
-    handleRemoveClick({id: selectedRowsIds[0]})
+    handleRemoveClick({user_id: selectedRowsIds[0], cohort_id: id})
   }
 
   if (isLoading && !data) {

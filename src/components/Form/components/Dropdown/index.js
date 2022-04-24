@@ -12,6 +12,7 @@ export default function Dropdown({
   width,
   optionUrl,
   control,
+  optionLable,
   errors,
 }) {
   const classes = useStyles()
@@ -29,7 +30,7 @@ export default function Dropdown({
     }
     ;(async () => {
       const response = await client(optionUrl)
-      const countries = response
+      const countries = response.data
       if (active) {
         setOptions(countries)
       }
@@ -60,13 +61,15 @@ export default function Dropdown({
           }}
           loading={loading}
           options={options}
-          isOptionEqualToValue={(option, value) => option.name === value.name}
-          getOptionLabel={option => option.name}
+          isOptionEqualToValue={(option, value) =>
+            option[optionLable] === value[optionLable]
+          }
+          getOptionLabel={option => option[optionLable]}
           onChange={(_, data) => setValue(name, data.id)}
           renderInput={params => (
             <TextField
               {...params}
-              label={name}
+              label={title}
               className={classes.input}
               helperText={errors[name] && `${name} is a required field`}
               InputProps={{

@@ -11,12 +11,12 @@ async function getToken() {
 }
 
 function handleUserResponse(user) {
-  window.localStorage.setItem(localStorageKey, user.access_token)
-  return user
+  window.localStorage.setItem(localStorageKey, user.data.token)
+  return user.data
 }
 
-function login({email, password}) {
-  return client('login', {email, password}).then(handleUserResponse)
+function login({username, password}) {
+  return client('login', {username, password}).then(handleUserResponse)
 }
 
 function register({username, password}) {
@@ -35,7 +35,10 @@ async function client(endpoint, data) {
   const config = {
     method: 'POST',
     body: JSON.stringify(data),
-    headers: {'Content-Type': 'application/json'},
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    },
   }
 
   return window.fetch(`${authURL}/${endpoint}`, config).then(async response => {

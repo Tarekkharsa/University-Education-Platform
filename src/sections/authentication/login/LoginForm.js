@@ -16,9 +16,11 @@ export default function LoginForm({onSubmit}) {
   const {isLoading, isError, error, run} = useAsync()
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email('Email must be a valid email address')
-      .required('Email is required'),
+    // email: Yup.string()
+    //   .email('Email must be a valid email address')
+    //   .required('Email is required'),
+
+    username: Yup.string().required('User Name is required'),
     password: Yup.string().required('Password is required'),
   })
 
@@ -29,15 +31,15 @@ export default function LoginForm({onSubmit}) {
   } = useForm({
     resolver: yupResolver(LoginSchema),
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
       remember: true,
     },
   })
 
   const onSubmitForm = data => {
-    const {email, password} = data
-    run(onSubmit({email, password}))
+    const {username, password} = data
+    run(onSubmit({username, password}))
   }
 
   return (
@@ -45,8 +47,8 @@ export default function LoginForm({onSubmit}) {
       <Stack spacing={3}>
         {isError ? <Alert severity="error">{error.message}</Alert> : null}
         <CustomInput
-          label="Email address"
-          name="email"
+          label="User name"
+          name="username"
           control={control}
           errors={errors}
         />

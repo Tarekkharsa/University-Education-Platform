@@ -24,7 +24,8 @@ export default function ShowCohort() {
   const client = useClient()
   const {isLoading, error, data} = useQuery({
     queryKey: 'cohort',
-    queryFn: () => client(`cohorts/${id}`).then(data => data),
+    queryFn: () =>
+      client(`cohort/getCohortById?cohort_id=${id}`).then(data => data.data[0]),
   })
 
   if (isLoading) {

@@ -29,11 +29,12 @@ export default function Cohorts() {
 
   const {isLoading, error, data, refetch} = useQuery({
     queryKey: 'cohorts',
-    queryFn: () => client('cohorts').then(data => data),
+    queryFn: () => client('cohort/getAllCohorts').then(data => data.data),
   })
 
   const {mutate: handleRemoveClick} = useMutation(
-    ({id}) => client(`cohorts/${id}`, {method: 'DELETE'}),
+    ({id}) =>
+      client(`cohort/deleteCohorts`, {method: 'POST', data: {cohort_ids: id}}),
     {
       onSuccess: data => {
         queryClient.invalidateQueries('cohorts')
@@ -56,7 +57,7 @@ export default function Cohorts() {
       selectedRows.map((row, i) => {
         selectedRowsIds.push(row.values.id)
       })
-    handleRemoveClick({id: selectedRowsIds[0]})
+    handleRemoveClick({id: selectedRowsIds})
   }
 
   if (isLoading && !data) {

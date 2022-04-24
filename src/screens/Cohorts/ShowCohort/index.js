@@ -83,23 +83,17 @@ export default function VerticalTabs() {
             Edit Cohort
           </Button>
         </Stack>
-        <Box
-          sx={{
-            flexGrow: 1,
-            display: 'flex',
-          }}
-        >
-          <Tabs
-            orientation="vertical"
-            variant="scrollable"
-            value={value}
-            onChange={handleChange}
-            aria-label="Vertical tabs example"
-            sx={{borderRight: 1, borderColor: 'divider'}}
-          >
-            <Tab label="Cohort Info" {...a11yProps(0)} />
-            <Tab label="Members" {...a11yProps(1)} />
-          </Tabs>
+        <Box sx={{width: '100%'}}>
+          <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="basic tabs example"
+            >
+              <Tab label="Cohort Info" {...a11yProps(0)} />
+              <Tab label="Members" {...a11yProps(1)} />
+            </Tabs>
+          </Box>
           <TabPanel value={value} index={0}>
             <ShowCohort />
           </TabPanel>

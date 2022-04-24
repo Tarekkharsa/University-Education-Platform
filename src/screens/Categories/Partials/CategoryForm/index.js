@@ -47,7 +47,8 @@ export default function CategoryForm({onSubmit}) {
     data: category,
   } = useQuery({
     queryKey: 'category',
-    queryFn: () => client(`categories/${id}`).then(data => data),
+    queryFn: () =>
+      client(`getCategories?key=id&value=${id}`).then(data => data.data[0]),
     enabled: id !== undefined,
   })
 
@@ -60,8 +61,8 @@ export default function CategoryForm({onSubmit}) {
 
   const {mutate, isError, error, isLoading} = useMutation(
     data =>
-      client(id ? `categories/${id}` : `categories`, {
-        method: id ? 'PATCH' : 'POST',
+      client(id ? `updateCategory` : `createCategory`, {
+        method: 'POST',
         data: data,
       }),
     {
@@ -75,7 +76,12 @@ export default function CategoryForm({onSubmit}) {
 
   const onSubmitForm = data => {
     let {name, description} = data
-    mutate({name, description, parent: state !== null ? state.id : 0})
+    mutate({
+      name,
+      description,
+      parent_id: state !== null ? state.id : 0,
+      id: id ? id : undefined,
+    })
   }
 
   if (fetchLoading) {

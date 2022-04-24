@@ -58,7 +58,7 @@ export default function TreeTable() {
     data: rows,
   } = useQuery({
     queryKey: 'categories',
-    queryFn: () => client('categories').then(data => data),
+    queryFn: () => client('getCategories').then(data => data.data),
   })
 
   // const [rows] = useState(categories)

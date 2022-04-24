@@ -24,7 +24,8 @@ export default function ShowCategoty() {
   const client = useClient()
   const {isLoading, error, data} = useQuery({
     queryKey: 'category',
-    queryFn: () => client(`categories/${id}`).then(data => data),
+    queryFn: () =>
+      client(`getCategories?key=id&value=${id}`).then(data => data.data[0]),
   })
 
   if (isLoading) {

@@ -20,8 +20,8 @@ export default function MemberForm({handleClose}) {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
 
-  const CohortSchema = Yup.object().shape({
-    user_id: Yup.string().required('User is required'),
+  const MemberSchema = Yup.object().shape({
+    // user_id: Yup.string().required('User is required'),
   })
 
   const {
@@ -32,27 +32,28 @@ export default function MemberForm({handleClose}) {
     reset,
     formState: {errors, isSubmitting},
   } = useForm({
-    resolver: yupResolver(CohortSchema),
+    resolver: yupResolver(MemberSchema),
     defaultValues: {user_id: ''},
   })
 
   const {mutate, isError, error, isLoading} = useMutation(
     data =>
-      client(id ? `cohorts/${id}` : `cohorts`, {
+      client(`cohort/addMember`, {
         method: 'POST',
         data: data,
       }),
     {
       onSuccess: data => {
-        queryClient.invalidateQueries('cohorts')
-        navigate(-1)
+        queryClient.invalidateQueries('members')
+        handleClose()
         reset()
       },
     },
   )
 
   const onSubmitForm = data => {
-    mutate(data)
+    let {user_id} = data
+    mutate({user_id, cohort_id: id})
   }
 
   return (
@@ -61,10 +62,10 @@ export default function MemberForm({handleClose}) {
         {isError ? <Alert severity="error">{error.message}</Alert> : null}
 
         <Dropdown
-          name={'User'}
+          name={'user_id'}
           title={'User'}
-          optionLable={'name'}
-          optionUrl={'users-data'}
+          optionLable={'email'}
+          optionUrl={'getAllUsers'}
           errors={errors}
           control={control}
           setValue={setValue}

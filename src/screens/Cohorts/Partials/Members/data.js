@@ -11,51 +11,61 @@ export const tableColumns = [
     disableFilters: true,
   },
   {
-    Header: 'Name',
-    accessor: 'name',
-    style: {
-      padding: '0',
-    },
-    Cell: ({row}) => {
-      return (
-        <Stack direction="row" alignItems="center" spacing={2}>
-          <Avatar alt={row.original.name} src={row.original.avatarUrl} />
-          <Typography variant="subtitle2" noWrap>
-            {row.original.name}
-          </Typography>
-        </Stack>
-      )
-    },
+    Header: 'User Name',
+    accessor: 'username',
+    disableFilters: true,
   },
   {
-    Header: 'Company',
-    accessor: 'company',
+    Header: 'Email',
+    accessor: 'email',
+    disableFilters: true,
   },
-  {
-    Header: 'Role',
-    accessor: 'role',
-  },
-  {
-    Header: 'Verified',
-    accessor: 'isVerified',
-    Cell: ({row}) => {
-      return row.original.isVerified ? 'Yes' : 'No'
-    },
-  },
-  {
-    Header: 'Status',
-    accessor: 'status',
-    Cell: ({row}) => {
-      return (
-        <Label
-          variant="ghost"
-          color={(row.original.status === 'banned' && 'error') || 'success'}
-        >
-          {sentenceCase(row.original.status)}
-        </Label>
-      )
-    },
-  },
+  // {
+  //   Header: 'User name',
+  //   accessor: 'username',
+  //   style: {
+  //     padding: '0',
+  //   },
+  //   Cell: ({row}) => {
+  //     return (
+  //       <Stack direction="row" alignItems="center" spacing={2}>
+  //         <Avatar alt={row.original.name} src={row.original.avatarUrl} />
+  //         <Typography variant="subtitle2" noWrap>
+  //           {row.original.name}
+  //         </Typography>
+  //       </Stack>
+  //     )
+  //   },
+  // },
+  // {
+  //   Header: 'Company',
+  //   accessor: 'company',
+  // },
+  // {
+  //   Header: 'Role',
+  //   accessor: 'role',
+  // },
+  // {
+  //   Header: 'Verified',
+  //   accessor: 'isVerified',
+  //   Cell: ({row}) => {
+  //     return row.original.isVerified ? 'Yes' : 'No'
+  //   },
+  // },
+  // {
+  //   Header: 'Status',
+  //   accessor: 'status',
+  //   Cell: ({row}) => {
+  //     return (
+  //       <Label
+  //         variant="ghost"
+  //         color={(row.original.status === 'banned' && 'error') || 'success'}
+  //       >
+  //         {sentenceCase(row.original.status)}
+  //       </Label>
+  //     )
+  //   },
+  // },
   {
     accessor: 'actions',
     Cell: ({row}) => {

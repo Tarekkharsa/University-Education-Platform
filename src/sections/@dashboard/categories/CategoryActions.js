@@ -14,7 +14,8 @@ export default function CategoryActions({row}) {
   const queryClient = useQueryClient()
 
   const {mutate: handleRemoveClick} = useMutation(
-    ({id}) => client(`categories/${id}`, {method: 'DELETE'}),
+    ({id}) =>
+      client(`deleteCategory`, {method: 'POST', data: {category_id: id}}),
     {
       onSuccess: data => {
         queryClient.invalidateQueries('categories')
