@@ -1,7 +1,4 @@
-import {Avatar, Stack, Typography} from '@mui/material'
-import {sentenceCase} from 'change-case'
 import {UserRoleMoreMenu} from 'sections/@dashboard/user'
-import Label from 'components/Label'
 
 export const tableHiddenColumns = ['id']
 export const tableColumns = [
@@ -11,50 +8,14 @@ export const tableColumns = [
     disableFilters: true,
   },
   {
-    Header: 'Name',
-    accessor: 'name',
-    style: {
-      padding: '0',
-    },
-    Cell: ({row}) => {
-      return (
-        <Stack direction="row" alignItems="center" spacing={2}>
-          <Avatar alt={row.original.name} src={row.original.avatarUrl} />
-          <Typography variant="subtitle2" noWrap>
-            {row.original.name}
-          </Typography>
-        </Stack>
-      )
-    },
+    Header: 'User Name',
+    accessor: 'username',
+    disableFilters: true,
   },
   {
-    Header: 'Company',
-    accessor: 'company',
-  },
-  {
-    Header: 'Role',
-    accessor: 'role',
-  },
-  {
-    Header: 'Verified',
-    accessor: 'isVerified',
-    Cell: ({row}) => {
-      return row.original.isVerified ? 'Yes' : 'No'
-    },
-  },
-  {
-    Header: 'Status',
-    accessor: 'status',
-    Cell: ({row}) => {
-      return (
-        <Label
-          variant="ghost"
-          color={(row.original.status === 'banned' && 'error') || 'success'}
-        >
-          {sentenceCase(row.original.status)}
-        </Label>
-      )
-    },
+    Header: 'Email',
+    accessor: 'email',
+    disableFilters: true,
   },
   {
     accessor: 'actions',
@@ -65,4 +26,50 @@ export const tableColumns = [
       textAlign: 'right',
     },
   },
+  // {
+  //   Header: 'Name',
+  //   accessor: 'name',
+  //   style: {
+  //     padding: '0',
+  //   },
+  //   Cell: ({row}) => {
+  //     return (
+  //       <Stack direction="row" alignItems="center" spacing={2}>
+  //         <Avatar alt={row.original.name} src={row.original.avatarUrl} />
+  //         <Typography variant="subtitle2" noWrap>
+  //           {row.original.name}
+  //         </Typography>
+  //       </Stack>
+  //     )
+  //   },
+  // },
+  // {
+  //   Header: 'Company',
+  //   accessor: 'company',
+  // },
+  // {
+  //   Header: 'Role',
+  //   accessor: 'role',
+  // },
+  // {
+  //   Header: 'Verified',
+  //   accessor: 'isVerified',
+  //   Cell: ({row}) => {
+  //     return row.original.isVerified ? 'Yes' : 'No'
+  //   },
+  // },
+  // {
+  //   Header: 'Status',
+  //   accessor: 'status',
+  //   Cell: ({row}) => {
+  //     return (
+  //       <Label
+  //         variant="ghost"
+  //         color={(row.original.status === 'banned' && 'error') || 'success'}
+  //       >
+  //         {sentenceCase(row.original.status)}
+  //       </Label>
+  //     )
+  //   },
+  // },
 ]

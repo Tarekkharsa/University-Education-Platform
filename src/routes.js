@@ -23,6 +23,8 @@ import ShowCohort from 'screens/Cohorts/ShowCohort'
 import EditRole from 'screens/Users/Roles/EditRole'
 import EditCategoty from 'screens/Categories/EditCategoty'
 import ShowCategoty from 'screens/Categories/ShowCategoty'
+import ShowAccount from 'screens/Users/Accounts/ShowAccount'
+import EditAccount from 'screens/Users/Accounts/EditAccount'
 
 // ----------------------------------------------------------------------
 
@@ -50,6 +52,8 @@ export default function Router() {
         {path: 'users/roles/:id/edit', element: <EditRole />},
         {path: 'users/accounts', element: <Accounts />},
         {path: 'users/accounts/add', element: <AddAccount />},
+        {path: 'users/accounts/:id/show', element: <ShowAccount />},
+        {path: 'users/accounts/:id/edit', element: <EditAccount />},
 
         {path: 'products', element: <Products />},
         {path: 'blog', element: <Blog />},

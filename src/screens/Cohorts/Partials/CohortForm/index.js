@@ -19,7 +19,7 @@ export default function CohortForm({onSubmit}) {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const CohortSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
+    name: Yup.string().required('Cohort Name is required'),
     description: Yup.string(),
   })
   const [ritchText, setRitchText] = useState('')

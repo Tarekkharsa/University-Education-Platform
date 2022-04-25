@@ -18,8 +18,8 @@ const CustomInput = ({name, label, control, errors}) => {
           autoComplete={name}
           type="text"
           label={label}
-          error={Boolean(errors.email && errors.email)}
-          helperText={errors.email && errors.email.message}
+          error={Boolean(errors[name] && errors[name])}
+          helperText={errors[name] && errors[name].message}
         />
       )}
       name={name}

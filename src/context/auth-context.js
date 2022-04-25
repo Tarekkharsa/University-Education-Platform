@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {queryCache} from 'react-query'
+import {QueryCache} from 'react-query'
 import * as auth from 'auth-provider'
 import {client} from 'utils/api-client'
 import {useAsync} from 'utils/hooks'
@@ -37,6 +37,7 @@ function AuthProvider(props) {
     run,
     setData,
   } = useAsync()
+  const queryCache = new QueryCache()
 
   React.useEffect(() => {
     const appDataPromise = bootstrapAppData()

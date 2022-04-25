@@ -6,40 +6,90 @@ import CustomInput from 'components/Form/components/CustomInput'
 import InputPassword from 'components/Form/components/InputPassword'
 import RichText from 'components/Form/components/RichText'
 import Uploader from 'components/Form/components/Uploader'
-import {useState} from 'react'
+import {useClient} from 'context/auth-context'
+import {useEffect, useState} from 'react'
 import {useForm} from 'react-hook-form'
-import {Link as RouterLink} from 'react-router-dom'
+import {useMutation, useQuery, useQueryClient} from 'react-query'
+import {Link as RouterLink, useNavigate, useParams} from 'react-router-dom'
 import {useAsync} from 'utils/hooks'
 import * as Yup from 'yup'
 
 // ----------------------------------------------------------------------
 
 export default function UserForm({onSubmit}) {
-  const {isLoading, isError, error, run} = useAsync()
-
-  const LoginSchema = Yup.object().shape({
+  const {id} = useParams()
+  const client = useClient()
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
+  const UserSchema = Yup.object().shape({
     email: Yup.string()
       .email('Email must be a valid email address')
       .required('Email is required'),
-    password: Yup.string().required('Password is required'),
+    firstname: Yup.string().required('First name is required'),
+    lastname: Yup.string().required('Last name is required'),
+    username: Yup.string().required('Username is required'),
+    password: !id ? Yup.string().required('Password is required') : '',
   })
 
   const {
     control,
     handleSubmit,
+    reset,
     formState: {errors, isSubmitting},
   } = useForm({
-    resolver: yupResolver(LoginSchema),
+    resolver: yupResolver(UserSchema),
     defaultValues: {
+      firstname: '',
+      lastname: '',
+      username: '',
       email: '',
       password: '',
-      remember: true,
     },
   })
 
+  const {
+    isLoading: fetchLoading,
+    error: getOneError,
+    data: user,
+  } = useQuery({
+    queryKey: 'user',
+    queryFn: () => client(`getUserById?id=${id}`).then(data => data.data),
+    enabled: id !== undefined,
+  })
+  useEffect(() => {
+    if (user && id !== undefined) {
+      const firstname = user.firstName
+      const lastname = user.lastName
+      const username = user.username
+      const email = user.email
+
+      reset({firstname, lastname, username, email})
+    }
+  }, [user])
+  const {mutate, isError, error, isLoading} = useMutation(
+    data =>
+      client(id ? 'updateUser' : `createUser`, {
+        method: 'POST',
+        data: data,
+      }),
+    {
+      onSuccess: data => {
+        queryClient.invalidateQueries('users')
+        navigate(-1)
+        reset()
+      },
+    },
+  )
   const onSubmitForm = data => {
-    const {email, password} = data
-    // run(onSubmit({email, password}))
+    let {firstname, lastname, username, email, password} = data
+    mutate({
+      firstname,
+      lastname,
+      username,
+      email,
+      password: id ? undefined : password,
+      user_id: id ? id : undefined,
+    })
   }
 
   return (
@@ -57,6 +107,18 @@ export default function UserForm({onSubmit}) {
           maxFileSize={30}
         />
         <CustomInput
+          label="First Name"
+          name="firstname"
+          control={control}
+          errors={errors}
+        />
+        <CustomInput
+          label="Last Name"
+          name="lastname"
+          control={control}
+          errors={errors}
+        />
+        <CustomInput
           label="User Name"
           name="username"
           control={control}
@@ -68,18 +130,14 @@ export default function UserForm({onSubmit}) {
           control={control}
           errors={errors}
         />
-        <InputPassword
-          label="New Password"
-          name="new_password"
-          control={control}
-          errors={errors}
-        />
-        <RichText
-          label="Description"
-          name="description"
-          width="100%"
-          InputChange={e => console.log('e', e)}
-        />
+        {id === undefined && (
+          <InputPassword
+            label="Password"
+            name="password"
+            control={control}
+            errors={errors}
+          />
+        )}
       </Stack>
       <Stack
         direction="row"
@@ -93,7 +151,7 @@ export default function UserForm({onSubmit}) {
           variant="contained"
           loading={isLoading}
         >
-          Create User
+          {id !== undefined ? 'Update User' : 'Create User'}
         </LoadingButton>
       </Stack>
     </form>

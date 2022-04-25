@@ -20,10 +20,19 @@ export default function RoleForm({onSubmit}) {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const RoleSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    description: Yup.string(),
+    role_ids: Yup.array(),
   })
   const [ritchText, setRitchText] = useState('')
+
+  const {
+    isLoading: fetchLoading,
+    error: getOneError,
+    data: user,
+  } = useQuery({
+    queryKey: 'user',
+    queryFn: () => client(`getUserById?id=${id}`).then(data => data.data),
+    enabled: id !== undefined,
+  })
 
   const {
     control,
@@ -34,55 +43,75 @@ export default function RoleForm({onSubmit}) {
     formState: {errors, isSubmitting},
   } = useForm({
     resolver: yupResolver(RoleSchema),
-    defaultValues: {name: '', description: ''},
+    defaultValues: {
+      role_ids: [
+        {
+          id: 1,
+          name: 'ROLE_ADMIN',
+        },
+        {
+          id: 2,
+          name: 'ROLE_MANAGER',
+        },
+      ],
+    },
   })
 
-  // const {
-  //   isLoading: fetchLoading,
-  //   error: getOneError,
-  //   data: cohort,
-  // } = useQuery({
-  //   queryKey: 'cohort',
-  //   queryFn: () => client(`cohorts/${id}`).then(data => data),
-  //   enabled: id !== undefined,
-  // })
+  useEffect(() => {
+    if (user && id !== undefined) {
+      setValue('role_ids', user.roles)
+      reset({role_ids: user.roles})
+    }
+  }, [user])
 
-  // const {mutate, isError, error, isLoading} = useMutation(
-  //   data =>
-  //     client(id ? `cohorts/${id}` : `cohorts`, {
-  //       method: id ? 'PATCH' : 'POST',
-  //       data: data,
-  //     }),
-  //   {
-  //     onSuccess: data => {
-  //       queryClient.invalidateQueries('cohorts')
-  //       navigate(-1)
-  //       reset()
-  //     },
-  //   },
-  // )
+  const {mutate, isError, error, isLoading} = useMutation(
+    data =>
+      client(id ? `cohorts/${id}` : `cohorts`, {
+        method: id ? 'PATCH' : 'POST',
+        data: data,
+      }),
+    {
+      onSuccess: data => {
+        queryClient.invalidateQueries('cohorts')
+        navigate(-1)
+        reset()
+      },
+    },
+  )
 
   const onSubmitForm = data => {
+    console.log('data', data)
     // mutate(data)
   }
 
-  // if (fetchLoading) {
-  //   return <FullPageSpinner />
-  // }
+  if (fetchLoading) {
+    return <FullPageSpinner />
+  }
 
   return (
     <form noValidate onSubmit={handleSubmit(onSubmitForm)}>
       <Stack spacing={3}>
-        {/* {isError ? <Alert severity="error">{error.message}</Alert> : null} */}
+        {isError ? <Alert severity="error">{error.message}</Alert> : null}
 
         <Dropdown
-          name={'name'}
-          title={'name'}
+          name={'role_ids'}
+          title={'User Roles'}
           optionLable={'name'}
-          optionUrl={'locations'}
+          optionUrl={'getAllRoles'}
           errors={errors}
           control={control}
           setValue={setValue}
+          editValue={[
+            {
+              id: 1,
+              name: 'ROLE_ADMIN',
+            },
+            {
+              id: 2,
+              name: 'ROLE_MANAGER',
+            },
+          ]}
+          multiple
         />
       </Stack>
       <Stack
@@ -104,7 +133,7 @@ export default function RoleForm({onSubmit}) {
           size="large"
           type="submit"
           variant="contained"
-          // loading={isLoading}
+          loading={isLoading}
         >
           {id ? 'Update Cohort' : 'Create Cohort'}
         </LoadingButton>

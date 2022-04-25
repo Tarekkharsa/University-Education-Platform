@@ -26,6 +26,7 @@ function FullPageSpinner() {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        color: '#1890FF',
       }}
     >
       <Spinner />

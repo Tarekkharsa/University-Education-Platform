@@ -42,7 +42,7 @@ export default function UserRoleMoreMenu({id}) {
             <Iconify icon="eva:edit-fill" width={24} height={24} />
           </ListItemIcon>
           <ListItemText
-            primary="Edit"
+            primary="Edit Role"
             primaryTypographyProps={{variant: 'body2'}}
           />
         </MenuItem>

@@ -14,6 +14,7 @@ export default function Dropdown({
   control,
   optionLable,
   errors,
+  multiple = false,
 }) {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
@@ -50,6 +51,7 @@ export default function Dropdown({
     <Controller
       render={props => (
         <Autocomplete
+          multiple={multiple}
           sx={{flexBasis: !!width ? width : '100%'}}
           {...props}
           open={open}

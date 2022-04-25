@@ -1,28 +1,44 @@
 // material
 import {Button, Container, Stack, Typography} from '@mui/material'
 import ReactTable from 'components/ReactTable'
-import {useCallback, useMemo, useState} from 'react'
+import {useCallback, useEffect, useMemo, useState} from 'react'
 import {Link as RouterLink} from 'react-router-dom'
 import Iconify from 'components/Iconify'
 // components
 import Page from 'components/Page'
 import {UserMoreMenu} from 'sections/@dashboard/user'
 //
-import USERLIST from '_mocks_/user'
+import categoriesLIST from '_mocks_/categories'
 import {tableColumns, tableHiddenColumns} from './data'
+import {queryCache, useMutation, useQuery, useQueryClient} from 'react-query'
+import {useAuth} from 'context/auth-context'
+import {FullPageSpinner} from 'components/lib'
+import {useClient} from 'context/auth-context'
 
 // ----------------------------------------------------------------------
 
 export default function Accounts() {
   const columns = useMemo(() => tableColumns, [])
   const hiddenColumns = useMemo(() => tableHiddenColumns, [])
-  const [loading, setLoading] = useState(false)
   const [rows, setRows] = useState([])
   let selectedRowsIds = []
 
-  const fetchData = useCallback(({pageSize, pageIndex}) => {
-    console.log('pageIndex', pageIndex)
-  }, [])
+  const client = useClient()
+  const queryClient = useQueryClient()
+
+  const {isLoading, error, data, refetch} = useQuery({
+    queryKey: 'users',
+    queryFn: () => client('getAllUsers').then(data => data.data),
+  })
+
+  const {mutate: handleRemoveClick} = useMutation(
+    ({id}) => client(`deleteUser`, {method: 'POST', data: {user_id: id}}),
+    {
+      onSuccess: data => {
+        queryClient.invalidateQueries('users')
+      },
+    },
+  )
 
   const getSelectedRows = useCallback(({selectedFlatRows}) => {
     selectedRowsIds = []
@@ -34,10 +50,19 @@ export default function Accounts() {
   }, [])
 
   const onDelete = selectedRows => {
-    console.log('selectedRows', selectedRows)
+    selectedRowsIds = []
+    selectedRows.length > 0 &&
+      selectedRows.map((row, i) => {
+        selectedRowsIds.push(row.values.id)
+      })
+    handleRemoveClick({id: selectedRowsIds[0]})
+  }
+
+  if (isLoading && !data) {
+    return <FullPageSpinner />
   }
   return (
-    <Page title="User | Minimal-UI">
+    <Page title="Users | Accounts">
       <Container>
         <Stack
           direction="row"
@@ -46,7 +71,7 @@ export default function Accounts() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            User
+            Users | Accounts
           </Typography>
           <Button
             variant="contained"
@@ -54,20 +79,17 @@ export default function Accounts() {
             to="/dashboard/users/accounts/add"
             startIcon={<Iconify icon="eva:plus-fill" />}
           >
-            New User
+            New User Account
           </Button>
         </Stack>
         <ReactTable
           columns={columns}
           hiddenColumns={hiddenColumns}
-          data={USERLIST}
-          fetchData={fetchData}
+          data={data}
           getSelectedRows={getSelectedRows}
           onDelete={onDelete}
-          loading={loading}
-          pageCount={2}
-          totalRecords={USERLIST.length}
-          isPaginated={false}
+          loading={isLoading}
+          totalRecords={data?.length}
         />
       </Container>
     </Page>
