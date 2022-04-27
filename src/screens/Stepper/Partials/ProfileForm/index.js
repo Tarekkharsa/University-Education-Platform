@@ -16,7 +16,7 @@ import * as Yup from 'yup'
 
 // ----------------------------------------------------------------------
 
-export default function UserForm({onSubmit}) {
+export default function ProfileForm({onSubmit}) {
   const {id} = useParams()
   const client = useClient()
   const queryClient = useQueryClient()
@@ -27,6 +27,7 @@ export default function UserForm({onSubmit}) {
       .required('Email is required'),
     firstname: Yup.string().required('First name is required'),
     lastname: Yup.string().required('Last name is required'),
+    username: Yup.string().required('Username is required'),
     password: !id ? Yup.string().required('Password is required') : '',
   })
 
@@ -40,6 +41,7 @@ export default function UserForm({onSubmit}) {
     defaultValues: {
       firstname: '',
       lastname: '',
+      username: '',
       email: '',
       password: '',
     },
@@ -58,9 +60,10 @@ export default function UserForm({onSubmit}) {
     if (user && id !== undefined) {
       const firstname = user.firstName
       const lastname = user.lastName
+      const username = user.username
       const email = user.email
 
-      reset({firstname, lastname, email})
+      reset({firstname, lastname, username, email})
     }
   }, [user])
   const {mutate, isError, error, isLoading} = useMutation(
@@ -78,10 +81,11 @@ export default function UserForm({onSubmit}) {
     },
   )
   const onSubmitForm = data => {
-    let {firstname, lastname, email, password} = data
+    let {firstname, lastname, username, email, password} = data
     mutate({
       firstname,
       lastname,
+      username,
       email,
       password: id ? undefined : password,
       user_id: id ? id : undefined,
@@ -111,6 +115,12 @@ export default function UserForm({onSubmit}) {
         <CustomInput
           label="Last Name"
           name="lastname"
+          control={control}
+          errors={errors}
+        />
+        <CustomInput
+          label="User Name"
+          name="username"
           control={control}
           errors={errors}
         />

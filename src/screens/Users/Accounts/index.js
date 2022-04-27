@@ -32,7 +32,7 @@ export default function Accounts() {
   })
 
   const {mutate: handleRemoveClick} = useMutation(
-    ({id}) => client(`deleteUser`, {method: 'POST', data: {user_id: id}}),
+    ({id}) => client(`deleteUsers`, {method: 'POST', data: {user_ids: id}}),
     {
       onSuccess: data => {
         queryClient.invalidateQueries('users')
@@ -55,7 +55,7 @@ export default function Accounts() {
       selectedRows.map((row, i) => {
         selectedRowsIds.push(row.values.id)
       })
-    handleRemoveClick({id: selectedRowsIds[0]})
+    handleRemoveClick({id: selectedRowsIds})
   }
 
   if (isLoading && !data) {

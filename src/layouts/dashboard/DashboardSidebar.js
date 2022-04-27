@@ -22,6 +22,7 @@ import Scrollbar from '../../components/Scrollbar'
 import NavSection from '../../components/NavSection'
 //
 import sidebarConfig from './SidebarConfig'
+import {useAuth} from 'context/auth-context'
 
 // ----------------------------------------------------------------------
 
@@ -52,6 +53,7 @@ DashboardSidebar.propTypes = {
 export default function DashboardSidebar({isOpenSidebar, onCloseSidebar}) {
   const {pathname} = useLocation()
 
+  const {user} = useAuth()
   const isDesktop = useResponsive('up', 'lg')
 
   useEffect(() => {
@@ -77,16 +79,16 @@ export default function DashboardSidebar({isOpenSidebar, onCloseSidebar}) {
       </Box>
 
       <Box sx={{mb: 5, mx: 2.5}}>
-        <Link underline="none" component={RouterLink} to="#">
+        <Link underline="none" component={RouterLink} to="profile">
           <AccountStyle>
             <Avatar src={account.photoURL} alt="photoURL" />
             <Box sx={{ml: 2}}>
               <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
-                {account.displayName}
+                {user.firstName}
               </Typography>
-              <Typography variant="body2" sx={{color: 'text.secondary'}}>
+              {/* <Typography variant="body2" sx={{color: 'text.secondary'}}>
                 {account.role}
-              </Typography>
+              </Typography> */}
             </Box>
           </AccountStyle>
         </Link>

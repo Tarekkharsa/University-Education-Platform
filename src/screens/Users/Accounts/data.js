@@ -11,8 +11,8 @@ export const tableColumns = [
     disableFilters: true,
   },
   {
-    Header: 'User Name',
-    accessor: 'username',
+    Header: 'First Name',
+    accessor: 'firstName',
     disableFilters: true,
   },
   {

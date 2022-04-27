@@ -1,9 +1,8 @@
 import {yupResolver} from '@hookform/resolvers/yup' // material
 import {LoadingButton} from '@mui/lab'
 import {Alert, Stack} from '@mui/material'
-import CustomInput from 'components/Form/components/CustomInput'
-import Dropdown from 'components/Form/components/Dropdown'
-import RichText from 'components/Form/components/RichText'
+import MultiSelect from 'components/Form/components/MultiDropdown'
+import MultiDropdown from 'components/Form/components/MultiDropdown'
 import {FullPageSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
 import {useEffect, useState} from 'react'
@@ -43,36 +42,24 @@ export default function RoleForm({onSubmit}) {
     formState: {errors, isSubmitting},
   } = useForm({
     resolver: yupResolver(RoleSchema),
-    defaultValues: {
-      role_ids: [
-        {
-          id: 1,
-          name: 'ROLE_ADMIN',
-        },
-        {
-          id: 2,
-          name: 'ROLE_MANAGER',
-        },
-      ],
-    },
+    defaultValues: {role_ids: []},
   })
 
   useEffect(() => {
     if (user && id !== undefined) {
-      setValue('role_ids', user.roles)
       reset({role_ids: user.roles})
     }
   }, [user])
 
   const {mutate, isError, error, isLoading} = useMutation(
     data =>
-      client(id ? `cohorts/${id}` : `cohorts`, {
-        method: id ? 'PATCH' : 'POST',
+      client(`assignRole`, {
+        method: 'POST',
         data: data,
       }),
     {
       onSuccess: data => {
-        queryClient.invalidateQueries('cohorts')
+        queryClient.invalidateQueries('users')
         navigate(-1)
         reset()
       },
@@ -80,8 +67,8 @@ export default function RoleForm({onSubmit}) {
   )
 
   const onSubmitForm = data => {
-    console.log('data', data)
-    // mutate(data)
+    let role_ids = data.role_ids.map(role => role.id)
+    mutate({role_ids, user_id: id})
   }
 
   if (fetchLoading) {
@@ -93,24 +80,14 @@ export default function RoleForm({onSubmit}) {
       <Stack spacing={3}>
         {isError ? <Alert severity="error">{error.message}</Alert> : null}
 
-        <Dropdown
+        <MultiSelect
           name={'role_ids'}
           title={'User Roles'}
           optionLable={'name'}
           optionUrl={'getAllRoles'}
           errors={errors}
           control={control}
-          setValue={setValue}
-          editValue={[
-            {
-              id: 1,
-              name: 'ROLE_ADMIN',
-            },
-            {
-              id: 2,
-              name: 'ROLE_MANAGER',
-            },
-          ]}
+          onChange={value => setValue('role_ids', value)}
           multiple
         />
       </Stack>

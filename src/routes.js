@@ -25,6 +25,7 @@ import EditCategoty from 'screens/Categories/EditCategoty'
 import ShowCategoty from 'screens/Categories/ShowCategoty'
 import ShowAccount from 'screens/Users/Accounts/ShowAccount'
 import EditAccount from 'screens/Users/Accounts/EditAccount'
+import CustomizedSteppers from 'screens/Stepper'
 
 // ----------------------------------------------------------------------
 
@@ -34,6 +35,7 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
+        {path: 'login-stepper', element: <CustomizedSteppers />},
         {path: 'app', element: <DashboardApp />},
         {path: 'profile', element: <Profile />},
         {path: 'courses', element: <Courses />},

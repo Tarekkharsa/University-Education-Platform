@@ -1,23 +1,24 @@
 import * as React from 'react'
-import {QueryCache} from 'react-query'
+import {QueryClient} from 'react-query'
 import * as auth from 'auth-provider'
 import {client} from 'utils/api-client'
 import {useAsync} from 'utils/hooks'
 import {FullPageSpinner, FullPageErrorFallback} from 'components/lib'
 
 async function bootstrapAppData() {
+  const queryCache = new QueryClient()
   let user = null
 
   const token = await auth.getToken()
-  if (token) {
-    // const data = await client('bootstrap', {token})
-    // queryCache.setQueryData('list-items', data.listItems, {
-    //   staleTime: 5000,
-    // })
-    // for (const listItem of data.listItems) {
-    //   setQueryDataForBook(listItem.book)
-    // }
-    user = {token}
+  const id = await auth.getID()
+  if (token && id) {
+    const data = await client(`getUserById?id=${id}`, {token})
+    console.log('data', data)
+    queryCache.setQueryData('user', data.data, {
+      staleTime: 5000,
+    })
+
+    user = {...data.data, token}
   }
   return user
 }
@@ -37,7 +38,7 @@ function AuthProvider(props) {
     run,
     setData,
   } = useAsync()
-  const queryCache = new QueryCache()
+  const queryCache = new QueryClient()
 
   React.useEffect(() => {
     const appDataPromise = bootstrapAppData()

@@ -23,11 +23,11 @@ ThemeConfig.propTypes = {
 export default function ThemeConfig({children}) {
   const themeOptions = useMemo(
     () => ({
-      palette: light,
+      palette: dark,
       shape: {borderRadius: 8},
       typography,
-      shadows: shadows.light,
-      customShadows: customShadows.light,
+      shadows: shadows.dark,
+      customShadows: customShadows.dark,
     }),
     [],
   )
