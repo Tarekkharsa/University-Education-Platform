@@ -15,10 +15,11 @@ export const tableColumns = [
   //   accessor: 'category',
   // },
   {
-    Header: 'Name',
+    Header: 'name',
     accessor: 'name',
   },
   {
+    Header: 'actions',
     accessor: 'actions',
     Cell: ({row}) => {
       return <CohortMoreMenu id={row.values.id} />

@@ -9,6 +9,7 @@ import Uploader from 'components/Form/components/Uploader'
 import {useClient} from 'context/auth-context'
 import {useEffect, useState} from 'react'
 import {useForm} from 'react-hook-form'
+import {FormattedMessage} from 'react-intl'
 import {useMutation, useQuery, useQueryClient} from 'react-query'
 import {Link as RouterLink, useNavigate, useParams} from 'react-router-dom'
 import {useAsync} from 'utils/hooks'
@@ -103,26 +104,26 @@ export default function UserForm({onSubmit}) {
           maxFileSize={30}
         />
         <CustomInput
-          label="First Name"
+          label="firstName"
           name="firstname"
           control={control}
           errors={errors}
         />
         <CustomInput
-          label="Last Name"
+          label="lastName"
           name="lastname"
           control={control}
           errors={errors}
         />
         <CustomInput
-          label="Email address"
+          label="email"
           name="email"
           control={control}
           errors={errors}
         />
         {id === undefined && (
           <InputPassword
-            label="Password"
+            label="password"
             name="password"
             control={control}
             errors={errors}
@@ -141,7 +142,11 @@ export default function UserForm({onSubmit}) {
           variant="contained"
           loading={isLoading}
         >
-          {id !== undefined ? 'Update User' : 'Create User'}
+          {id !== undefined ? (
+            <FormattedMessage id="update_user" />
+          ) : (
+            <FormattedMessage id="save" />
+          )}
         </LoadingButton>
       </Stack>
     </form>

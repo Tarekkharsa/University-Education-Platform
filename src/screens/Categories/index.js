@@ -1,14 +1,17 @@
 // material
 import {Button, Container, Stack, Typography} from '@mui/material'
+import {useTheme} from '@mui/styles'
 import Iconify from 'components/Iconify'
 // components
 import Page from 'components/Page'
+import {FormattedMessage} from 'react-intl'
 import {Link as RouterLink} from 'react-router-dom'
 import Table from './Table'
 
 // ----------------------------------------------------------------------
 
 export default function Categories() {
+  const theme = useTheme()
   return (
     <Page title="Category">
       <Container>
@@ -19,7 +22,7 @@ export default function Categories() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Category
+            <FormattedMessage id="categories" />
           </Typography>
           <Button
             variant="contained"
@@ -27,7 +30,7 @@ export default function Categories() {
             to="/dashboard/categories/add"
             startIcon={<Iconify icon="eva:plus-fill" />}
           >
-            New Parent Category
+            <FormattedMessage id="new_parant_category" />
           </Button>
         </Stack>
         <Table />

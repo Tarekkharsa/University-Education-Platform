@@ -7,6 +7,7 @@ import {FullPageSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
 import {useEffect, useState} from 'react'
 import {useForm} from 'react-hook-form'
+import {FormattedMessage} from 'react-intl'
 import {useMutation, useQuery, useQueryClient} from 'react-query'
 import {useNavigate, useParams} from 'react-router-dom'
 import * as Yup from 'yup'
@@ -90,7 +91,7 @@ export default function CohortForm({onSubmit}) {
         {isError ? <Alert severity="error">{error.message}</Alert> : null}
 
         <CustomInput
-          label="Cohort Name"
+          label="cohort_name"
           name="name"
           control={control}
           errors={errors}
@@ -117,7 +118,7 @@ export default function CohortForm({onSubmit}) {
           variant="contained"
           sx={{mr: 2}}
         >
-          Cancel
+          <FormattedMessage id="cancel" />
         </LoadingButton>
         <LoadingButton
           size="large"
@@ -125,7 +126,11 @@ export default function CohortForm({onSubmit}) {
           variant="contained"
           loading={isLoading}
         >
-          {id ? 'Update Cohort' : 'Create Cohort'}
+          {id ? (
+            <FormattedMessage id="update_cohort" />
+          ) : (
+            <FormattedMessage id="save" />
+          )}
         </LoadingButton>
       </Stack>
     </form>

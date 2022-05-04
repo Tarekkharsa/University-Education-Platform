@@ -14,6 +14,7 @@ import Page from 'components/Page'
 import {useClient} from 'context/auth-context'
 import React from 'react'
 import ReactHtmlParser from 'react-html-parser'
+import {FormattedMessage} from 'react-intl'
 import {useQuery} from 'react-query'
 import {Link as RouterLink, useParams} from 'react-router-dom'
 import useStyles from './styles'
@@ -41,7 +42,7 @@ export default function ShowAccount() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Account Details
+            <FormattedMessage id="account_details" />
           </Typography>
 
           <Button
@@ -50,31 +51,39 @@ export default function ShowAccount() {
             to={`/dashboard/users/accounts/${id}/edit`}
             startIcon={<Iconify icon="eva:edit-fill" />}
           >
-            Edit User Account
+            <FormattedMessage id="edit_user" />
           </Button>
         </Stack>
 
         <List className={classes.root}>
           <ListItem button className={classes.li}>
-            <ListItemIcon>First Name</ListItemIcon>
+            <ListItemIcon>
+              <FormattedMessage id="firstName" />
+            </ListItemIcon>
             <div>{data?.firstName}</div>
           </ListItem>
           <Divider variant="inset" component="li" />
 
           <ListItem button className={classes.li}>
-            <ListItemIcon>Last Name</ListItemIcon>
+            <ListItemIcon>
+              <FormattedMessage id="lastName" />
+            </ListItemIcon>
             <div>{data?.lastName}</div>
           </ListItem>
           <Divider variant="inset" component="li" />
 
           <ListItem button className={classes.li}>
-            <ListItemIcon>User Name</ListItemIcon>
+            <ListItemIcon>
+              <FormattedMessage id="userName" />
+            </ListItemIcon>
             <div>{data?.username}</div>
           </ListItem>
           <Divider variant="inset" component="li" />
 
           <ListItem button className={classes.li}>
-            <ListItemIcon>Email</ListItemIcon>
+            <ListItemIcon>
+              <FormattedMessage id="email" />
+            </ListItemIcon>
             <div>{data?.email}</div>
           </ListItem>
           <Divider variant="inset" component="li" />

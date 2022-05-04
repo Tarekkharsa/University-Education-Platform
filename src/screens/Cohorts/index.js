@@ -15,10 +15,13 @@ import {queryCache, useMutation, useQuery, useQueryClient} from 'react-query'
 import {useAuth} from 'context/auth-context'
 import {FullPageSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
+import {useTheme} from '@mui/styles'
+import {FormattedMessage} from 'react-intl'
 
 // ----------------------------------------------------------------------
 
 export default function Cohorts() {
+  const theme = useTheme()
   const columns = useMemo(() => tableColumns, [])
   const hiddenColumns = useMemo(() => tableHiddenColumns, [])
   const [rows, setRows] = useState([])
@@ -73,7 +76,7 @@ export default function Cohorts() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Cohorts
+            <FormattedMessage id="cohorts" />
           </Typography>
           <Button
             variant="contained"
@@ -81,7 +84,7 @@ export default function Cohorts() {
             to="/dashboard/cohorts/add"
             startIcon={<Iconify icon="eva:plus-fill" />}
           >
-            New Cohort
+            <FormattedMessage id="new_cohort" />
           </Button>
         </Stack>
         <ReactTable

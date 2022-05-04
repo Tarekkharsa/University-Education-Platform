@@ -14,10 +14,13 @@ import {queryCache, useMutation, useQuery, useQueryClient} from 'react-query'
 import {useAuth} from 'context/auth-context'
 import {FullPageSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
+import {useTheme} from '@mui/styles'
+import {FormattedMessage} from 'react-intl'
 
 // ----------------------------------------------------------------------
 
 export default function Accounts() {
+  const theme = useTheme()
   const columns = useMemo(() => tableColumns, [])
   const hiddenColumns = useMemo(() => tableHiddenColumns, [])
   const [rows, setRows] = useState([])
@@ -71,7 +74,7 @@ export default function Accounts() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Users | Accounts
+            <FormattedMessage id="users_accounts" />
           </Typography>
           <Button
             variant="contained"
@@ -79,7 +82,7 @@ export default function Accounts() {
             to="/dashboard/users/accounts/add"
             startIcon={<Iconify icon="eva:plus-fill" />}
           >
-            New User Account
+            <FormattedMessage id="new_user_account" />
           </Button>
         </Stack>
         <ReactTable

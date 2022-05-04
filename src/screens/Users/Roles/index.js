@@ -14,6 +14,7 @@ import {queryCache, useMutation, useQuery, useQueryClient} from 'react-query'
 import {useAuth} from 'context/auth-context'
 import {FullPageSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
+import {FormattedMessage} from 'react-intl'
 
 // ----------------------------------------------------------------------
 
@@ -71,7 +72,7 @@ export default function Roles() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Users | Roles
+            <FormattedMessage id="users_roles" />
           </Typography>
         </Stack>
         <ReactTable

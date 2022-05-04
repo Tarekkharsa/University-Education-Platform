@@ -14,6 +14,7 @@ import Page from 'components/Page'
 import {useClient} from 'context/auth-context'
 import React from 'react'
 import ReactHtmlParser from 'react-html-parser'
+import {FormattedMessage} from 'react-intl'
 import {useQuery} from 'react-query'
 import {Link as RouterLink, useParams} from 'react-router-dom'
 import useStyles from './styles'
@@ -42,7 +43,7 @@ export default function ShowCategoty() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Category Details
+            <FormattedMessage id="category_details" />
           </Typography>
 
           <Button
@@ -51,19 +52,23 @@ export default function ShowCategoty() {
             to={`/dashboard/categories/${id}/edit`}
             startIcon={<Iconify icon="eva:edit-fill" />}
           >
-            Edit Category
+            <FormattedMessage id="edit_category" />
           </Button>
         </Stack>
 
         <List className={classes.root}>
           <ListItem button className={classes.li}>
-            <ListItemIcon>Name</ListItemIcon>
+            <ListItemIcon>
+              <FormattedMessage id="name" />
+            </ListItemIcon>
             <div>{data?.name}</div>
           </ListItem>
           <Divider variant="inset" component="li" />
 
           <ListItem button className={classes.descLi}>
-            <ListItemIcon>Description</ListItemIcon>
+            <ListItemIcon>
+              <FormattedMessage id="description" />
+            </ListItemIcon>
             <div>{ReactHtmlParser(data?.description)}</div>
           </ListItem>
           <Divider variant="inset" component="li" />

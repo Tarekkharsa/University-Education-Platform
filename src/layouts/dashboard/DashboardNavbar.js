@@ -24,6 +24,7 @@ const RootStyle = styled(AppBar)(({theme}) => ({
   [theme.breakpoints.up('lg')]: {
     width: `calc(100% - ${DRAWER_WIDTH + 1}px)`,
   },
+  // left: 'auto',
 }))
 
 const ToolbarStyle = styled(Toolbar)(({theme}) => ({
@@ -55,8 +56,8 @@ export default function DashboardNavbar({onOpenSidebar}) {
         <Box sx={{flexGrow: 1}} />
 
         <Stack direction="row" alignItems="center" spacing={{xs: 0.5, sm: 1.5}}>
-          {/* <LanguagePopover />
-          <NotificationsPopover /> */}
+          <LanguagePopover />
+          {/* <NotificationsPopover /> */}
           <AccountPopover />
         </Stack>
       </ToolbarStyle>

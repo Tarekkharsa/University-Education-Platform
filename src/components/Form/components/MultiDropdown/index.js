@@ -4,6 +4,7 @@ import useStyles from './style'
 import {Autocomplete, CircularProgress, TextField} from '@mui/material'
 import {useAuth, useClient} from 'context/auth-context'
 import React, {useState, useEffect} from 'react'
+import {FormattedMessage} from 'react-intl'
 
 export default function MultiSelect({
   title,
@@ -74,7 +75,7 @@ export default function MultiSelect({
             return (
               <TextField
                 {...params}
-                label={title}
+                label={<FormattedMessage id={title} />}
                 className={classes.input}
                 helperText={errors[name] && `${name} is a required field`}
                 InputProps={{

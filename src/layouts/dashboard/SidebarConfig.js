@@ -17,11 +17,11 @@ const sidebarConfig = [
     icon: getIcon('eva:people-fill'),
     children: [
       {
-        title: 'Accounts',
+        title: 'accounts',
         path: '/dashboard/users/accounts',
       },
       {
-        title: 'Roles',
+        title: 'roles',
         path: '/dashboard/users/roles',
       },
     ],
@@ -32,12 +32,12 @@ const sidebarConfig = [
   //   icon: getIcon('fluent:learning-app-20-regular'),
   // },
   {
-    title: 'Categories',
+    title: 'categories',
     path: '/dashboard/categories',
     icon: getIcon('carbon:categories'),
   },
   {
-    title: 'Cohorts',
+    title: 'cohorts',
     path: '/dashboard/cohorts',
     icon: getIcon('ic:outline-groups'),
   },

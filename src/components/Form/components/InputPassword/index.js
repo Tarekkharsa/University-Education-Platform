@@ -2,6 +2,7 @@ import {IconButton, InputAdornment, TextField} from '@mui/material'
 import Iconify from 'components/Iconify'
 import React, {useState} from 'react'
 import {Controller} from 'react-hook-form'
+import {FormattedMessage} from 'react-intl'
 
 function InputPassword({control, errors, name, label}) {
   const [showPassword, setShowPassword] = useState(false)
@@ -23,7 +24,7 @@ function InputPassword({control, errors, name, label}) {
           fullWidth
           autoComplete="current-password"
           type={showPassword ? 'text' : 'password'}
-          label={label}
+          label={<FormattedMessage id={label} />}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">

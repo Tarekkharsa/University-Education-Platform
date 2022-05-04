@@ -8,16 +8,17 @@ export const tableColumns = [
     disableFilters: true,
   },
   {
-    Header: 'First Name',
+    Header: 'firstName',
     accessor: 'firstName',
     disableFilters: true,
   },
   {
-    Header: 'Email',
+    Header: 'email',
     accessor: 'email',
     disableFilters: true,
   },
   {
+    Header: 'actions',
     accessor: 'actions',
     Cell: ({row}) => {
       return <UserRoleMoreMenu id={row.values.id} />

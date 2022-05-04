@@ -6,6 +6,7 @@ import CustomInput from 'components/Form/components/CustomInput'
 import InputPassword from 'components/Form/components/InputPassword'
 import {useState} from 'react'
 import {useForm} from 'react-hook-form'
+import {FormattedMessage} from 'react-intl'
 import {Link as RouterLink} from 'react-router-dom'
 import {useAsync} from 'utils/hooks'
 import * as Yup from 'yup'
@@ -47,13 +48,13 @@ export default function LoginForm({onSubmit}) {
       <Stack spacing={3}>
         {isError ? <Alert severity="error">{error.message}</Alert> : null}
         <CustomInput
-          label="User name"
+          label="userName"
           name="username"
           control={control}
           errors={errors}
         />
         <InputPassword
-          label="Password"
+          label="password"
           name="password"
           control={control}
           errors={errors}
@@ -66,7 +67,7 @@ export default function LoginForm({onSubmit}) {
         sx={{my: 2}}
       >
         <CustomCheckbox
-          label="Remember me"
+          label="remember_me"
           name="remember"
           control={control}
           errors={errors}
@@ -77,7 +78,7 @@ export default function LoginForm({onSubmit}) {
           to="#"
           underline="hover"
         >
-          Forgot password?
+          <FormattedMessage id="forgot_password" />
         </Link>
       </Stack>
 
@@ -88,7 +89,7 @@ export default function LoginForm({onSubmit}) {
         variant="contained"
         loading={isLoading}
       >
-        Login
+        <FormattedMessage id="login" />
       </LoadingButton>
     </form>
   )

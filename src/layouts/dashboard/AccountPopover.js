@@ -17,22 +17,23 @@ import MenuPopover from '../../components/MenuPopover'
 //
 import account from '../../_mocks_/account'
 import {useAuth} from 'context/auth-context'
+import {FormattedMessage} from 'react-intl'
 
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
   {
-    label: 'Home',
+    label: 'home',
     icon: 'eva:home-fill',
     linkTo: '/',
   },
   {
-    label: 'Profile',
+    label: 'profile',
     icon: 'eva:person-fill',
     linkTo: '#',
   },
   {
-    label: 'Settings',
+    label: 'settings',
     icon: 'eva:settings-2-fill',
     linkTo: '#',
   },
@@ -110,14 +111,13 @@ export default function AccountPopover() {
                 height: 24,
               }}
             />
-
-            {option.label}
+            <FormattedMessage id={option.label} />
           </MenuItem>
         ))}
 
         <Box sx={{p: 2, pt: 1.5}}>
           <Button fullWidth color="inherit" variant="outlined" onClick={logout}>
-            Logout
+            <FormattedMessage id="logout" />
           </Button>
         </Box>
       </MenuPopover>

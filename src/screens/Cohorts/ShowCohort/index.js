@@ -18,6 +18,7 @@ import Iconify from 'components/Iconify'
 import Page from 'components/Page'
 import ShowCohort from './showCohortDetails'
 import Members from '../Partials/Members'
+import {FormattedMessage} from 'react-intl'
 
 function TabPanel(props) {
   const {children, value, index, ...other} = props
@@ -71,7 +72,7 @@ export default function VerticalTabs() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Cohort Details
+            <FormattedMessage id="cohort_details" />
           </Typography>
 
           <Button
@@ -80,7 +81,7 @@ export default function VerticalTabs() {
             to={`/dashboard/cohorts/${id}/edit`}
             startIcon={<Iconify icon="eva:edit-fill" />}
           >
-            Edit Cohort
+            <FormattedMessage id="edit_cohort" />
           </Button>
         </Stack>
         <Box sx={{width: '100%'}}>
@@ -90,8 +91,14 @@ export default function VerticalTabs() {
               onChange={handleChange}
               aria-label="basic tabs example"
             >
-              <Tab label="Cohort Info" {...a11yProps(0)} />
-              <Tab label="Members" {...a11yProps(1)} />
+              <Tab
+                label={<FormattedMessage id="cohort_info" />}
+                {...a11yProps(0)}
+              />
+              <Tab
+                label={<FormattedMessage id="members" />}
+                {...a11yProps(1)}
+              />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>

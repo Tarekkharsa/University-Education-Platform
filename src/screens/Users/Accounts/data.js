@@ -6,21 +6,23 @@ import Label from 'components/Label'
 export const tableHiddenColumns = ['id']
 export const tableColumns = [
   {
-    Header: 'ID',
+    Header: 'id',
     accessor: 'id',
     disableFilters: true,
   },
   {
-    Header: 'First Name',
+    Header: 'firstName',
     accessor: 'firstName',
     disableFilters: true,
   },
   {
-    Header: 'Email',
+    Header: 'email',
     accessor: 'email',
     disableFilters: true,
   },
   {
+    Header: 'actions',
+
     accessor: 'actions',
     Cell: ({row}) => {
       return <UserMoreMenu id={row.values.id} />

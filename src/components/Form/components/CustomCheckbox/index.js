@@ -1,6 +1,7 @@
 import {Checkbox, FormControlLabel} from '@mui/material'
 import React from 'react'
 import {Controller} from 'react-hook-form'
+import {FormattedMessage} from 'react-intl'
 
 export default function CustomCheckbox({label, control, name}) {
   return (
@@ -15,7 +16,7 @@ export default function CustomCheckbox({label, control, name}) {
               checked={field.value}
             />
           }
-          label={label}
+          label={<FormattedMessage id={label} />}
         />
       )}
     />

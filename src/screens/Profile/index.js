@@ -19,6 +19,9 @@ import {styled} from '@mui/material/styles'
 import useStyles from './styles'
 import Iconify from 'components/Iconify'
 import {Link as RouterLink} from 'react-router-dom'
+import {FormattedMessage} from 'react-intl'
+import {useTheme} from '@mui/styles'
+import Settings from './Partials/Settings'
 
 function TabPanel(props) {
   const {children, value, index, ...other} = props
@@ -85,6 +88,7 @@ const EditSectionStyle = styled('div')(({theme}) => ({
 }))
 
 export default function Profile() {
+  const theme = useTheme()
   const classes = useStyles()
   const [value, setValue] = React.useState(0)
 
@@ -109,7 +113,7 @@ export default function Profile() {
         <AccountDetailsStyle>
           <ListItem button className={classes.li}>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
-              First Name
+              <FormattedMessage id="firstName" />
             </Typography>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
               firstName
@@ -119,7 +123,7 @@ export default function Profile() {
 
           <ListItem button className={classes.li}>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
-              Last Name
+              <FormattedMessage id="lastName" />
             </Typography>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
               lastName
@@ -129,7 +133,7 @@ export default function Profile() {
 
           <ListItem button className={classes.li}>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
-              User Name
+              <FormattedMessage id="userName" />
             </Typography>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
               username
@@ -139,7 +143,7 @@ export default function Profile() {
 
           <ListItem button className={classes.li}>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
-              Email
+              <FormattedMessage id="email" />
             </Typography>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
               email
@@ -155,7 +159,7 @@ export default function Profile() {
           to="/dashboard/cohorts/add"
           startIcon={<Iconify icon="eva:edit-2-outline" />}
         >
-          Edit Account Details
+          <FormattedMessage id="edit_account" />
         </Button>
       </EditSectionStyle>
       <Box sx={{width: '100%', mt: 5}}>
@@ -165,15 +169,18 @@ export default function Profile() {
             onChange={handleChange}
             aria-label="basic tabs example"
           >
-            <Tab label="Cohort Info" {...a11yProps(0)} />
-            <Tab label="Members" {...a11yProps(1)} />
+            <Tab
+              label={<FormattedMessage id="change_password" />}
+              {...a11yProps(0)}
+            />
+            <Tab label={<FormattedMessage id="settings" />} {...a11yProps(1)} />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          ldsjfl
+          change_password
         </TabPanel>
         <TabPanel value={value} index={1}>
-          ldskfks
+          <Settings />
         </TabPanel>
       </Box>
     </Page>

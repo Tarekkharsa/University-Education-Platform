@@ -7,6 +7,7 @@ import {FullPageSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
 import {useEffect, useState} from 'react'
 import {useForm} from 'react-hook-form'
+import {FormattedMessage} from 'react-intl'
 import {useMutation, useQuery, useQueryClient} from 'react-query'
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
 import * as Yup from 'yup'
@@ -94,7 +95,7 @@ export default function CategoryForm({onSubmit}) {
         {isError ? <Alert severity="error">{error.message}</Alert> : null}
 
         <CustomInput
-          label="Category Name"
+          label="category_name"
           name="name"
           control={control}
           errors={errors}
@@ -121,7 +122,7 @@ export default function CategoryForm({onSubmit}) {
           variant="contained"
           sx={{mr: 2}}
         >
-          Cancel
+          <FormattedMessage id="cancel" />
         </LoadingButton>
         <LoadingButton
           size="large"
@@ -129,7 +130,11 @@ export default function CategoryForm({onSubmit}) {
           variant="contained"
           loading={isLoading}
         >
-          {id ? 'Update Category' : 'Create Category'}
+          {id ? (
+            <FormattedMessage id="update_category" />
+          ) : (
+            <FormattedMessage id="save" />
+          )}
         </LoadingButton>
       </Stack>
     </form>

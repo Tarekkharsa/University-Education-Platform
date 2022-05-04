@@ -23,6 +23,7 @@ import NavSection from '../../components/NavSection'
 //
 import sidebarConfig from './SidebarConfig'
 import {useAuth} from 'context/auth-context'
+import {useTheme} from '@mui/material/styles'
 
 // ----------------------------------------------------------------------
 
@@ -52,6 +53,7 @@ DashboardSidebar.propTypes = {
 
 export default function DashboardSidebar({isOpenSidebar, onCloseSidebar}) {
   const {pathname} = useLocation()
+  const theme = useTheme()
 
   const {user} = useAuth()
   const isDesktop = useResponsive('up', 'lg')
@@ -82,7 +84,11 @@ export default function DashboardSidebar({isOpenSidebar, onCloseSidebar}) {
         <Link underline="none" component={RouterLink} to="profile">
           <AccountStyle>
             <Avatar src={account.photoURL} alt="photoURL" />
-            <Box sx={{ml: 2}}>
+            <Box
+              sx={{
+                ml: 2,
+              }}
+            >
               <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
                 {user.firstName}
               </Typography>
@@ -121,6 +127,7 @@ export default function DashboardSidebar({isOpenSidebar, onCloseSidebar}) {
               width: DRAWER_WIDTH,
               bgcolor: 'background.default',
               borderRightStyle: 'dashed',
+              right: 0,
             },
           }}
         >

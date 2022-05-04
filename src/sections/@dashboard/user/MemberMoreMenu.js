@@ -10,6 +10,7 @@ import {
 } from '@mui/material'
 // component
 import Iconify from '../../../components/Iconify'
+import {FormattedMessage} from 'react-intl'
 
 // ----------------------------------------------------------------------
 
@@ -42,7 +43,7 @@ export default function MemberMoreMenu({id}) {
             <Iconify icon="carbon:view" width={24} height={24} />
           </ListItemIcon>
           <ListItemText
-            primary="Show"
+            primary={<FormattedMessage id="show" />}
             primaryTypographyProps={{variant: 'body2'}}
           />
         </MenuItem>

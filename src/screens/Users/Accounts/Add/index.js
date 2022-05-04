@@ -2,6 +2,7 @@ import {Button, Container, Stack, Typography} from '@mui/material'
 import Iconify from 'components/Iconify'
 import Page from 'components/Page'
 import React from 'react'
+import {FormattedMessage} from 'react-intl'
 import {Link as RouterLink} from 'react-router-dom'
 import UserForm from '../Partials/UserForm'
 
@@ -16,7 +17,7 @@ export default function AddAccount() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Create New User
+            <FormattedMessage id="create_new_user" />
           </Typography>
         </Stack>
         <UserForm />

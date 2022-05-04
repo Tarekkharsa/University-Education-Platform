@@ -14,6 +14,7 @@ import React from 'react'
 import account from '../../../../_mocks_/account'
 import {styled} from '@mui/material/styles'
 import useStyles from './styles'
+import {FormattedMessage} from 'react-intl'
 
 const AccountDetailsStyle = styled(List)(({theme}) => ({
   width: '68%',
@@ -66,7 +67,7 @@ export default function ShowProfile() {
         <AccountDetailsStyle>
           <ListItem button className={classes.li}>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
-              First Name
+              <FormattedMessage id="firstName" />
             </Typography>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
               firstName
@@ -76,7 +77,7 @@ export default function ShowProfile() {
 
           <ListItem button className={classes.li}>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
-              Last Name
+              <FormattedMessage id="lastName" />
             </Typography>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
               lastName
@@ -86,7 +87,7 @@ export default function ShowProfile() {
 
           <ListItem button className={classes.li}>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
-              User Name
+              <FormattedMessage id="userName" />
             </Typography>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
               username
@@ -96,7 +97,7 @@ export default function ShowProfile() {
 
           <ListItem button className={classes.li}>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
-              Email
+              <FormattedMessage id="email" />
             </Typography>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
               email

@@ -10,6 +10,7 @@ import {
 } from '@mui/material'
 // component
 import Iconify from '../../../components/Iconify'
+import {FormattedMessage} from 'react-intl'
 
 // ----------------------------------------------------------------------
 
@@ -42,7 +43,7 @@ export default function UserRoleMoreMenu({id}) {
             <Iconify icon="eva:edit-fill" width={24} height={24} />
           </ListItemIcon>
           <ListItemText
-            primary="Edit Role"
+            primary={<FormattedMessage id="edit_role" />}
             primaryTypographyProps={{variant: 'body2'}}
           />
         </MenuItem>

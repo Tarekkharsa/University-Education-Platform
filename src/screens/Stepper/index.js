@@ -14,6 +14,7 @@ import Iconify from 'components/Iconify'
 import ProfileForm from './Partials/ProfileForm'
 import ShowProfile from './Partials/ShowProfile'
 import {Typography} from '@mui/material'
+import {FormattedMessage} from 'react-intl'
 
 const ColorlibConnector = styled(StepConnector)(({theme}) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -81,7 +82,7 @@ function ColorlibStepIcon(props) {
   )
 }
 
-const steps = ['Complete Profile', 'Wait Approved', 'Approved']
+const steps = ['complete_profile', 'wait_for_approval', 'approved']
 
 export default function CustomizedSteppers() {
   const [activeStep, setActiveStep] = React.useState(1)
@@ -96,7 +97,7 @@ export default function CustomizedSteppers() {
           <Step key={label}>
             <StepLabel StepIconComponent={ColorlibStepIcon}>
               <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
-                {label}
+                <FormattedMessage id={label} />
               </Typography>
             </StepLabel>
           </Step>

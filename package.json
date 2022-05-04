@@ -37,6 +37,7 @@
     "react-hook-form": "^7.28.0",
     "react-html-parser": "^2.0.2",
     "react-icons": "^4.3.1",
+    "react-intl": "^5.25.1",
     "react-lazyload": "^3.2.0",
     "react-query": "^3.35.0",
     "react-query-devtools": "^2.6.3",
@@ -44,7 +45,9 @@
     "react-scripts": "5.0.0",
     "react-sortable-tree": "^2.8.0",
     "react-table": "^7.7.0",
+    "recoil": "^0.7.2",
     "simplebar-react": "^2.3.6",
+    "stylis-plugin-rtl": "^2.1.1",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },

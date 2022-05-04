@@ -2,6 +2,7 @@ import {IconButton, Toolbar, Tooltip, Typography} from '@mui/material'
 // material
 import {styled} from '@mui/material/styles'
 import PropTypes from 'prop-types'
+import {FormattedMessage} from 'react-intl'
 // component
 import Iconify from '../../Iconify'
 import {GlobalFilter} from './ReactTableFilters'
@@ -44,7 +45,7 @@ export default function CustomToolbar({
     >
       {numSelected > 0 ? (
         <Typography component="div" variant="subtitle1">
-          {numSelected} selected
+          {numSelected} <FormattedMessage id="selected" />
         </Typography>
       ) : (
         <GlobalFilter

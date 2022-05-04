@@ -10,6 +10,7 @@ import {
 } from '@mui/material'
 // component
 import Iconify from '../../../components/Iconify'
+import {FormattedMessage} from 'react-intl'
 
 // ----------------------------------------------------------------------
 
@@ -43,7 +44,7 @@ export default function CohortMoreMenu({id}) {
             <Iconify icon="carbon:view" width={24} height={24} />
           </ListItemIcon>
           <ListItemText
-            primary="Show"
+            primary={<FormattedMessage id="show" />}
             primaryTypographyProps={{variant: 'body2'}}
           />
         </MenuItem>
@@ -56,7 +57,7 @@ export default function CohortMoreMenu({id}) {
             <Iconify icon="eva:edit-fill" width={24} height={24} />
           </ListItemIcon>
           <ListItemText
-            primary="Edit"
+            primary={<FormattedMessage id="edit" />}
             primaryTypographyProps={{variant: 'body2'}}
           />
         </MenuItem>

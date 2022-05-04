@@ -30,6 +30,7 @@ import CategoryActions from 'sections/@dashboard/categories/CategoryActions'
 import {useQuery} from 'react-query'
 import {useClient} from 'context/auth-context'
 import {FullPageSpinner} from 'components/lib'
+import {FormattedMessage} from 'react-intl'
 
 const getChildRows = (row, rows) => {
   const childRows = rows.filter(r => r.parent === (row ? row.id : 0))
@@ -41,11 +42,11 @@ export default function TreeTable() {
     // {name: 'id', title: 'ID'},
     {
       name: 'name',
-      title: 'Name',
+      title: <FormattedMessage id="name" />,
     },
     {
       name: 'actions',
-      title: 'actions',
+      title: <FormattedMessage id="actions" />,
       getCellValue: row => <CategoryActions row={row} />,
     },
   ])

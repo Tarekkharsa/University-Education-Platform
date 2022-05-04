@@ -11,6 +11,7 @@ import AuthLayout from 'layouts/AuthLayout'
 import Page from 'components/Page'
 import {LoginForm} from 'sections/authentication/login'
 import AuthSocial from 'sections/authentication/AuthSocial'
+import {FormattedMessage} from 'react-intl'
 
 // ----------------------------------------------------------------------
 
@@ -59,7 +60,7 @@ function UnauthenticatedApp() {
 
       <SectionStyle sx={{display: {xs: 'none', md: 'flex'}}}>
         <Typography variant="h3" sx={{px: 5, mt: 10, mb: 5}}>
-          Hi, Welcome Back
+          <FormattedMessage id="welecome_back" />
         </Typography>
         <img src="/static/illustrations/login.svg" alt="login" />
       </SectionStyle>
@@ -68,10 +69,10 @@ function UnauthenticatedApp() {
         <ContentStyle>
           <Stack sx={{mb: 5}}>
             <Typography variant="h4" gutterBottom>
-              Sign in to Education Platform
+              <FormattedMessage id="sign_in_to_continue" />
             </Typography>
             <Typography sx={{color: 'text.secondary'}}>
-              Enter your details below.
+              <FormattedMessage id="enter_your_details_below" />
             </Typography>
           </Stack>
           {/* <AuthSocial /> */}

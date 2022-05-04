@@ -15,6 +15,7 @@ import {
 } from '@mui/material'
 import {FullPageSpinner} from 'components/lib'
 import React, {useState} from 'react'
+import {FormattedMessage} from 'react-intl'
 import {
   usePagination,
   useRowSelect,
@@ -131,7 +132,7 @@ function ReactTable({
       />
 
       <TableContainer sx={{minWidth: 800}}>
-        <Table {...getTableProps()}>
+        <Table className={classes.root} {...getTableProps()}>
           <TableHead>
             {headerGroups.map(headerGroup => (
               <TableRow {...headerGroup.getHeaderGroupProps()}>
@@ -140,7 +141,11 @@ function ReactTable({
                     sx={column?.style ? column?.style : null}
                     {...column.getHeaderProps()}
                   >
-                    {column.render('Header')}
+                    {typeof column.render('Header') !== 'object' ? (
+                      <FormattedMessage id={column.render('Header')} />
+                    ) : (
+                      column.render('Header')
+                    )}
                   </TableCell>
                 ))}
               </TableRow>
@@ -182,7 +187,7 @@ function ReactTable({
         <TableFooter className={classes.pagination}>
           <TableRow className={classes.pagination}>
             <span className={classes.pagination}>
-              Jump to Page:
+              <FormattedMessage id="jump_to_page" />:
               <FormControl
                 size="small"
                 variant="outlined"
