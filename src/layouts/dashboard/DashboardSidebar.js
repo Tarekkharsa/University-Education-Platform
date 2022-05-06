@@ -90,7 +90,7 @@ export default function DashboardSidebar({isOpenSidebar, onCloseSidebar}) {
               }}
             >
               <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
-                {user.firstName}
+                {user.firstname}
               </Typography>
               {/* <Typography variant="body2" sx={{color: 'text.secondary'}}>
                 {account.role}

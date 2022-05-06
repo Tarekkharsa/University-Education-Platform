@@ -1,7 +1,8 @@
 import {Avatar, Stack, Typography} from '@mui/material'
-import {sentenceCase} from 'change-case'
-import {UserMoreMenu} from 'sections/@dashboard/user'
 import Label from 'components/Label'
+import {FormattedMessage} from 'react-intl'
+import {UserMoreMenu} from 'sections/@dashboard/user'
+import SwitchAction from './Partials/SwitchAction'
 
 export const tableHiddenColumns = ['id']
 export const tableColumns = [
@@ -12,13 +13,40 @@ export const tableColumns = [
   },
   {
     Header: 'firstName',
-    accessor: 'firstName',
+    accessor: 'firstname',
     disableFilters: true,
+    style: {
+      padding: '0',
+    },
+    Cell: ({row}) => {
+      return (
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <Avatar alt={row.original.firstname} src={row.original.image} />
+          <Typography variant="subtitle2" noWrap>
+            {row.original.firstname}
+          </Typography>
+        </Stack>
+      )
+    },
   },
   {
     Header: 'email',
     accessor: 'email',
     disableFilters: true,
+  },
+  {
+    Header: 'status',
+    accessor: 'status',
+    disableSortBy: true,
+    Cell: props => {
+      return props.value !== 2 ? (
+        <SwitchAction value={props.value} row={props.row} />
+      ) : (
+        <Label variant="ghost" color={'success'}>
+          <FormattedMessage id="active" />
+        </Label>
+      )
+    },
   },
   {
     Header: 'actions',

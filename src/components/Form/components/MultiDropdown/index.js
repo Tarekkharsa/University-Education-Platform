@@ -53,7 +53,7 @@ export default function MultiSelect({
   return (
     <Controller
       control={control}
-      name={'role_ids'}
+      name={name}
       render={({field: {onChange, value}}) => (
         <Autocomplete
           multiple={multiple}

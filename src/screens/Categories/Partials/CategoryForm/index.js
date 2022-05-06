@@ -6,7 +6,7 @@ import RichText from 'components/Form/components/RichText'
 import {FullPageSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
 import {useEffect, useState} from 'react'
-import {useForm} from 'react-hook-form'
+import {Controller, useForm} from 'react-hook-form'
 import {FormattedMessage} from 'react-intl'
 import {useMutation, useQuery, useQueryClient} from 'react-query'
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
@@ -55,7 +55,6 @@ export default function CategoryForm({onSubmit}) {
 
   useEffect(() => {
     if (category && id !== undefined) {
-      setRitchText(category.description)
       reset(category)
     }
   }, [category])
@@ -100,13 +99,19 @@ export default function CategoryForm({onSubmit}) {
           control={control}
           errors={errors}
         />
-
-        <RichText
-          label="Description"
+        <Controller
+          control={control}
           name="description"
-          width="100%"
-          editValue={ritchText}
-          InputChange={(name, value) => setValue('description', value)}
+          render={({field: {onChange, value}}) => (
+            <RichText
+              label="Description"
+              errorText={errors ? errors?.description?.message : ''}
+              width="100%"
+              InputChange={values => onChange(values)}
+              value={value}
+              editValue={value}
+            />
+          )}
         />
       </Stack>
       <Stack

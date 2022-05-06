@@ -19,14 +19,14 @@ import {useQuery} from 'react-query'
 import {Link as RouterLink, useParams} from 'react-router-dom'
 import useStyles from './styles'
 
-export default function ShowCohort() {
+export default function ShowGroup() {
   const classes = useStyles()
   const {id} = useParams()
   const client = useClient()
   const {isLoading, error, data} = useQuery({
-    queryKey: 'cohort',
+    queryKey: 'group',
     queryFn: () =>
-      client(`cohort/getCohortById?cohort_id=${id}`).then(data => data.data[0]),
+      client(`group/getGroupById?group_id=${id}`).then(data => data.data[0]),
   })
 
   if (isLoading) {

@@ -14,8 +14,7 @@ import {FormattedMessage} from 'react-intl'
 
 // ----------------------------------------------------------------------
 
-export default function CohortMoreMenu({id}) {
-  console.log('id', id)
+export default function GroupMoreMenu({id}) {
   const ref = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()

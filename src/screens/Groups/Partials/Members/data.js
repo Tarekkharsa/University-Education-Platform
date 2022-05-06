@@ -11,12 +11,12 @@ export const tableColumns = [
     disableFilters: true,
   },
   {
-    Header: 'User Name',
+    Header: 'userName',
     accessor: 'username',
     disableFilters: true,
   },
   {
-    Header: 'Email',
+    Header: 'email',
     accessor: 'email',
     disableFilters: true,
   },
@@ -67,6 +67,7 @@ export const tableColumns = [
   //   },
   // },
   {
+    Header: 'actions',
     accessor: 'actions',
     Cell: ({row}) => {
       return <MemberMoreMenu id={row.values.id} />

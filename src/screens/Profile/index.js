@@ -156,7 +156,7 @@ export default function Profile() {
         <Button
           variant="contained"
           component={RouterLink}
-          to="/dashboard/cohorts/add"
+          to="/dashboard/groups/add"
           startIcon={<Iconify icon="eva:edit-2-outline" />}
         >
           <FormattedMessage id="edit_account" />

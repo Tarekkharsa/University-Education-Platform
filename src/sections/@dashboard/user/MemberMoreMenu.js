@@ -37,7 +37,7 @@ export default function MemberMoreMenu({id}) {
       >
         <MenuItem
           sx={{color: 'text.secondary'}}
-          onClick={() => navigate(`dashboard/users/${id}/show`)}
+          onClick={() => navigate(`/dashboard/users/accounts/${id}/show`)}
         >
           <ListItemIcon>
             <Iconify icon="carbon:view" width={24} height={24} />

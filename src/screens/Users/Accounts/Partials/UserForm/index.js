@@ -57,11 +57,7 @@ export default function UserForm({onSubmit}) {
   })
   useEffect(() => {
     if (user && id !== undefined) {
-      const firstname = user.firstName
-      const lastname = user.lastName
-      const email = user.email
-
-      reset({firstname, lastname, email})
+      reset(user)
     }
   }, [user])
   const {mutate, isError, error, isLoading} = useMutation(
@@ -86,6 +82,7 @@ export default function UserForm({onSubmit}) {
       email,
       password: id ? undefined : password,
       user_id: id ? id : undefined,
+      username: id ? user.username : undefined,
     })
   }
 
@@ -93,16 +90,6 @@ export default function UserForm({onSubmit}) {
     <form autoComplete="off" noValidate onSubmit={handleSubmit(onSubmitForm)}>
       <Stack spacing={3}>
         {isError ? <Alert severity="error">{error.message}</Alert> : null}
-        <Uploader
-          name="avatar"
-          InputChange={e => console.log('e', e)}
-          label="Avatar"
-          width="100%"
-          accept={['image/*']}
-          aspectRatio="1:1"
-          multiple={false}
-          maxFileSize={30}
-        />
         <CustomInput
           label="firstName"
           name="firstname"

@@ -12,17 +12,21 @@ import NotFound from 'screens/Page404'
 import Categories from 'screens/Categories'
 import Courses from 'screens/Courses'
 import Roles from 'screens/Users/Roles'
-import Accounts from 'screens/Users/Accounts'
-import AddAccount from 'screens/Users/Accounts/Add'
-import Cohorts from 'screens/Cohorts'
-import AddCohort from 'screens/Cohorts/Add'
-import AddCategoty from 'screens/Categories/Add'
-import EditCohort from 'screens/Cohorts/EditCohort'
-import Profile from 'screens/Profile'
-import ShowCohort from 'screens/Cohorts/ShowCohort'
+
+import Groups from 'screens/Groups'
+import AddGroup from 'screens/Groups/Add'
+import EditGroup from 'screens/Groups/EditGroup'
+import ShowGroup from 'screens/Groups/ShowGroup'
+
 import EditRole from 'screens/Users/Roles/EditRole'
+import AddCategoty from 'screens/Categories/Add'
 import EditCategoty from 'screens/Categories/EditCategoty'
 import ShowCategoty from 'screens/Categories/ShowCategoty'
+
+import Profile from 'screens/Profile'
+
+import Accounts from 'screens/Users/Accounts'
+import AddAccount from 'screens/Users/Accounts/Add'
 import ShowAccount from 'screens/Users/Accounts/ShowAccount'
 import EditAccount from 'screens/Users/Accounts/EditAccount'
 import CustomizedSteppers from 'screens/Stepper'
@@ -45,10 +49,10 @@ export default function Router() {
         {path: 'categories/:id/edit', element: <EditCategoty />},
         {path: 'categories/:id/show', element: <ShowCategoty />},
 
-        {path: 'cohorts', element: <Cohorts />},
-        {path: 'cohorts/add', element: <AddCohort />},
-        {path: 'cohorts/:id/edit', element: <EditCohort />},
-        {path: 'cohorts/:id/show', element: <ShowCohort />},
+        {path: 'groups', element: <Groups />},
+        {path: 'groups/add', element: <AddGroup />},
+        {path: 'groups/:id/edit', element: <EditGroup />},
+        {path: 'groups/:id/show', element: <ShowGroup />},
 
         {path: 'users/roles', element: <Roles />},
         {path: 'users/roles/:id/edit', element: <EditRole />},

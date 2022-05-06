@@ -1,3 +1,5 @@
+import {Chip} from '@mui/material'
+
 export const parseEditValue = editValue => {
   let arr = []
   let newEditValue = []
@@ -26,3 +28,14 @@ export const isEmpty = value =>
   value === null ||
   (typeof value === 'object' && Object.keys(value).length === 0) ||
   (typeof value === 'string' && value.trim().length === 0)
+
+export const evaluateChips = (values, styles) => {
+  let chips = []
+  if (!isEmpty(values))
+    values.map(object => {
+      chips.push(
+        <Chip style={!styles ? {margin: '5px'} : styles} label={object.name} />,
+      )
+    })
+  return chips
+}

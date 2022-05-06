@@ -22,6 +22,8 @@ export function MultipleFileUploadField({
   isDuplicated,
   error,
   errorText,
+  errors,
+  setError,
 }) {
   const {notifications} = useSetNotification()
   const classes = useStyles()
@@ -39,23 +41,38 @@ export function MultipleFileUploadField({
 
   const onDrop = useCallback(
     (accFiles, rejFiles) => {
+      console.log('accFiles', accFiles)
       if (checkFileLimit(accFiles)) {
-        notifications(`File Limit ${limit}`)
+        // notifications(`File Limit ${limit}`)
+        setError(name, {type: 'custom', message: `File Limit ${limit}`})
+
         return
       }
       if (rejFiles.length != 0) {
         rejFiles.map(file => {
           try {
             file.errors.map(msg => {
-              notifications(file.file.name + msg.message)
+              // notifications(file.file.name + msg.message)
+              setError(name, {
+                type: 'custom',
+                message: file.file.name + msg.message,
+              })
             })
           } catch (ex) {
-            notifications(
-              file.name +
+            // notifications(
+            //   file.name +
+            //     'Some thing wen wrong. Note that max file size is: ' +
+            //     maxFileSize +
+            //     ' MB',
+            // )
+            setError(name, {
+              type: 'custom',
+              message:
+                file.name +
                 'Some thing wen wrong. Note that max file size is: ' +
                 maxFileSize +
                 ' MB',
-            )
+            })
           }
         })
       }
@@ -72,10 +89,12 @@ export function MultipleFileUploadField({
 
   useEffect(() => {
     if (multiple) {
-      InputChange(name, formState)
+      // InputChange(name, formState)
+      InputChange(name, files)
     } else {
       let image = formState.length > 0 ? formState[0] : ''
-      InputChange(name, image)
+      // InputChange(name, image)
+      InputChange(name, files[0])
     }
   }, [uploadedFiles, editValues, files])
 
@@ -194,6 +213,9 @@ export function MultipleFileUploadField({
           <input {...getInputProps()} />
           <p>Drag 'n' drop some files here, or click to select files</p>
         </div>
+        {errors && (
+          <div className={classes.errorText}>{errors[name]?.message}</div>
+        )}
         {error && <div className={classes.errorText}>{errorText}</div>}
         {/*       image preview section        */}
         <Thumbs

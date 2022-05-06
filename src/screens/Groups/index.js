@@ -20,7 +20,7 @@ import {FormattedMessage} from 'react-intl'
 
 // ----------------------------------------------------------------------
 
-export default function Cohorts() {
+export default function Groups() {
   const theme = useTheme()
   const columns = useMemo(() => tableColumns, [])
   const hiddenColumns = useMemo(() => tableHiddenColumns, [])
@@ -31,16 +31,16 @@ export default function Cohorts() {
   const queryClient = useQueryClient()
 
   const {isLoading, error, data, refetch} = useQuery({
-    queryKey: 'cohorts',
-    queryFn: () => client('cohort/getAllCohorts').then(data => data.data),
+    queryKey: 'groups',
+    queryFn: () => client('group/getAllGroups').then(data => data.data),
   })
 
   const {mutate: handleRemoveClick} = useMutation(
     ({id}) =>
-      client(`cohort/deleteCohorts`, {method: 'POST', data: {cohort_ids: id}}),
+      client(`group/deleteGroups`, {method: 'POST', data: {group_ids: id}}),
     {
       onSuccess: data => {
-        queryClient.invalidateQueries('cohorts')
+        queryClient.invalidateQueries('groups')
       },
     },
   )
@@ -67,7 +67,7 @@ export default function Cohorts() {
     return <FullPageSpinner />
   }
   return (
-    <Page title="Cohorts">
+    <Page title="Groups">
       <Container>
         <Stack
           direction="row"
@@ -76,15 +76,15 @@ export default function Cohorts() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            <FormattedMessage id="cohorts" />
+            <FormattedMessage id="groups" />
           </Typography>
           <Button
             variant="contained"
             component={RouterLink}
-            to="/dashboard/cohorts/add"
+            to="/dashboard/groups/add"
             startIcon={<Iconify icon="eva:plus-fill" />}
           >
-            <FormattedMessage id="new_cohort" />
+            <FormattedMessage id="new_group" />
           </Button>
         </Stack>
         <ReactTable

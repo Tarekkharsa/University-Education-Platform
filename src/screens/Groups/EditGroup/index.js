@@ -3,12 +3,12 @@ import Iconify from 'components/Iconify'
 import Page from 'components/Page'
 import React from 'react'
 import {FormattedMessage} from 'react-intl'
-import {Link as RouterLink} from 'react-router-dom'
-import CohortForm from '../Partials/CohortForm'
+import {Link as RouterLink, useParams} from 'react-router-dom'
+import GroupForm from '../Partials/GroupForm'
 
-export default function AddCohort() {
+export default function EditGroup() {
   return (
-    <Page title="Cohort">
+    <Page title="Group">
       <Container>
         <Stack
           direction="row"
@@ -17,10 +17,10 @@ export default function AddCohort() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            <FormattedMessage id="create_new_cohort" />
+            <FormattedMessage id="update_group" />
           </Typography>
         </Stack>
-        <CohortForm />
+        <GroupForm />
       </Container>
     </Page>
   )

@@ -2,12 +2,11 @@ import {yupResolver} from '@hookform/resolvers/yup' // material
 import {LoadingButton} from '@mui/lab'
 import {Alert, Stack} from '@mui/material'
 import CustomInput from 'components/Form/components/CustomInput'
-import Dropdown from 'components/Form/components/Dropdown'
 import RichText from 'components/Form/components/RichText'
 import {FullPageSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
 import {useEffect, useState} from 'react'
-import {useForm} from 'react-hook-form'
+import {Controller, useForm} from 'react-hook-form'
 import {FormattedMessage} from 'react-intl'
 import {useMutation, useQuery, useQueryClient} from 'react-query'
 import {useNavigate, useParams} from 'react-router-dom'
@@ -15,14 +14,14 @@ import * as Yup from 'yup'
 
 // ----------------------------------------------------------------------
 
-export default function MemberForm({handleClose}) {
+export default function GroupForm({onSubmit}) {
   const {id} = useParams()
   const client = useClient()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-
-  const MemberSchema = Yup.object().shape({
-    // user_id: Yup.string().required('User is required'),
+  const GroupSchema = Yup.object().shape({
+    name: Yup.string().required(<FormattedMessage id="group_name_required" />),
+    description: Yup.string(),
   })
 
   const {
@@ -33,28 +32,55 @@ export default function MemberForm({handleClose}) {
     reset,
     formState: {errors, isSubmitting},
   } = useForm({
-    resolver: yupResolver(MemberSchema),
-    defaultValues: {user_id: ''},
+    resolver: yupResolver(GroupSchema),
+    defaultValues: {name: '', description: ''},
   })
+
+  const {
+    isFetching: fetchLoading,
+    error: getOneError,
+    data: group,
+  } = useQuery({
+    queryKey: 'group',
+    queryFn: () =>
+      client(`group/getGroupById?group_id=${id}`).then(data => data.data[0]),
+    enabled: id !== undefined,
+  })
+
+  useEffect(() => {
+    if (group && id !== undefined) {
+      reset(group)
+    }
+  }, [group])
 
   const {mutate, isError, error, isLoading} = useMutation(
     data =>
-      client(`cohort/addMember`, {
+      client(id ? 'group/update' : `group/create`, {
         method: 'POST',
         data: data,
       }),
     {
       onSuccess: data => {
-        queryClient.invalidateQueries('members')
-        handleClose()
+        queryClient.invalidateQueries('groups')
+        navigate(-1)
         reset()
       },
     },
   )
 
   const onSubmitForm = data => {
-    let {user_id} = data
-    mutate({user_id, cohort_id: id})
+    let {name, description} = data
+    mutate({
+      name,
+      description,
+      visible: 1,
+      is_system: true,
+      group_id: id ? id : undefined,
+    })
+  }
+
+  if (fetchLoading) {
+    return <FullPageSpinner />
   }
 
   return (
@@ -62,14 +88,25 @@ export default function MemberForm({handleClose}) {
       <Stack spacing={3}>
         {isError ? <Alert severity="error">{error.message}</Alert> : null}
 
-        <Dropdown
-          name={'user_id'}
-          title={'User'}
-          optionLable={'email'}
-          optionUrl={'getAllUsers'}
-          errors={errors}
+        <CustomInput
+          label="group_name"
+          name="name"
           control={control}
-          setValue={setValue}
+          errors={errors}
+        />
+        <Controller
+          control={control}
+          name="description"
+          render={({field: {onChange, value}}) => (
+            <RichText
+              label="Description"
+              errorText={errors ? errors?.description?.message : ''}
+              width="100%"
+              InputChange={values => onChange(values)}
+              value={value}
+              editValue={value}
+            />
+          )}
         />
       </Stack>
       <Stack
@@ -79,7 +116,7 @@ export default function MemberForm({handleClose}) {
         sx={{my: 2}}
       >
         <LoadingButton
-          onClick={handleClose}
+          onClick={() => navigate('/dashboard/groups')}
           size="large"
           type="submit"
           variant="contained"
@@ -93,7 +130,11 @@ export default function MemberForm({handleClose}) {
           variant="contained"
           loading={isLoading}
         >
-          Save
+          {id ? (
+            <FormattedMessage id="update_group" />
+          ) : (
+            <FormattedMessage id="save" />
+          )}
         </LoadingButton>
       </Stack>
     </form>

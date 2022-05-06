@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     margin: '0',
     fontSize: '0.75rem',
     marginTop: '3px',
-    textAlign: 'left',
+    textAlign: theme.direction === 'ltr' ? 'left' : 'right',
     fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
     fontWeight: '400',
     lineHeight: '1.66',

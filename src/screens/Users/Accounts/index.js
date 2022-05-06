@@ -16,10 +16,12 @@ import {FullPageSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
 import {useTheme} from '@mui/styles'
 import {FormattedMessage} from 'react-intl'
+import UploadUsersModal from './Partials/UploadUsersModal'
 
 // ----------------------------------------------------------------------
 
 export default function Accounts() {
+  const [open, setOpen] = useState(false)
   const theme = useTheme()
   const columns = useMemo(() => tableColumns, [])
   const hiddenColumns = useMemo(() => tableHiddenColumns, [])
@@ -76,14 +78,24 @@ export default function Accounts() {
           <Typography variant="h4" gutterBottom>
             <FormattedMessage id="users_accounts" />
           </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="/dashboard/users/accounts/add"
-            startIcon={<Iconify icon="eva:plus-fill" />}
-          >
-            <FormattedMessage id="new_user_account" />
-          </Button>
+          <div>
+            <Button
+              sx={{ml: 2, mr: 2}}
+              variant="contained"
+              startIcon={<Iconify icon="eva:plus-fill" />}
+              onClick={() => setOpen(true)}
+            >
+              <FormattedMessage id="upload_users_csv" />
+            </Button>
+            <Button
+              variant="contained"
+              component={RouterLink}
+              to="/dashboard/users/accounts/add"
+              startIcon={<Iconify icon="eva:plus-fill" />}
+            >
+              <FormattedMessage id="new_user_account" />
+            </Button>
+          </div>
         </Stack>
         <ReactTable
           columns={columns}
@@ -94,6 +106,9 @@ export default function Accounts() {
           loading={isLoading}
           totalRecords={data?.length}
         />
+        {open && (
+          <UploadUsersModal handleClose={() => setOpen(false)} open={open} />
+        )}
       </Container>
     </Page>
   )

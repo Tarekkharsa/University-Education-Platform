@@ -16,7 +16,7 @@ import {
 import {Link as RouterLink, useParams} from 'react-router-dom'
 import Iconify from 'components/Iconify'
 import Page from 'components/Page'
-import ShowCohort from './showCohortDetails'
+import ShowGroup from './showGroupDetails'
 import Members from '../Partials/Members'
 import {FormattedMessage} from 'react-intl'
 
@@ -63,7 +63,7 @@ export default function VerticalTabs() {
   }
 
   return (
-    <Page title="Cohort">
+    <Page title="Group">
       <Container>
         <Stack
           direction="row"
@@ -72,16 +72,16 @@ export default function VerticalTabs() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            <FormattedMessage id="cohort_details" />
+            <FormattedMessage id="group_details" />
           </Typography>
 
           <Button
             variant="contained"
             component={RouterLink}
-            to={`/dashboard/cohorts/${id}/edit`}
+            to={`/dashboard/groups/${id}/edit`}
             startIcon={<Iconify icon="eva:edit-fill" />}
           >
-            <FormattedMessage id="edit_cohort" />
+            <FormattedMessage id="edit_group" />
           </Button>
         </Stack>
         <Box sx={{width: '100%'}}>
@@ -92,7 +92,7 @@ export default function VerticalTabs() {
               aria-label="basic tabs example"
             >
               <Tab
-                label={<FormattedMessage id="cohort_info" />}
+                label={<FormattedMessage id="group_info" />}
                 {...a11yProps(0)}
               />
               <Tab
@@ -102,7 +102,7 @@ export default function VerticalTabs() {
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <ShowCohort />
+            <ShowGroup />
           </TabPanel>
           <TabPanel value={value} index={1}>
             <Members />

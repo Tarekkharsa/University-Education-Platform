@@ -9,7 +9,8 @@ const useStyles = makeStyles(theme => ({
     margin: '3px 0 ',
   },
   formControl: {
-    marginLeft: '10px',
+    marginLeft: theme.direction === 'ltr' ? '10px' : 'unset',
+    marginRight: theme.direction === 'rtl' ? '10px' : 'unset',
   },
 }))
 

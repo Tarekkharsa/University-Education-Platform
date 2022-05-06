@@ -21,8 +21,6 @@ import {FormattedMessage} from 'react-intl'
 export default function Roles() {
   const columns = useMemo(() => tableColumns, [])
   const hiddenColumns = useMemo(() => tableHiddenColumns, [])
-  const [rows, setRows] = useState([])
-  let selectedRowsIds = []
 
   const client = useClient()
   const queryClient = useQueryClient()
@@ -31,33 +29,6 @@ export default function Roles() {
     queryKey: 'users',
     queryFn: () => client('getAllUsers').then(data => data.data),
   })
-
-  const {mutate: handleRemoveClick} = useMutation(
-    ({id}) => client(`deleteUser`, {method: 'POST', data: {user_id: id}}),
-    {
-      onSuccess: data => {
-        queryClient.invalidateQueries('users')
-      },
-    },
-  )
-
-  const getSelectedRows = useCallback(({selectedFlatRows}) => {
-    selectedRowsIds = []
-    selectedFlatRows.length > 0 &&
-      selectedFlatRows.map((row, i) => {
-        selectedRowsIds.push(row.values.id)
-      })
-    setRows(selectedRowsIds)
-  }, [])
-
-  const onDelete = selectedRows => {
-    selectedRowsIds = []
-    selectedRows.length > 0 &&
-      selectedRows.map((row, i) => {
-        selectedRowsIds.push(row.values.id)
-      })
-    handleRemoveClick({id: selectedRowsIds[0]})
-  }
 
   if (isLoading && !data) {
     return <FullPageSpinner />
@@ -79,8 +50,6 @@ export default function Roles() {
           columns={columns}
           hiddenColumns={hiddenColumns}
           data={data}
-          getSelectedRows={getSelectedRows}
-          onDelete={onDelete}
           loading={isLoading}
           totalRecords={data?.length}
         />

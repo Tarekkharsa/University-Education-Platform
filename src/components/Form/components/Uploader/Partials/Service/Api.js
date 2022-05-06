@@ -38,7 +38,7 @@ export function uploadFile(file, onProgress, notifications, setError) {
   // const url = `${ApiConfigs.apiUrl}${ApiConfigs.multipleMediaFileUpload}`;
   const url = process.env.REACT_APP_UPLOAD_API_URL
   const key = 'docs_upload_example_us_preset'
-
+  console.log('file', file)
   return new Promise((res, rej) => {
     const xhr = new XMLHttpRequest()
     xhr.open('POST', url)

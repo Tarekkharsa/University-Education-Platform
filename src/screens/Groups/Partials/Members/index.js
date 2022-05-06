@@ -16,6 +16,7 @@ import {useAuth} from 'context/auth-context'
 import {FullPageSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
 import AddMemberModal from './Add'
+import {FormattedMessage} from 'react-intl'
 
 // ----------------------------------------------------------------------
 
@@ -32,13 +33,13 @@ export default function Members() {
   const {isLoading, error, data, refetch} = useQuery({
     queryKey: 'members',
     queryFn: () =>
-      client(`cohort/getAllCohortMembers?cohort_id=${id}`).then(data =>
+      client(`group/getAllGroupMembers?group_id=${id}`).then(data =>
         data.data.filter(x => x !== null),
       ),
   })
 
   const {mutate: handleRemoveClick} = useMutation(
-    data => client(`cohort/deleteMember`, {method: 'POST', data}),
+    data => client(`group/deleteMembers`, {method: 'POST', data}),
     {
       onSuccess: data => {
         queryClient.invalidateQueries('members')
@@ -65,14 +66,14 @@ export default function Members() {
       selectedRows.map((row, i) => {
         selectedRowsIds.push(row.values.id)
       })
-    handleRemoveClick({user_id: selectedRowsIds[0], cohort_id: id})
+    handleRemoveClick({user_ids: selectedRowsIds, group_id: id})
   }
 
   if (isLoading && !data) {
     return <FullPageSpinner />
   }
   return (
-    <Page title="Cohorts">
+    <Page title="Groups">
       <Container>
         <Stack
           direction="row"
@@ -81,14 +82,14 @@ export default function Members() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Members
+            <FormattedMessage id="members" />
           </Typography>
           <Button
             variant="contained"
             onClick={handleOpen}
             startIcon={<Iconify icon="eva:plus-fill" />}
           >
-            New Member
+            <FormattedMessage id="new_member" />
           </Button>
         </Stack>
         <ReactTable

@@ -60,7 +60,7 @@ export default function ShowAccount() {
             <ListItemIcon>
               <FormattedMessage id="firstName" />
             </ListItemIcon>
-            <div>{data?.firstName}</div>
+            <div>{data?.firstname}</div>
           </ListItem>
           <Divider variant="inset" component="li" />
 
@@ -68,7 +68,7 @@ export default function ShowAccount() {
             <ListItemIcon>
               <FormattedMessage id="lastName" />
             </ListItemIcon>
-            <div>{data?.lastName}</div>
+            <div>{data?.lastname}</div>
           </ListItem>
           <Divider variant="inset" component="li" />
 

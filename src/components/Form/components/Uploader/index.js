@@ -6,7 +6,7 @@ import useStyles from './styles'
 function Uploader(props) {
   // props { accept, key, id, maxFileSize, multiple, InputChange, width, name, label, placeholder, title, editValue, filesLimit, error, errorText, isDuplicated }
   const classes = useStyles()
-  const {width, label, id, editValue} = props
+  const {width, label, id, editValue, errors, setError} = props
   let newProps = {
     ...props,
     editValue: parseEditValue(editValue),

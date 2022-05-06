@@ -2,6 +2,8 @@ import {yupResolver} from '@hookform/resolvers/yup' // material
 import {LoadingButton} from '@mui/lab'
 import {Alert, Stack} from '@mui/material'
 import CustomInput from 'components/Form/components/CustomInput'
+import Dropdown from 'components/Form/components/Dropdown'
+import MultiSelect from 'components/Form/components/MultiDropdown'
 import RichText from 'components/Form/components/RichText'
 import {FullPageSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
@@ -14,16 +16,15 @@ import * as Yup from 'yup'
 
 // ----------------------------------------------------------------------
 
-export default function CohortForm({onSubmit}) {
+export default function MemberForm({handleClose}) {
   const {id} = useParams()
   const client = useClient()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const CohortSchema = Yup.object().shape({
-    name: Yup.string().required('Cohort Name is required'),
-    description: Yup.string(),
+
+  const MemberSchema = Yup.object().shape({
+    user_ids: Yup.array().required(),
   })
-  const [ritchText, setRitchText] = useState('')
 
   const {
     control,
@@ -33,76 +34,44 @@ export default function CohortForm({onSubmit}) {
     reset,
     formState: {errors, isSubmitting},
   } = useForm({
-    resolver: yupResolver(CohortSchema),
-    defaultValues: {name: '', description: ''},
+    resolver: yupResolver(MemberSchema),
+    defaultValues: {user_ids: []},
   })
-
-  const {
-    isLoading: fetchLoading,
-    error: getOneError,
-    data: cohort,
-  } = useQuery({
-    queryKey: 'cohort',
-    queryFn: () =>
-      client(`cohort/getCohortById?cohort_id=${id}`).then(data => data.data[0]),
-    enabled: id !== undefined,
-  })
-
-  useEffect(() => {
-    if (cohort && id !== undefined) {
-      setRitchText(cohort.description)
-      reset(cohort)
-    }
-  }, [cohort])
 
   const {mutate, isError, error, isLoading} = useMutation(
     data =>
-      client(id ? 'cohort/update' : `cohort/create`, {
+      client(`group/addMembers`, {
         method: 'POST',
         data: data,
       }),
     {
       onSuccess: data => {
-        queryClient.invalidateQueries('cohorts')
-        navigate(-1)
+        queryClient.invalidateQueries('members')
+        handleClose()
         reset()
       },
     },
   )
 
   const onSubmitForm = data => {
-    let {name, description} = data
-    mutate({
-      name,
-      description,
-      visible: 1,
-      is_system: true,
-      cohort_id: id ? id : undefined,
-    })
-  }
-
-  if (fetchLoading) {
-    return <FullPageSpinner />
+    let {user_ids} = data
+    let ids = user_ids.map(user => user.id)
+    mutate({user_ids: ids, group_id: id})
   }
 
   return (
     <form noValidate onSubmit={handleSubmit(onSubmitForm)}>
       <Stack spacing={3}>
         {isError ? <Alert severity="error">{error.message}</Alert> : null}
-
-        <CustomInput
-          label="cohort_name"
-          name="name"
-          control={control}
+        <MultiSelect
+          name={'user_ids'}
+          title={'members'}
+          optionLable={'username'}
+          optionUrl={'getAllUsers'}
           errors={errors}
-        />
-
-        <RichText
-          label="Description"
-          name="description"
-          width="100%"
-          editValue={ritchText}
-          InputChange={(name, value) => setValue('description', value)}
+          control={control}
+          onChange={value => setValue('user_ids', value)}
+          multiple
         />
       </Stack>
       <Stack
@@ -112,7 +81,7 @@ export default function CohortForm({onSubmit}) {
         sx={{my: 2}}
       >
         <LoadingButton
-          onClick={() => navigate('/dashboard/cohorts')}
+          onClick={handleClose}
           size="large"
           type="submit"
           variant="contained"
@@ -126,11 +95,7 @@ export default function CohortForm({onSubmit}) {
           variant="contained"
           loading={isLoading}
         >
-          {id ? (
-            <FormattedMessage id="update_cohort" />
-          ) : (
-            <FormattedMessage id="save" />
-          )}
+          <FormattedMessage id="save" />
         </LoadingButton>
       </Stack>
     </form>

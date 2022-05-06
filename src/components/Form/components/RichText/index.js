@@ -8,10 +8,10 @@ const RichText = ({
   name,
   label,
   editValue,
+  value,
 }) => {
   const classes = useStyles()
   const editor = useRef(null)
-  const [content, setContent] = useState(editValue)
 
   const config = useMemo(
     () => ({
@@ -69,18 +69,14 @@ const RichText = ({
       ],
       showPlaceholder: false,
       statusbar: false,
-      // toolbarInlineForSelection: true,
-      // iframe: true,
+      tabIndex: 0,
       style: {
         width: '100%',
       },
     }),
-    [editDisabled, editValue],
+    [editDisabled],
   )
 
-  const onEditorStateChange = value => {
-    InputChange(name, value)
-  }
   return (
     <div>
       <div
@@ -90,10 +86,9 @@ const RichText = ({
       >
         <JoditEditor
           ref={editor}
-          value={content}
+          value={value}
           config={config}
-          tabIndex={1} // tabIndex of textarea
-          onChange={newContent => onEditorStateChange(newContent)}
+          onChange={newContent => InputChange(newContent)}
         />
       </div>
       <div className={classes.errorText}>{!!errorText ? errorText : ''}</div>
