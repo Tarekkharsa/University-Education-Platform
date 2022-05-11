@@ -1,6 +1,6 @@
 import {yupResolver} from '@hookform/resolvers/yup'
 import {LoadingButton} from '@mui/lab'
-import {Modal, Stack} from '@mui/material'
+import {Alert, Modal, Stack} from '@mui/material'
 import Uploader from 'components/Form/components/Uploader'
 import {useAuth, useClient} from 'context/auth-context'
 import React from 'react'
@@ -38,11 +38,12 @@ const UploadUsersModal = ({open, handleClose}) => {
 
   const {mutate, isError, error, isLoading} = useMutation(
     data =>
-      // client('uploadUsersCsv', {
-      //   method: 'POST',
-      //   data: data,
-      // }),
-      fileUpload(data),
+      axios.post(process.env.REACT_APP_API_URL + '/uploadUsersCsv', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: user.token ? `Bearer ${user.token}` : undefined,
+        },
+      }),
     {
       onSuccess: data => {
         queryClient.invalidateQueries('users')
@@ -50,26 +51,11 @@ const UploadUsersModal = ({open, handleClose}) => {
       },
     },
   )
-  function fileUpload(file) {
-    const url = 'http://127.0.0.1:8081/uploadUsersCsv'
-    const formData = new FormData()
-    formData.append('file', file.file)
-    formData.append('upload_preset', 'docs_upload_example_us_preset')
 
-    const config = {
-      headers: {
-        Authorization: user.token ? `Bearer ${user.token}` : undefined,
-        'content-type': 'multipart/form-data',
-      },
-    }
-    return post(url, formData, config)
-  }
   const onSubmitForm = data => {
-    console.log('data', data.file.file)
     const formData = new FormData()
     formData.append('file', data.file.file)
-    mutate({file: formData})
-    // console.log('data', data)
+    mutate(formData)
   }
   return (
     <>
@@ -84,6 +70,8 @@ const UploadUsersModal = ({open, handleClose}) => {
             noValidate
             onSubmit={handleSubmit(onSubmitForm)}
           >
+            {isError ? <Alert severity="error">{error.message}</Alert> : null}
+
             <Uploader
               name="file"
               InputChange={(name, files) => setValue(name, files)}

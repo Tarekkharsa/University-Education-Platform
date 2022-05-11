@@ -14,6 +14,8 @@ import {
 //
 import Iconify from './Iconify'
 import {FormattedMessage} from 'react-intl'
+import {useAuth} from 'context/auth-context'
+import useRoles from 'hooks/useRoles'
 
 // ----------------------------------------------------------------------
 
@@ -186,17 +188,21 @@ NavSection.propTypes = {
 }
 
 export default function NavSection({navConfig, ...other}) {
+  const {checkIfRolesInUserRoles} = useRoles()
   const theme = useTheme()
   const {pathname} = useLocation()
+
   const match = path =>
     path ? !!matchPath({path, end: false}, pathname) : false
 
   return (
     <Box {...other}>
       <List disablePadding>
-        {navConfig.map(item => (
-          <NavItem key={item.title} item={item} active={match} />
-        ))}
+        {navConfig.map(item => {
+          if (checkIfRolesInUserRoles(item.roles)) {
+            return <NavItem key={item.title} item={item} active={match} />
+          }
+        })}
       </List>
     </Box>
   )

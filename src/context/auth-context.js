@@ -13,12 +13,15 @@ async function bootstrapAppData() {
   const id = await auth.getID()
   if (token && id) {
     const data = await client(`getUserById?id=${id}`, {token})
-    console.log('data', data)
     queryCache.setQueryData('user', data.data, {
       staleTime: 5000,
     })
 
-    user = {...data.data, token}
+    user = {
+      ...data.data,
+      token,
+      permissions: data.data.roles.map(role => role.name),
+    }
   }
   return user
 }
@@ -39,14 +42,17 @@ function AuthProvider(props) {
     setData,
   } = useAsync()
   const queryCache = new QueryClient()
-
+  console.log('auth context', user)
   React.useEffect(() => {
     const appDataPromise = bootstrapAppData()
     run(appDataPromise)
   }, [run])
 
   const login = React.useCallback(
-    form => auth.login(form).then(user => setData(user)),
+    form =>
+      auth.login(form).then(user => {
+        setData({...user, permissions: user.roles.map(role => role.name)})
+      }),
     [setData],
   )
   const register = React.useCallback(

@@ -100,7 +100,9 @@ export default function DashboardSidebar({isOpenSidebar, onCloseSidebar}) {
         </Link>
       </Box>
 
-      <NavSection navConfig={sidebarConfig} />
+      {user.status !== 0 && user.status !== 1 && (
+        <NavSection navConfig={sidebarConfig} />
+      )}
     </Scrollbar>
   )
 

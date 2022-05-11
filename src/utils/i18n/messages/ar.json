@@ -74,5 +74,17 @@
   "confirm": "تأكيد",
   "active_user": "تفعيل المستخدم",
   "active": "نشط",
-  "upload_users_file": "تحميل ملف المستخدمين"
+  "upload_users_file": "تحميل ملف المستخدمين",
+  "drag_and_drop_users_file": "إسحب وإسقط ملف المستخدمين",
+  "upload_file": "تحميل ملف",
+  "father_name": "اسم الأب",
+  "national_id_number": "رقم الهوية الوطنية",
+  "mother_name": "اسم الأم",
+  "phone_number": "رقم الهاتف",
+  "user_image": "صورة المستخدم",
+  "national_id_image": "صورة الهوية الوطنية",
+  "certificate_image": "صورة الشهادة",
+  "old_password": "كلمة المرور القديمة",
+  "new_password": "كلمة المرور الجديدة",
+  "update_profile": "تحديث الملف الشخصي"
 }

@@ -3,6 +3,7 @@ import {makeStyles} from '@mui/styles'
 const useStyles = makeStyles(theme => ({
   thumbsContainer: {
     display: 'flex',
+    justifyContent: 'space-between',
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginTop: 16,
@@ -39,7 +40,8 @@ const useStyles = makeStyles(theme => ({
   },
   thumbDeleteButton: {
     position: 'absolute',
-    left: 10,
+    left: theme.direction === 'ltr' ? 10 : 'unset',
+    right: theme.direction === 'rtl' ? 10 : 'unset',
     bottom: 10,
     background: theme.palette.primary.main,
     color: '#fff',
@@ -51,7 +53,8 @@ const useStyles = makeStyles(theme => ({
   },
   thumbEditButton: {
     position: 'absolute',
-    right: 10,
+    right: theme.direction === 'ltr' ? 10 : 'unset',
+    left: theme.direction === 'rtl' ? 10 : 'unset',
     bottom: 10,
     background: theme.palette.primary.main,
     color: '#fff',

@@ -17,7 +17,7 @@ import * as Yup from 'yup'
 
 // ----------------------------------------------------------------------
 
-export default function ProfileForm({onSubmit}) {
+export default function ProfileForm() {
   const {user: userAuth} = useAuth()
   const id = userAuth.id
   const client = useClient()
@@ -65,7 +65,14 @@ export default function ProfileForm({onSubmit}) {
   })
   useEffect(() => {
     if (user && id !== undefined) {
-      reset(user)
+      console.log('user', user)
+      reset({
+        ...user,
+        father_name: user.fathername,
+        mother_name: user.mothername,
+        national_id_number: user.nationalidnumber,
+        phone_number: user.phonenumber,
+      })
     }
   }, [user])
   const {mutate, isError, error, isLoading} = useMutation(
@@ -176,6 +183,14 @@ export default function ProfileForm({onSubmit}) {
         justifyContent="flex-end"
         sx={{my: 2}}
       >
+        <LoadingButton
+          size="large"
+          variant="contained"
+          style={{marginLeft: '1rem'}}
+          onClick={() => navigate(-1)}
+        >
+          <FormattedMessage id="cancel" />
+        </LoadingButton>
         <LoadingButton
           size="large"
           type="submit"

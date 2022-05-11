@@ -30,12 +30,12 @@ const MENU_OPTIONS = [
   {
     label: 'profile',
     icon: 'eva:person-fill',
-    linkTo: '#',
+    linkTo: 'profile',
   },
   {
     label: 'settings',
     icon: 'eva:settings-2-fill',
-    linkTo: '#',
+    linkTo: 'profile',
   },
 ]
 

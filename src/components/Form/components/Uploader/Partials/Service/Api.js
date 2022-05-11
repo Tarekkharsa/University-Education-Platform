@@ -36,20 +36,24 @@ export const deleteFile = (id, notifications) => {
 
 export function uploadFile(file, onProgress, notifications, setError) {
   // const url = `${ApiConfigs.apiUrl}${ApiConfigs.multipleMediaFileUpload}`;
-  const url = process.env.REACT_APP_UPLOAD_API_URL
+  const url = 'http://127.0.0.1:8081/uploadFile'
+  // const url = process.env.REACT_APP_UPLOAD_API_URL
   const key = 'docs_upload_example_us_preset'
   console.log('file', file)
   return new Promise((res, rej) => {
     const xhr = new XMLHttpRequest()
     xhr.open('POST', url)
-    // xhr.setRequestHeader('Authorization', getStorage(StorageKeys.token));
+    xhr.setRequestHeader(
+      'Authorization',
+      `Bearer ${window.localStorage.getItem('__auth_provider_token__')}`,
+    )
     xhr.onload = () => {
       const resp = JSON.parse(xhr.responseText)
-      if (resp.result == 'success') {
-        res(resp.content)
+      if (resp.success) {
+        res(resp.data)
       } else {
         setError(true)
-        notifications(resp.error_des)
+        notifications('Upload failed')
       }
     }
     xhr.onerror = evt => {
@@ -81,20 +85,23 @@ export function uploadFile(file, onProgress, notifications, setError) {
 }
 export function uploadImage(file, onProgress, notifications, setError) {
   // const url = `${ApiConfigs.apiUrl}${ApiConfigs.multipleMediaImageUpload}`;
-  const url = process.env.REACT_APP_UPLOAD_API_URL
+  const url = 'http://127.0.0.1:8081/uploadFile'
   const key = 'docs_upload_example_us_preset'
 
   return new Promise((res, rej) => {
     const xhr = new XMLHttpRequest()
     xhr.open('POST', url)
-    // xhr.setRequestHeader('Authorization', getStorage(StorageKeys.token));
+    xhr.setRequestHeader(
+      'Authorization',
+      `Bearer ${window.localStorage.getItem('__auth_provider_token__')}`,
+    )
     xhr.onload = () => {
       const resp = JSON.parse(xhr.responseText)
-      if (resp.result == 'success') {
-        res(resp.content)
+      if (resp.success) {
+        res(resp.data)
       } else {
         setError(true)
-        notifications(resp.error_des)
+        notifications('Upload failed')
       }
     }
     xhr.onerror = evt => {

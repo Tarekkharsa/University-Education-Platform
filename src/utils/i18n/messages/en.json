@@ -74,5 +74,17 @@
   "confirm": "Confirm",
   "active_user": "Active User ?",
   "active": "Active",
-  "upload_users_file": "Upload Users File"
+  "upload_users_file": "Upload Users File",
+  "drag_and_drop_users_file": "Drag and Drop Users File",
+  "upload_file": "Upload File",
+  "father_name": "Father Name",
+  "national_id_number": "National ID Number",
+  "mother_name": "Mother Name",
+  "phone_number": "Phone Number",
+  "user_image": "User Image",
+  "national_id_image": "National ID Image",
+  "certificate_image": "Certificate Image",
+  "old_password": "Old Password",
+  "new_password": "New Password",
+  "update_profile": "Update Profile"
 }

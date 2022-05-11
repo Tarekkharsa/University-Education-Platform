@@ -82,10 +82,10 @@ export default function Accounts() {
             <Button
               sx={{ml: 2, mr: 2}}
               variant="contained"
-              startIcon={<Iconify icon="eva:plus-fill" />}
+              startIcon={<Iconify icon="akar-icons:file" />}
               onClick={() => setOpen(true)}
             >
-              <FormattedMessage id="upload_users_csv" />
+              <FormattedMessage id="upload_file" />
             </Button>
             <Button
               variant="contained"

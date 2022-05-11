@@ -33,6 +33,7 @@ function register({username, password}) {
 
 async function logout() {
   window.localStorage.removeItem(localStorageKey)
+  window.localStorage.removeItem(localStorageID)
 }
 
 // an auth provider wouldn't use your client, they'd have their own

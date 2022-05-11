@@ -15,6 +15,8 @@ import ProfileForm from './Partials/ProfileForm'
 import ShowProfile from './Partials/ShowProfile'
 import {Typography} from '@mui/material'
 import {FormattedMessage} from 'react-intl'
+import {useAuth} from 'context/auth-context'
+import Profile from 'screens/Profile'
 
 const ColorlibConnector = styled(StepConnector)(({theme}) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -85,7 +87,12 @@ function ColorlibStepIcon(props) {
 const steps = ['complete_profile', 'wait_for_approval', 'approved']
 
 export default function CustomizedSteppers() {
-  const [activeStep, setActiveStep] = React.useState(1)
+  const {user} = useAuth()
+  const [activeStep, setActiveStep] = React.useState(user.status)
+  React.useEffect(() => {
+    setActiveStep(user.status)
+  }, [user.status])
+
   return (
     <Stack sx={{width: '100%'}} spacing={4}>
       <Stepper
@@ -105,7 +112,7 @@ export default function CustomizedSteppers() {
       </Stepper>
       <div>
         {activeStep === 0 && <ProfileForm />}
-        {activeStep === 1 && <ShowProfile />}
+        {activeStep === 1 && <Profile />}
         {activeStep === 2 && <>Welcome ....</>}
       </div>
     </Stack>

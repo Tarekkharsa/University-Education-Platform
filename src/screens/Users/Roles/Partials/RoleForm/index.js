@@ -25,7 +25,7 @@ export default function RoleForm({onSubmit}) {
   const [ritchText, setRitchText] = useState('')
 
   const {
-    isLoading: fetchLoading,
+    isFetching: fetchLoading,
     error: getOneError,
     data: user,
   } = useQuery({

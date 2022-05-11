@@ -22,6 +22,11 @@ import {Link as RouterLink} from 'react-router-dom'
 import {FormattedMessage} from 'react-intl'
 import {useTheme} from '@mui/styles'
 import Settings from './Partials/Settings'
+import {useAuth, useClient} from 'context/auth-context'
+import {useQuery} from 'react-query'
+import {FullPageSpinner} from 'components/lib'
+import useFiles from 'hooks/useFiles'
+import ChangePassword from './Partials/ChangePassword'
 
 function TabPanel(props) {
   const {children, value, index, ...other} = props
@@ -67,6 +72,7 @@ const AccountStyle = styled('div')(({theme}) => ({
   flexDirection: 'column',
   width: '30%',
   alignItems: 'center',
+  justifyContent: 'center',
   padding: theme.spacing(2, 2.5),
   borderRadius: Number(theme.shape.borderRadius) * 1.5,
   backgroundColor: theme.palette.grey[500_12],
@@ -88,12 +94,28 @@ const EditSectionStyle = styled('div')(({theme}) => ({
 }))
 
 export default function Profile() {
+  const {user: userAuth} = useAuth()
+  console.log(userAuth)
+  let id = userAuth.id
+  const client = useClient()
   const theme = useTheme()
   const classes = useStyles()
   const [value, setValue] = React.useState(0)
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
+  }
+  const {
+    isLoading,
+    error,
+    data: user,
+  } = useQuery({
+    queryKey: 'user',
+    queryFn: () => client(`getUserById?id=${id}`).then(data => data.data),
+  })
+
+  if (isLoading) {
+    return <FullPageSpinner />
   }
 
   return (
@@ -103,7 +125,7 @@ export default function Profile() {
           <AvatarStyle src={account.photoURL} alt="photoURL" />
           <Box sx={{ml: 2, mt: 2}}>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
-              {account.displayName}
+              {user.firstname} {user.lastname}
             </Typography>
             <Typography variant="body2" sx={{color: 'text.secondary'}}>
               {account.role}
@@ -116,7 +138,7 @@ export default function Profile() {
               <FormattedMessage id="firstName" />
             </Typography>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
-              firstName
+              {user.firstname}
             </Typography>
           </ListItem>
           <Divider variant="inset" component="li" />
@@ -126,7 +148,47 @@ export default function Profile() {
               <FormattedMessage id="lastName" />
             </Typography>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
-              lastName
+              {user.lastname}
+            </Typography>
+          </ListItem>
+          <Divider variant="inset" component="li" />
+
+          <ListItem button className={classes.li}>
+            <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
+              <FormattedMessage id="father_name" />
+            </Typography>
+            <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
+              {user.fathername}
+            </Typography>
+          </ListItem>
+          <Divider variant="inset" component="li" />
+
+          <ListItem button className={classes.li}>
+            <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
+              <FormattedMessage id="mother_name" />
+            </Typography>
+            <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
+              {user.mothername}
+            </Typography>
+          </ListItem>
+          <Divider variant="inset" component="li" />
+
+          <ListItem button className={classes.li}>
+            <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
+              <FormattedMessage id="phone_number" />
+            </Typography>
+            <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
+              {user.phonenumber}
+            </Typography>
+          </ListItem>
+          <Divider variant="inset" component="li" />
+
+          <ListItem button className={classes.li}>
+            <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
+              <FormattedMessage id="national_id_number" />
+            </Typography>
+            <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
+              {user.nationalidnumber}
             </Typography>
           </ListItem>
           <Divider variant="inset" component="li" />
@@ -136,7 +198,7 @@ export default function Profile() {
               <FormattedMessage id="userName" />
             </Typography>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
-              username
+              {user.username}
             </Typography>
           </ListItem>
           <Divider variant="inset" component="li" />
@@ -146,7 +208,7 @@ export default function Profile() {
               <FormattedMessage id="email" />
             </Typography>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
-              email
+              {user.email}
             </Typography>
           </ListItem>
           <Divider variant="inset" component="li" />
@@ -156,7 +218,7 @@ export default function Profile() {
         <Button
           variant="contained"
           component={RouterLink}
-          to="/dashboard/groups/add"
+          to="/dashboard/profile/edit"
           startIcon={<Iconify icon="eva:edit-2-outline" />}
         >
           <FormattedMessage id="edit_account" />
@@ -169,18 +231,20 @@ export default function Profile() {
             onChange={handleChange}
             aria-label="basic tabs example"
           >
+            <Tab label={<FormattedMessage id="settings" />} {...a11yProps(0)} />
+
             <Tab
               label={<FormattedMessage id="change_password" />}
-              {...a11yProps(0)}
+              {...a11yProps(1)}
             />
-            <Tab label={<FormattedMessage id="settings" />} {...a11yProps(1)} />
           </Tabs>
         </Box>
+
         <TabPanel value={value} index={0}>
-          change_password
+          <Settings />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Settings />
+          <ChangePassword />
         </TabPanel>
       </Box>
     </Page>

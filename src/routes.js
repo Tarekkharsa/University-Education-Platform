@@ -1,4 +1,4 @@
-import {Navigate, useRoutes} from 'react-router-dom'
+import {Navigate, Outlet, useRoutes} from 'react-router-dom'
 // layouts
 import DashboardLayout from 'layouts/dashboard'
 import LogoOnlyLayout from 'layouts/LogoOnlyLayout'
@@ -30,6 +30,10 @@ import AddAccount from 'screens/Users/Accounts/Add'
 import ShowAccount from 'screens/Users/Accounts/ShowAccount'
 import EditAccount from 'screens/Users/Accounts/EditAccount'
 import CustomizedSteppers from 'screens/Stepper'
+import {useAuth} from 'context/auth-context'
+import {useEffect} from 'react'
+import EditProfile from 'screens/Profile/Partials/EditProfile'
+import useRoles from 'hooks/useRoles'
 
 // ----------------------------------------------------------------------
 
@@ -40,8 +44,18 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         {path: 'login-stepper', element: <CustomizedSteppers />},
-        {path: 'app', element: <DashboardApp />},
+        {
+          path: 'app',
+          element: (
+            <PrivateRoute>
+              <PrivateAdminRoute>
+                <DashboardApp />
+              </PrivateAdminRoute>
+            </PrivateRoute>
+          ),
+        },
         {path: 'profile', element: <Profile />},
+        {path: 'profile/edit', element: <EditProfile />},
         {path: 'courses', element: <Courses />},
 
         {path: 'categories', element: <Categories />},
@@ -77,4 +91,23 @@ export default function Router() {
     },
     {path: '*', element: <Navigate to="/404" replace />},
   ])
+}
+
+function PrivateRoute({children}) {
+  const {user} = useAuth()
+
+  return user.status === 0 || user.status === 1 ? (
+    <Navigate to="/dashboard/login-stepper" />
+  ) : (
+    children
+  )
+}
+function PrivateAdminRoute({children}) {
+  const {checkIfRolesInUserRoles} = useRoles()
+
+  return !checkIfRolesInUserRoles(['ROLE_ADMIN']) ? (
+    <Navigate to="/dashboard/profile" />
+  ) : (
+    children
+  )
 }

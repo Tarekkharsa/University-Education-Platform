@@ -9,6 +9,7 @@ import useSetNotification from './hooks/useSetNotification'
 import IMGEditor from './IMGEditor'
 import {Grid, Button} from '@mui/material'
 import {isEmpty} from './Service/Helpers'
+import {FormattedMessage} from 'react-intl'
 
 export function MultipleFileUploadField({
   name,
@@ -24,6 +25,7 @@ export function MultipleFileUploadField({
   errorText,
   errors,
   setError,
+  autoUpload,
 }) {
   const {notifications} = useSetNotification()
   const classes = useStyles()
@@ -89,12 +91,18 @@ export function MultipleFileUploadField({
 
   useEffect(() => {
     if (multiple) {
-      // InputChange(name, formState)
-      InputChange(name, files)
+      if (autoUpload) {
+        InputChange(name, formState)
+      } else {
+        InputChange(name, files)
+      }
     } else {
       let image = formState.length > 0 ? formState[0] : ''
-      // InputChange(name, image)
-      InputChange(name, files[0])
+      if (autoUpload) {
+        InputChange(name, image)
+      } else {
+        InputChange(name, files[0])
+      }
     }
   }, [uploadedFiles, editValues, files])
 
@@ -211,7 +219,9 @@ export function MultipleFileUploadField({
       <Grid item>
         <div {...getRootProps({className: classes.dropzone})}>
           <input {...getInputProps()} />
-          <p>Drag 'n' drop some files here, or click to select files</p>
+          <p>
+            <FormattedMessage id="drag_and_drop_users_file" />
+          </p>
         </div>
         {errors && (
           <div className={classes.errorText}>{errors[name]?.message}</div>
@@ -226,7 +236,7 @@ export function MultipleFileUploadField({
           setCropper={setCropper}
           onDelete={onDelete}
         />
-        {!isEmpty(files) && (
+        {autoUpload && !isEmpty(files) && (
           <Grid item>
             <Button
               variant="contained"
