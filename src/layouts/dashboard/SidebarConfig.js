@@ -28,11 +28,6 @@ const sidebarConfig = [
       },
     ],
   },
-  // {
-  //   title: 'Courses',
-  //   path: '/dashboard/courses',
-  //   icon: getIcon('fluent:learning-app-20-regular'),
-  // },
   {
     title: 'categories',
     path: '/dashboard/categories',
@@ -44,6 +39,12 @@ const sidebarConfig = [
     path: '/dashboard/groups',
     icon: getIcon('ic:outline-groups'),
     roles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+  },
+  {
+    title: 'courses',
+    path: '/dashboard/courses',
+    roles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_TEACHER'],
+    icon: getIcon('fluent:learning-app-20-regular'),
   },
   // {
   //   title: 'product',

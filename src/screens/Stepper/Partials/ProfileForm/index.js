@@ -77,6 +77,7 @@ export default function ProfileForm({onSubmit}) {
     {
       onSuccess: data => {
         queryClient.invalidateQueries('user')
+        window.location.reload()
       },
     },
   )

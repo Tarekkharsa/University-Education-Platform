@@ -89,9 +89,6 @@ const steps = ['complete_profile', 'wait_for_approval', 'approved']
 export default function CustomizedSteppers() {
   const {user} = useAuth()
   const [activeStep, setActiveStep] = React.useState(user.status)
-  React.useEffect(() => {
-    setActiveStep(user.status)
-  }, [user.status])
 
   return (
     <Stack sx={{width: '100%'}} spacing={4}>

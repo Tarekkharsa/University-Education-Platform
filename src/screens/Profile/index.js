@@ -80,7 +80,7 @@ const AccountStyle = styled('div')(({theme}) => ({
 
 const AvatarStyle = styled(Avatar)(({theme}) => ({
   width: '50%',
-  height: 'auto',
+  height: '45%',
 }))
 const ContainerStyle = styled(Container)(({theme}) => ({
   display: 'flex',
@@ -95,7 +95,6 @@ const EditSectionStyle = styled('div')(({theme}) => ({
 
 export default function Profile() {
   const {user: userAuth} = useAuth()
-  console.log(userAuth)
   let id = userAuth.id
   const client = useClient()
   const theme = useTheme()
@@ -117,12 +116,19 @@ export default function Profile() {
   if (isLoading) {
     return <FullPageSpinner />
   }
+  console.log(
+    'process.env.REACT_APP_STORAGEURL_API_URL + user.image',
+    process.env.REACT_APP_STORAGEURL_API_URL + user.image,
+  )
 
   return (
     <Page title="User | Profile">
       <ContainerStyle>
         <AccountStyle>
-          <AvatarStyle src={account.photoURL} alt="photoURL" />
+          <AvatarStyle
+            src={process.env.REACT_APP_STORAGEURL_API_URL + user.image}
+            alt="photoURL"
+          />
           <Box sx={{ml: 2, mt: 2}}>
             <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
               {user.firstname} {user.lastname}

@@ -2,7 +2,7 @@
 import {Button, Container, Stack, Typography} from '@mui/material'
 import ReactTable from 'components/ReactTable'
 import {useCallback, useEffect, useMemo, useState} from 'react'
-import {Link as RouterLink} from 'react-router-dom'
+import {Link as RouterLink, useParams} from 'react-router-dom'
 import Iconify from 'components/Iconify'
 // components
 import Page from 'components/Page'
@@ -15,13 +15,13 @@ import {queryCache, useMutation, useQuery, useQueryClient} from 'react-query'
 import {useAuth} from 'context/auth-context'
 import {FullPageSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
-import {useTheme} from '@mui/styles'
+import AddMemberModal from './Add'
 import {FormattedMessage} from 'react-intl'
 
 // ----------------------------------------------------------------------
 
-export default function Courses() {
-  const theme = useTheme()
+export default function Members() {
+  const {id} = useParams()
   const columns = useMemo(() => tableColumns, [])
   const hiddenColumns = useMemo(() => tableHiddenColumns, [])
   const [rows, setRows] = useState([])
@@ -31,18 +31,25 @@ export default function Courses() {
   const queryClient = useQueryClient()
 
   const {isLoading, error, data, refetch} = useQuery({
-    queryKey: 'courses',
-    queryFn: () => client('course/getAll').then(data => data.data),
+    queryKey: 'members',
+    queryFn: () =>
+      client(`group/getAllGroupMembers?group_id=${id}`).then(data =>
+        data.data.filter(x => x !== null),
+      ),
   })
 
   const {mutate: handleRemoveClick} = useMutation(
-    ({id}) => client(`course/delete`, {method: 'POST', data: {course_ids: id}}),
+    data => client(`group/deleteMembers`, {method: 'POST', data}),
     {
       onSuccess: data => {
-        queryClient.invalidateQueries('courses')
+        queryClient.invalidateQueries('members')
       },
     },
   )
+
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
 
   const getSelectedRows = useCallback(({selectedFlatRows}) => {
     selectedRowsIds = []
@@ -59,14 +66,14 @@ export default function Courses() {
       selectedRows.map((row, i) => {
         selectedRowsIds.push(row.values.id)
       })
-    handleRemoveClick({id: selectedRowsIds})
+    handleRemoveClick({user_ids: selectedRowsIds, group_id: id})
   }
 
   if (isLoading && !data) {
     return <FullPageSpinner />
   }
   return (
-    <Page title="Courses">
+    <Page title="Groups">
       <Container>
         <Stack
           direction="row"
@@ -75,15 +82,14 @@ export default function Courses() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            <FormattedMessage id="courses" />
+            <FormattedMessage id="members" />
           </Typography>
           <Button
             variant="contained"
-            component={RouterLink}
-            to="/dashboard/courses/add"
+            onClick={handleOpen}
             startIcon={<Iconify icon="eva:plus-fill" />}
           >
-            <FormattedMessage id="new_course" />
+            <FormattedMessage id="new_member" />
           </Button>
         </Stack>
         <ReactTable
@@ -94,6 +100,11 @@ export default function Courses() {
           onDelete={onDelete}
           loading={isLoading}
           totalRecords={data?.length}
+        />
+        <AddMemberModal
+          open={open}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
         />
       </Container>
     </Page>

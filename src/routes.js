@@ -10,7 +10,6 @@ import Blog from 'screens/Blog'
 import User from 'screens/User'
 import NotFound from 'screens/Page404'
 import Categories from 'screens/Categories'
-import Courses from 'screens/Courses'
 import Roles from 'screens/Users/Roles'
 
 import Groups from 'screens/Groups'
@@ -35,6 +34,11 @@ import {useEffect} from 'react'
 import EditProfile from 'screens/Profile/Partials/EditProfile'
 import useRoles from 'hooks/useRoles'
 
+import Courses from 'screens/Courses'
+import AddCourse from 'screens/Courses/Add'
+import EditCourse from 'screens/Courses/EditCourse'
+import ShowCourse from 'screens/Courses/ShowCourse'
+
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -43,7 +47,14 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        {path: 'login-stepper', element: <CustomizedSteppers />},
+        {
+          path: 'login-stepper',
+          element: (
+            <PrivateAdminStepperRoute>
+              <CustomizedSteppers />
+            </PrivateAdminStepperRoute>
+          ),
+        },
         {
           path: 'app',
           element: (
@@ -56,21 +67,53 @@ export default function Router() {
         },
         {path: 'profile', element: <Profile />},
         {path: 'profile/edit', element: <EditProfile />},
-        {path: 'courses', element: <Courses />},
 
-        {path: 'categories', element: <Categories />},
+        {path: 'courses', element: <Courses />},
+        {path: 'courses/add', element: <AddCourse />},
+        {path: 'courses/:id/edit', element: <EditCourse />},
+        {path: 'courses/:id/show', element: <ShowCourse />},
+
+        {
+          path: 'categories',
+          element: (
+            <PrivateRoute>
+              <Categories />
+            </PrivateRoute>
+          ),
+        },
         {path: 'categories/add', element: <AddCategoty />},
         {path: 'categories/:id/edit', element: <EditCategoty />},
         {path: 'categories/:id/show', element: <ShowCategoty />},
 
-        {path: 'groups', element: <Groups />},
+        {
+          path: 'groups',
+          element: (
+            <PrivateRoute>
+              <Groups />
+            </PrivateRoute>
+          ),
+        },
         {path: 'groups/add', element: <AddGroup />},
         {path: 'groups/:id/edit', element: <EditGroup />},
         {path: 'groups/:id/show', element: <ShowGroup />},
 
-        {path: 'users/roles', element: <Roles />},
+        {
+          path: 'users/roles',
+          element: (
+            <PrivateRoute>
+              <Roles />
+            </PrivateRoute>
+          ),
+        },
         {path: 'users/roles/:id/edit', element: <EditRole />},
-        {path: 'users/accounts', element: <Accounts />},
+        {
+          path: 'users/accounts',
+          element: (
+            <PrivateRoute>
+              <Accounts />
+            </PrivateRoute>
+          ),
+        },
         {path: 'users/accounts/add', element: <AddAccount />},
         {path: 'users/accounts/:id/show', element: <ShowAccount />},
         {path: 'users/accounts/:id/edit', element: <EditAccount />},
@@ -107,6 +150,15 @@ function PrivateAdminRoute({children}) {
 
   return !checkIfRolesInUserRoles(['ROLE_ADMIN']) ? (
     <Navigate to="/dashboard/profile" />
+  ) : (
+    children
+  )
+}
+function PrivateAdminStepperRoute({children}) {
+  const {checkIfRolesInUserRoles} = useRoles()
+
+  return checkIfRolesInUserRoles(['ROLE_ADMIN']) ? (
+    <Navigate to="/dashboard/app" />
   ) : (
     children
   )

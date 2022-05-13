@@ -86,5 +86,19 @@
   "certificate_image": "Certificate Image",
   "old_password": "Old Password",
   "new_password": "New Password",
-  "update_profile": "Update Profile"
+  "update_profile": "Update Profile",
+  "drag_and_drop_files": "Drag and Drop Files",
+  "courses": "Courses",
+  "course_name": "Course Name",
+  "course_description": "Course Description",
+  "course_image": "Course Image",
+  "edit_course": "Edit Course",
+  "update_course": "Update Course",
+  "create_new_course": "Create New Course",
+  "new_course": "New Course",
+  "fullname": "Full Name",
+  "shortname": "Short Name",
+  "start_date": "Start Date",
+  "end_date": "End Date",
+  "visible": "Visible"
 }

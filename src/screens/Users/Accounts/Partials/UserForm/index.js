@@ -29,6 +29,7 @@ export default function UserForm({onSubmit}) {
     firstname: Yup.string().required('First name is required'),
     lastname: Yup.string().required('Last name is required'),
     password: !id ? Yup.string().required('Password is required') : '',
+    username: Yup.string(),
   })
 
   const {
@@ -43,6 +44,7 @@ export default function UserForm({onSubmit}) {
       lastname: '',
       email: '',
       password: '',
+      username: '',
     },
   })
 
@@ -75,14 +77,14 @@ export default function UserForm({onSubmit}) {
     },
   )
   const onSubmitForm = data => {
-    let {firstname, lastname, email, password} = data
+    let {firstname, lastname, email, password, username} = data
     mutate({
       firstname,
       lastname,
       email,
       password: id ? undefined : password,
       user_id: id ? id : undefined,
-      username: id ? user.username : undefined,
+      username: id ? username : undefined,
     })
   }
 
@@ -102,6 +104,14 @@ export default function UserForm({onSubmit}) {
           control={control}
           errors={errors}
         />
+        {id && (
+          <CustomInput
+            label="userName"
+            name="username"
+            control={control}
+            errors={errors}
+          />
+        )}
         <CustomInput
           label="email"
           name="email"

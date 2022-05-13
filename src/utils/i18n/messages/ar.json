@@ -86,5 +86,19 @@
   "certificate_image": "صورة الشهادة",
   "old_password": "كلمة المرور القديمة",
   "new_password": "كلمة المرور الجديدة",
-  "update_profile": "تحديث الملف الشخصي"
+  "update_profile": "تحديث الملف الشخصي",
+  "drag_and_drop_files": "إسحب وإسقط الملفات",
+  "courses": "الدورات",
+  "course_name": "اسم الدورة",
+  "course_description": "وصف الدورة",
+  "course_image": "صورة الدورة",
+  "edit_course": "تحرير الدورة",
+  "update_course": "تحديث الدورة",
+  "create_new_course": "إنشاء دورة جديدة",
+  "new_course": "دورة جديدة",
+  "fullname": "الاسم الكامل",
+  "shortname": "الاسم المختصر",
+  "start_date": "تاريخ البدء",
+  "end_date": "تاريخ الانتهاء",
+  "visible": "مرئي"
 }

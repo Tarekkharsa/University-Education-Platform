@@ -88,7 +88,7 @@ export default function RoleForm({onSubmit}) {
           optionUrl={'getAllRoles'}
           errors={errors}
           control={control}
-          onChange={value => setValue('role_ids', value)}
+          handleChange={value => setValue('role_ids', value)}
           multiple
         />
       </Stack>

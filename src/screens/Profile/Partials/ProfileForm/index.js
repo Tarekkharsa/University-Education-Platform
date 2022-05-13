@@ -65,7 +65,6 @@ export default function ProfileForm() {
   })
   useEffect(() => {
     if (user && id !== undefined) {
-      console.log('user', user)
       reset({
         ...user,
         father_name: user.fathername,
@@ -84,6 +83,7 @@ export default function ProfileForm() {
     {
       onSuccess: data => {
         queryClient.invalidateQueries('user')
+        navigate('/profile')
       },
     },
   )

@@ -42,7 +42,6 @@ function AuthProvider(props) {
     setData,
   } = useAsync()
   const queryCache = new QueryClient()
-  console.log('auth context', user)
   React.useEffect(() => {
     const appDataPromise = bootstrapAppData()
     run(appDataPromise)

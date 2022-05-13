@@ -1,32 +1,37 @@
 import {yupResolver} from '@hookform/resolvers/yup' // material
 import {LoadingButton} from '@mui/lab'
 import {Alert, Stack} from '@mui/material'
+import CustomCheckbox from 'components/Form/components/CustomCheckbox'
+import CustomDatePicker from 'components/Form/components/CustomDatePicker'
 import CustomInput from 'components/Form/components/CustomInput'
+import MultiSelect from 'components/Form/components/MultiDropdown'
 import RichText from 'components/Form/components/RichText'
 import {FullPageSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
-import {useEffect, useState} from 'react'
+import moment from 'moment'
+import {useEffect} from 'react'
 import {Controller, useForm} from 'react-hook-form'
 import {FormattedMessage} from 'react-intl'
 import {useMutation, useQuery, useQueryClient} from 'react-query'
-import {useLocation, useNavigate, useParams} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import * as Yup from 'yup'
 
 // ----------------------------------------------------------------------
 
-export default function CategoryForm({onSubmit}) {
+export default function CourseForm() {
   const {id} = useParams()
-  const {state} = useLocation()
-
   const client = useClient()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-
-  const CategorySchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    description: Yup.string(),
+  const CourseSchema = Yup.object().shape({
+    fullname: Yup.string().required(),
+    shortname: Yup.string().required(),
+    // category_id: Yup.number().required(),
+    description: Yup.string().required(),
+    start_date: Yup.date().required(),
+    end_date: Yup.date().required(),
+    visible: Yup.boolean().required(),
   })
-  const [ritchText, setRitchText] = useState('')
 
   const {
     control,
@@ -36,49 +41,57 @@ export default function CategoryForm({onSubmit}) {
     reset,
     formState: {errors, isSubmitting},
   } = useForm({
-    resolver: yupResolver(CategorySchema),
-    defaultValues: {name: '', description: ''},
+    resolver: yupResolver(CourseSchema),
+    defaultValues: {
+      fullname: '',
+      shortname: '',
+      // category_id: null,
+      description: '',
+      start_date: null,
+      end_date: null,
+      visible: false,
+    },
   })
 
   const {
-    isLoading: fetchLoading,
+    isFetching: fetchLoading,
     error: getOneError,
-    data: category,
+    data: group,
   } = useQuery({
-    queryKey: 'category',
+    queryKey: 'group',
     queryFn: () =>
-      client(`getCategories?key=id&value=${id}`).then(data => data.data[0]),
+      client(`course/getCourseById?id=${id}`).then(data => data.data[0]),
     enabled: id !== undefined,
   })
 
   useEffect(() => {
-    if (category && id !== undefined) {
-      reset(category)
+    if (group && id !== undefined) {
+      reset(group)
     }
-  }, [category])
+  }, [group])
 
   const {mutate, isError, error, isLoading} = useMutation(
     data =>
-      client(id ? `updateCategory` : `createCategory`, {
+      client(id ? 'course/create' : `course/create`, {
         method: 'POST',
         data: data,
       }),
     {
       onSuccess: data => {
-        queryClient.invalidateQueries('categories')
-        navigate('/dashboard/categories')
+        queryClient.invalidateQueries('courses')
+        navigate(-1)
         reset()
       },
     },
   )
 
   const onSubmitForm = data => {
-    let {name, description} = data
     mutate({
-      name,
-      description,
-      parent_id: state !== null ? state.id : 0,
-      id: id ? id : undefined,
+      ...data,
+      start_date: new Date(data.start_date).getTime() / 1000,
+      end_date: new Date(data.end_date).getTime() / 1000,
+      category_id: data.category_id.id,
+      visible: data.visible === true ? '1' : '0',
     })
   }
 
@@ -90,10 +103,46 @@ export default function CategoryForm({onSubmit}) {
     <form noValidate onSubmit={handleSubmit(onSubmitForm)}>
       <Stack spacing={3}>
         {isError ? <Alert severity="error">{error.message}</Alert> : null}
-
         <CustomInput
-          label="category_name"
-          name="name"
+          label="fullname"
+          name="fullname"
+          control={control}
+          errors={errors}
+        />
+        <CustomInput
+          label="shortname"
+          name="shortname"
+          control={control}
+          errors={errors}
+        />
+        <MultiSelect
+          name={'category_id'}
+          title={'categories'}
+          optionLable={'name'}
+          groupBy={'parent'}
+          optionUrl={'getCategories'}
+          errors={errors}
+          control={control}
+          handleChange={value => {
+            setValue('category_id', value)
+          }}
+        />
+
+        <CustomDatePicker
+          label="start_date"
+          name="start_date"
+          control={control}
+          errors={errors}
+        />
+        <CustomDatePicker
+          label="end_date"
+          name="end_date"
+          control={control}
+          errors={errors}
+        />
+        <CustomCheckbox
+          label="visible"
+          name="visible"
           control={control}
           errors={errors}
         />
@@ -119,7 +168,7 @@ export default function CategoryForm({onSubmit}) {
         sx={{my: 2}}
       >
         <LoadingButton
-          onClick={() => navigate('/dashboard/categories')}
+          onClick={() => navigate('/dashboard/groups')}
           size="large"
           type="submit"
           variant="contained"
@@ -134,7 +183,7 @@ export default function CategoryForm({onSubmit}) {
           loading={isLoading}
         >
           {id ? (
-            <FormattedMessage id="update_category" />
+            <FormattedMessage id="update_group" />
           ) : (
             <FormattedMessage id="save" />
           )}

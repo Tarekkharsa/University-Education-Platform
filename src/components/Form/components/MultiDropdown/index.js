@@ -17,11 +17,13 @@ export default function MultiSelect({
   optionLable,
   errors,
   multiple = false,
-  onChange,
+  handleChange,
+  groupBy,
 }) {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const [options, setOptions] = useState([])
+  const [selected, setSelected] = useState(null)
   const {uesr} = useAuth()
   const loading = open && options.length === 0
   const client = useClient()
@@ -65,6 +67,7 @@ export default function MultiSelect({
           onClose={() => {
             setOpen(false)
           }}
+          groupBy={option => String(option[groupBy])}
           loading={loading}
           options={options}
           isOptionEqualToValue={(option, value) =>
@@ -93,7 +96,7 @@ export default function MultiSelect({
               />
             )
           }}
-          onChange={(event, values, reason) => onChange(values)}
+          onChange={(event, values, reason) => handleChange(values)}
           value={value}
         />
       )}

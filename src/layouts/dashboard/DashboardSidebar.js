@@ -83,7 +83,10 @@ export default function DashboardSidebar({isOpenSidebar, onCloseSidebar}) {
       <Box sx={{mb: 5, mx: 2.5}}>
         <Link underline="none" component={RouterLink} to="profile">
           <AccountStyle>
-            <Avatar src={account.photoURL} alt="photoURL" />
+            <Avatar
+              src={process.env.REACT_APP_STORAGEURL_API_URL + user.image}
+              alt="photoURL"
+            />
             <Box
               sx={{
                 ml: 2,

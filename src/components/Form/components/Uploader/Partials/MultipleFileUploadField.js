@@ -43,7 +43,6 @@ export function MultipleFileUploadField({
 
   const onDrop = useCallback(
     (accFiles, rejFiles) => {
-      console.log('accFiles', accFiles)
       if (checkFileLimit(accFiles)) {
         // notifications(`File Limit ${limit}`)
         setError(name, {type: 'custom', message: `File Limit ${limit}`})
@@ -213,6 +212,7 @@ export function MultipleFileUploadField({
     }
     return new File([u8arr], filename, {type: mime})
   }
+  // get user token
 
   return (
     <React.Fragment>
@@ -220,7 +220,7 @@ export function MultipleFileUploadField({
         <div {...getRootProps({className: classes.dropzone})}>
           <input {...getInputProps()} />
           <p>
-            <FormattedMessage id="drag_and_drop_users_file" />
+            <FormattedMessage id="drag_and_drop_files" />
           </p>
         </div>
         {errors && (
