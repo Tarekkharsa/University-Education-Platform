@@ -100,5 +100,13 @@
   "shortname": "الاسم المختصر",
   "start_date": "تاريخ البدء",
   "end_date": "تاريخ الانتهاء",
-  "visible": "مرئي"
+  "visible": "مرئي",
+  "course_info": "معلومات الدورة",
+  "course_details": "تفاصيل الدورة",
+  "lessons": "الدروس",
+  "new_lesson": "درس جديد",
+  "update_lesson": "تحديث الدرس",
+  "edit_lesson": "تحرير الدرس",
+  "section": "القسم",
+  "section_num": "رقم القسم"
 }

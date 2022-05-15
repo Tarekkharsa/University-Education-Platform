@@ -2,14 +2,13 @@ import {yupResolver} from '@hookform/resolvers/yup' // material
 import {LoadingButton} from '@mui/lab'
 import {Alert, Stack} from '@mui/material'
 import CustomCheckbox from 'components/Form/components/CustomCheckbox'
-import CustomDatePicker from 'components/Form/components/CustomDatePicker'
 import CustomInput from 'components/Form/components/CustomInput'
+import Dropdown from 'components/Form/components/Dropdown'
 import MultiSelect from 'components/Form/components/MultiDropdown'
 import RichText from 'components/Form/components/RichText'
 import {FullPageSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
-import moment from 'moment'
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import {Controller, useForm} from 'react-hook-form'
 import {FormattedMessage} from 'react-intl'
 import {useMutation, useQuery, useQueryClient} from 'react-query'
@@ -18,19 +17,19 @@ import * as Yup from 'yup'
 
 // ----------------------------------------------------------------------
 
-export default function CourseForm() {
+export default function LessonForm({handleClose, lesson = null}) {
+  console.log('lesson', lesson)
   const {id} = useParams()
   const client = useClient()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const CourseSchema = Yup.object().shape({
-    fullname: Yup.string().required(),
-    shortname: Yup.string().required(),
-    // category_id: Yup.number().required(),
+
+  const LessonSchema = Yup.object().shape({
+    section_num: Yup.string().required(),
+    name: Yup.string().required(),
     description: Yup.string().required(),
-    start_date: Yup.date().required(),
-    end_date: Yup.date().required(),
     visible: Yup.boolean().required(),
+    highlight: Yup.boolean().required(),
   })
 
   const {
@@ -41,115 +40,94 @@ export default function CourseForm() {
     reset,
     formState: {errors, isSubmitting},
   } = useForm({
-    resolver: yupResolver(CourseSchema),
+    resolver: yupResolver(LessonSchema),
     defaultValues: {
-      fullname: '',
-      shortname: '',
-      // category_id: null,
+      section_num: '',
+      name: '',
       description: '',
-      start_date: null,
-      end_date: null,
       visible: false,
+      highlight: false,
     },
   })
 
   const {
     isFetching: fetchLoading,
     error: getOneError,
-    data: course,
+    data: lessonData,
   } = useQuery({
-    queryKey: 'course',
+    queryKey: 'lesson',
     queryFn: () =>
-      client(`course/getCourseById?id=${id}`).then(data => data.data[0]),
-    enabled: id !== undefined,
+      client(
+        `course/lesson/getLessonById?course_id=${id}&section_num=${lesson.section}`,
+      ).then(data => data.data[0]),
+    enabled: lesson !== null,
   })
-
-  useEffect(() => {
-    if (course && id !== undefined) {
-      reset({
-        ...course,
-        description: course.summary,
-        end_date: new Date(course.enddate),
-        start_date: new Date(course.startdate),
-        category_id: course.categoryid,
-        visible: Boolean(course.visible),
-      })
-    }
-  }, [course])
 
   const {mutate, isError, error, isLoading} = useMutation(
     data =>
-      client(id ? 'course/update' : `course/create`, {
-        method: 'POST',
-        data: data,
-      }),
+      client(
+        lesson !== null ? `course/lesson/update` : `course/lesson/create`,
+        {
+          method: 'POST',
+          data: data,
+        },
+      ),
     {
       onSuccess: data => {
-        queryClient.invalidateQueries('courses')
-        navigate(-1)
+        queryClient.invalidateQueries('lessons')
+        handleClose()
         reset()
       },
     },
   )
 
+  useEffect(() => {
+    if (lessonData && lesson !== null) {
+      reset({
+        ...lessonData,
+        section_num: lessonData.sectionnum,
+        description: lessonData.summary,
+      })
+    }
+  }, [lessonData])
+
   const onSubmitForm = data => {
     mutate({
       ...data,
-      start_date: new Date(data.start_date).getTime() / 1000,
-      end_date: new Date(data.end_date).getTime() / 1000,
-      category_id: data.category_id.id,
+      course_id: id,
       visible: data.visible === true ? '1' : '0',
+      highlight: data.visible === true ? '1' : '0',
     })
   }
 
   if (fetchLoading) {
     return <FullPageSpinner />
   }
-
   return (
     <form noValidate onSubmit={handleSubmit(onSubmitForm)}>
       <Stack spacing={3}>
         {isError ? <Alert severity="error">{error.message}</Alert> : null}
         <CustomInput
-          label="fullname"
-          name="fullname"
+          label="name"
+          name="name"
           control={control}
           errors={errors}
         />
         <CustomInput
-          label="shortname"
-          name="shortname"
-          control={control}
-          errors={errors}
-        />
-        <MultiSelect
-          name={'category_id'}
-          title={'categories'}
-          optionLable={'name'}
-          groupBy={'parent'}
-          optionUrl={'getCategories'}
-          errors={errors}
-          control={control}
-          handleChange={value => {
-            setValue('category_id', value)
-          }}
-        />
-
-        <CustomDatePicker
-          label="start_date"
-          name="start_date"
-          control={control}
-          errors={errors}
-        />
-        <CustomDatePicker
-          label="end_date"
-          name="end_date"
+          label="section_num"
+          name="section_num"
           control={control}
           errors={errors}
         />
         <CustomCheckbox
           label="visible"
           name="visible"
+          control={control}
+          errors={errors}
+        />
+        <CustomCheckbox
+          label="highlight"
+          name="highlight"
           control={control}
           errors={errors}
         />
@@ -175,9 +153,8 @@ export default function CourseForm() {
         sx={{my: 2}}
       >
         <LoadingButton
-          onClick={() => navigate('/dashboard/courses')}
+          onClick={handleClose}
           size="large"
-          type="submit"
           variant="contained"
           sx={{mr: 2}}
         >
@@ -189,11 +166,7 @@ export default function CourseForm() {
           variant="contained"
           loading={isLoading}
         >
-          {id ? (
-            <FormattedMessage id="update_course" />
-          ) : (
-            <FormattedMessage id="save" />
-          )}
+          <FormattedMessage id="save" />
         </LoadingButton>
       </Stack>
     </form>

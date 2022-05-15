@@ -100,5 +100,13 @@
   "shortname": "Short Name",
   "start_date": "Start Date",
   "end_date": "End Date",
-  "visible": "Visible"
+  "visible": "Visible",
+  "course_info": "Course Info",
+  "course_details": "Course Details",
+  "lessons": "Lessons",
+  "new_lesson": "New Lesson",
+  "update_lesson": "Update Lesson",
+  "edit_lesson": "Edit Lesson",
+  "section": "Section",
+  "section_num": "Section Number"
 }

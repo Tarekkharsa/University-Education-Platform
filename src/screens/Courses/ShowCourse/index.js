@@ -1,24 +1,16 @@
-import * as React from 'react'
-import PropTypes from 'prop-types'
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
-import Typography from '@mui/material/Typography'
+import {Button, Container, Stack} from '@mui/material'
 import Box from '@mui/material/Box'
-import {
-  Button,
-  Container,
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  Stack,
-} from '@mui/material'
-import {Link as RouterLink, useParams} from 'react-router-dom'
+import Tab from '@mui/material/Tab'
+import Tabs from '@mui/material/Tabs'
+import Typography from '@mui/material/Typography'
 import Iconify from 'components/Iconify'
 import Page from 'components/Page'
-import ShowGroup from './showGroupDetails'
-import Members from '../Partials/Members'
+import PropTypes from 'prop-types'
+import * as React from 'react'
 import {FormattedMessage} from 'react-intl'
+import {Link as RouterLink, useParams} from 'react-router-dom'
+import Lessons from '../Partials/Lessons'
+import ShowCourse from './showCourseDetails'
 
 function TabPanel(props) {
   const {children, value, index, ...other} = props
@@ -63,7 +55,7 @@ export default function VerticalTabs() {
   }
 
   return (
-    <Page title="Group">
+    <Page title="Course">
       <Container>
         <Stack
           direction="row"
@@ -72,16 +64,16 @@ export default function VerticalTabs() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            <FormattedMessage id="group_details" />
+            <FormattedMessage id="course_details" />
           </Typography>
 
           <Button
             variant="contained"
             component={RouterLink}
-            to={`/dashboard/groups/${id}/edit`}
+            to={`/dashboard/courses/${id}/edit`}
             startIcon={<Iconify icon="eva:edit-fill" />}
           >
-            <FormattedMessage id="edit_group" />
+            <FormattedMessage id="edit_course" />
           </Button>
         </Stack>
         <Box sx={{width: '100%'}}>
@@ -92,20 +84,20 @@ export default function VerticalTabs() {
               aria-label="basic tabs example"
             >
               <Tab
-                label={<FormattedMessage id="group_info" />}
+                label={<FormattedMessage id="course_info" />}
                 {...a11yProps(0)}
               />
               <Tab
-                label={<FormattedMessage id="members" />}
+                label={<FormattedMessage id="lessons" />}
                 {...a11yProps(1)}
               />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <ShowGroup />
+            <ShowCourse />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <Members />
+            <Lessons />
           </TabPanel>
         </Box>
       </Container>

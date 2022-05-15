@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
-import MemberForm from '../Partials/MemberForm'
+import LessonForm from '../Partials/LessonForm'
 
 const style = {
   position: 'absolute',
@@ -17,7 +17,7 @@ const style = {
   p: 4,
 }
 
-export default function AddMemberModal({open, handleClose, handleOpen}) {
+export default function AddLessonModal({open, handleClose, handleOpen}) {
   return (
     <Modal
       open={open}
@@ -26,7 +26,7 @@ export default function AddMemberModal({open, handleClose, handleOpen}) {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <MemberForm handleClose={handleClose} />
+        <LessonForm handleClose={handleClose} />
       </Box>
     </Modal>
   )

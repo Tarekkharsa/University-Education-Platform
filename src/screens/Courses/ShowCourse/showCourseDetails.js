@@ -19,14 +19,14 @@ import {useQuery} from 'react-query'
 import {Link as RouterLink, useParams} from 'react-router-dom'
 import useStyles from './styles'
 
-export default function ShowGroup() {
+export default function ShowCourse() {
   const classes = useStyles()
   const {id} = useParams()
   const client = useClient()
   const {isLoading, error, data} = useQuery({
-    queryKey: 'group',
+    queryKey: 'course',
     queryFn: () =>
-      client(`group/getGroupById?group_id=${id}`).then(data => data.data[0]),
+      client(`course/getCourseById?id=${id}`).then(data => data.data[0]),
   })
 
   if (isLoading) {
@@ -37,9 +37,9 @@ export default function ShowGroup() {
     <List className={classes.root}>
       <ListItem button className={classes.li}>
         <ListItemIcon>
-          <FormattedMessage id="name" />
+          <FormattedMessage id="fullname" />
         </ListItemIcon>
-        <div>{data?.name}</div>
+        <div>{data?.fullname}</div>
       </ListItem>
       <Divider variant="inset" component="li" />
 
@@ -47,7 +47,7 @@ export default function ShowGroup() {
         <ListItemIcon>
           <FormattedMessage id="description" />
         </ListItemIcon>
-        <div>{ReactHtmlParser(data?.description)}</div>
+        <div>{ReactHtmlParser(data?.summary)}</div>
       </ListItem>
       <Divider variant="inset" component="li" />
     </List>

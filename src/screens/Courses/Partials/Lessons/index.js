@@ -1,55 +1,77 @@
 // material
 import {Button, Container, Stack, Typography} from '@mui/material'
-import ReactTable from 'components/ReactTable'
-import {useCallback, useEffect, useMemo, useState} from 'react'
-import {Link as RouterLink, useParams} from 'react-router-dom'
 import Iconify from 'components/Iconify'
+import {FullPageSpinner} from 'components/lib'
 // components
 import Page from 'components/Page'
-import {UserMoreMenu} from 'sections/@dashboard/user'
-//
-import USERLIST from '_mocks_/user'
-import categoriesLIST from '_mocks_/categories'
-import {tableColumns, tableHiddenColumns} from './data'
-import {queryCache, useMutation, useQuery, useQueryClient} from 'react-query'
-import {useAuth} from 'context/auth-context'
-import {FullPageSpinner} from 'components/lib'
+import ReactTable from 'components/ReactTable'
 import {useClient} from 'context/auth-context'
-import AddMemberModal from './Add'
+import {useCallback, useMemo, useState} from 'react'
 import {FormattedMessage} from 'react-intl'
+import {useMutation, useQuery, useQueryClient} from 'react-query'
+import {useParams} from 'react-router-dom'
+import LessonMoreMenu from 'sections/@dashboard/courses/LessonMoreMenu'
+import AddLessonModal from './Add'
+import {tableColumns, tableHiddenColumns} from './data'
+import EditLessonModal from './Edit'
 
 // ----------------------------------------------------------------------
 
-export default function Members() {
+export default function Lessons() {
   const {id} = useParams()
-  const columns = useMemo(() => tableColumns, [])
+  const [lesson, setLesson] = useState(null)
+
+  const [openEditModla, setOpenEditModla] = useState(false)
+  const handleEditOpen = () => setOpenEditModla(true)
+  const handleEditClose = () => setOpenEditModla(false)
+
+  let newTableColumns = [
+    ...tableColumns,
+    {
+      Header: 'actions',
+      accessor: 'actions',
+      Cell: ({row}) => {
+        return (
+          <LessonMoreMenu
+            setOpen={setOpenEditModla}
+            setLesson={setLesson}
+            row={row.values}
+          />
+        )
+      },
+      style: {
+        textAlign: 'right',
+      },
+    },
+  ]
+  const columns = useMemo(() => newTableColumns, [])
   const hiddenColumns = useMemo(() => tableHiddenColumns, [])
   const [rows, setRows] = useState([])
   let selectedRowsIds = []
 
   const client = useClient()
   const queryClient = useQueryClient()
+  // add modle
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
 
   const {isLoading, error, data, refetch} = useQuery({
-    queryKey: 'members',
+    queryKey: 'lessons',
     queryFn: () =>
-      client(`group/getAllGroupMembers?group_id=${id}`).then(data =>
+      client(`course/getCourseLessonsWithDetails?id=${id}`).then(data =>
         data.data.filter(x => x !== null),
       ),
   })
 
   const {mutate: handleRemoveClick} = useMutation(
-    data => client(`group/deleteMembers`, {method: 'POST', data}),
+    data => client(`course/lesson/delete`, {method: 'POST', data}),
     {
       onSuccess: data => {
-        queryClient.invalidateQueries('members')
+        queryClient.invalidateQueries('lessons')
       },
     },
   )
-
-  const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
 
   const getSelectedRows = useCallback(({selectedFlatRows}) => {
     selectedRowsIds = []
@@ -66,14 +88,14 @@ export default function Members() {
       selectedRows.map((row, i) => {
         selectedRowsIds.push(row.values.id)
       })
-    handleRemoveClick({user_ids: selectedRowsIds, group_id: id})
+    handleRemoveClick({section_ids: selectedRowsIds, course_id: id})
   }
 
   if (isLoading && !data) {
     return <FullPageSpinner />
   }
   return (
-    <Page title="Groups">
+    <Page title="Lessons">
       <Container>
         <Stack
           direction="row"
@@ -82,14 +104,14 @@ export default function Members() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            <FormattedMessage id="members" />
+            <FormattedMessage id="lessons" />
           </Typography>
           <Button
             variant="contained"
             onClick={handleOpen}
             startIcon={<Iconify icon="eva:plus-fill" />}
           >
-            <FormattedMessage id="new_member" />
+            <FormattedMessage id="new_lesson" />
           </Button>
         </Stack>
         <ReactTable
@@ -101,10 +123,16 @@ export default function Members() {
           loading={isLoading}
           totalRecords={data?.length}
         />
-        <AddMemberModal
+        <AddLessonModal
           open={open}
           handleOpen={handleOpen}
           handleClose={handleClose}
+        />
+        <EditLessonModal
+          open={openEditModla}
+          handleOpen={handleEditOpen}
+          handleClose={handleEditClose}
+          lesson={lesson}
         />
       </Container>
     </Page>
