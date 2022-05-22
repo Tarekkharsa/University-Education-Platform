@@ -34,6 +34,24 @@ function FullPageSpinner() {
   )
 }
 
+function ModalSpinner() {
+  return (
+    <div
+      style={{
+        fontSize: '4em',
+        display: 'flex',
+        height: '30vh',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: '#1890FF',
+      }}
+    >
+      <Spinner />
+    </div>
+  )
+}
+
 function FullPageErrorFallback({error}) {
   return (
     <div
@@ -53,4 +71,4 @@ function FullPageErrorFallback({error}) {
   )
 }
 
-export {FullPageErrorFallback, FullPageSpinner}
+export {FullPageErrorFallback, FullPageSpinner, ModalSpinner}

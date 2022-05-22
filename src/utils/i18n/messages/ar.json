@@ -108,5 +108,21 @@
   "update_lesson": "تحديث الدرس",
   "edit_lesson": "تحرير الدرس",
   "section": "القسم",
-  "section_num": "رقم القسم"
+  "section_num": "رقم القسم",
+  "lesson_info": "معلومات الدرس",
+  "modules": "الوحدات",
+  "file_name": "اسم الملف",
+  "file_url": "رابط الملف",
+  "highlight": "تمييز",
+  "lesson_activities": "أنشطة الدرس",
+  "new_lesson_activity": "نشاط جديد للدرس",
+  "activities": "الأنشطة",
+  "add_activity": "إضافة نشاط",
+  "BigBlueButton": "BigBlueButton",
+  "File": "ملف",
+  "URL": "رابط",
+  "Folder": "مجلد",
+  "Choice": "اختيار",
+  "add_file": "إضافة ملف",
+  "add_url": "إضافة رابط"
 }

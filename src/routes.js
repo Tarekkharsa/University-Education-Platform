@@ -38,6 +38,9 @@ import Courses from 'screens/Courses'
 import AddCourse from 'screens/Courses/Add'
 import EditCourse from 'screens/Courses/EditCourse'
 import ShowCourse from 'screens/Courses/ShowCourse'
+import ShowLesson from 'screens/Courses/Partials/Lessons/Show'
+import FileModule from 'screens/Courses/Partials/Lessons/Show/LessonModules/AddModule/FileModule'
+import UrlModule from 'screens/Courses/Partials/Lessons/Show/LessonModules/AddModule/UrlModule'
 
 // ----------------------------------------------------------------------
 
@@ -72,7 +75,18 @@ export default function Router() {
         {path: 'courses/add', element: <AddCourse />},
         {path: 'courses/:id/edit', element: <EditCourse />},
         {path: 'courses/:id/show', element: <ShowCourse />},
-
+        {
+          path: 'courses/:id/show/lessons/:lessonId/show',
+          element: <ShowLesson />,
+        },
+        {
+          path: 'courses/:id/show/lessons/:lessonId/show/files',
+          element: <FileModule />,
+        },
+        {
+          path: 'courses/:id/show/lessons/:lessonId/show/url',
+          element: <UrlModule />,
+        },
         {
           path: 'categories',
           element: (

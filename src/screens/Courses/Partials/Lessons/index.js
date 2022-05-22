@@ -14,6 +14,7 @@ import LessonMoreMenu from 'sections/@dashboard/courses/LessonMoreMenu'
 import AddLessonModal from './Add'
 import {tableColumns, tableHiddenColumns} from './data'
 import EditLessonModal from './Edit'
+import ShowLessonModal from './Show'
 
 // ----------------------------------------------------------------------
 
@@ -31,11 +32,12 @@ export default function Lessons() {
       Header: 'actions',
       accessor: 'actions',
       Cell: ({row}) => {
+        console.log('row', row)
         return (
           <LessonMoreMenu
             setOpen={setOpenEditModla}
             setLesson={setLesson}
-            row={row.values}
+            row={row.original}
           />
         )
       },
@@ -59,8 +61,8 @@ export default function Lessons() {
   const {isLoading, error, data, refetch} = useQuery({
     queryKey: 'lessons',
     queryFn: () =>
-      client(`course/getCourseLessonsWithDetails?id=${id}`).then(data =>
-        data.data.filter(x => x !== null),
+      client(`course/getCourseLessonsWithDetails?id=${id}`).then(
+        data => data.data.lessons,
       ),
   })
 
@@ -123,17 +125,21 @@ export default function Lessons() {
           loading={isLoading}
           totalRecords={data?.length}
         />
-        <AddLessonModal
-          open={open}
-          handleOpen={handleOpen}
-          handleClose={handleClose}
-        />
-        <EditLessonModal
-          open={openEditModla}
-          handleOpen={handleEditOpen}
-          handleClose={handleEditClose}
-          lesson={lesson}
-        />
+        {open && (
+          <AddLessonModal
+            open={open}
+            handleOpen={handleOpen}
+            handleClose={handleClose}
+          />
+        )}
+        {openEditModla && (
+          <EditLessonModal
+            open={openEditModla}
+            handleOpen={handleEditOpen}
+            handleClose={handleEditClose}
+            lesson={lesson}
+          />
+        )}
       </Container>
     </Page>
   )

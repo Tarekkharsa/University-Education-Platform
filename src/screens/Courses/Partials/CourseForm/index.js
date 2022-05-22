@@ -15,6 +15,7 @@ import {FormattedMessage} from 'react-intl'
 import {useMutation, useQuery, useQueryClient} from 'react-query'
 import {useNavigate, useParams} from 'react-router-dom'
 import * as Yup from 'yup'
+import TreeTable from './Partials/Table'
 
 // ----------------------------------------------------------------------
 
@@ -45,7 +46,7 @@ export default function CourseForm() {
     defaultValues: {
       fullname: '',
       shortname: '',
-      // category_id: null,
+      category_id: null,
       description: '',
       start_date: null,
       end_date: null,
@@ -68,10 +69,10 @@ export default function CourseForm() {
     if (course && id !== undefined) {
       reset({
         ...course,
+        category_id: course.category,
         description: course.summary,
         end_date: new Date(course.enddate),
         start_date: new Date(course.startdate),
-        category_id: course.categoryid,
         visible: Boolean(course.visible),
       })
     }
@@ -134,7 +135,6 @@ export default function CourseForm() {
             setValue('category_id', value)
           }}
         />
-
         <CustomDatePicker
           label="start_date"
           name="start_date"

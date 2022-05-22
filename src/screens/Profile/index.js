@@ -116,10 +116,6 @@ export default function Profile() {
   if (isLoading) {
     return <FullPageSpinner />
   }
-  console.log(
-    'process.env.REACT_APP_STORAGEURL_API_URL + user.image',
-    process.env.REACT_APP_STORAGEURL_API_URL + user.image,
-  )
 
   return (
     <Page title="User | Profile">

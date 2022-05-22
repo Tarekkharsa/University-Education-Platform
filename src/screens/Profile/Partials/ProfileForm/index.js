@@ -6,6 +6,7 @@ import CustomInput from 'components/Form/components/CustomInput'
 import InputPassword from 'components/Form/components/InputPassword'
 import RichText from 'components/Form/components/RichText'
 import Uploader from 'components/Form/components/Uploader'
+import {FullPageSpinner} from 'components/lib'
 import {useAuth, useClient} from 'context/auth-context'
 import {useEffect, useState} from 'react'
 import {useForm} from 'react-hook-form'
@@ -23,6 +24,7 @@ export default function ProfileForm() {
   const client = useClient()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
+  const [userImage, setUserImage] = useState(null)
   const UserSchema = Yup.object().shape({
     email: Yup.string()
       .email('Email must be a valid email address')
@@ -41,6 +43,7 @@ export default function ProfileForm() {
     handleSubmit,
     reset,
     setValue,
+    getValues,
     formState: {errors, isSubmitting},
   } = useForm({
     resolver: yupResolver(UserSchema),
@@ -65,6 +68,8 @@ export default function ProfileForm() {
   })
   useEffect(() => {
     if (user && id !== undefined) {
+      setUserImage(user.image)
+
       reset({
         ...user,
         father_name: user.fathername,
@@ -76,38 +81,46 @@ export default function ProfileForm() {
   }, [user])
   const {mutate, isError, error, isLoading} = useMutation(
     data =>
-      client('completeUserProfile', {
+      client('updateUser', {
         method: 'POST',
         data: data,
       }),
     {
       onSuccess: data => {
         queryClient.invalidateQueries('user')
-        navigate('/profile')
+        navigate('/dashboard/profile')
       },
     },
   )
   const onSubmitForm = data => {
-    mutate(data)
+    mutate({
+      ...data,
+      user_id: id,
+    })
   }
-
+  if (fetchLoading) {
+    return <FullPageSpinner />
+  }
   return (
     <form autoComplete="off" noValidate onSubmit={handleSubmit(onSubmitForm)}>
       <Stack spacing={3}>
         {isError ? <Alert severity="error">{error.message}</Alert> : null}
-        <Uploader
-          name="user_image"
-          InputChange={(name, file) => {
-            setValue(name, file)
-          }}
-          label="user_image"
-          width="100%"
-          accept={['image/*']}
-          aspectRatio="1:1"
-          multiple={false}
-          maxFileSize={30}
-          autoUpload={true}
-        />
+        {user.image && (
+          <Uploader
+            name="user_image"
+            InputChange={(name, file) => {
+              setValue(name, file)
+            }}
+            label="user_image"
+            width="100%"
+            accept={['image/*']}
+            aspectRatio="1:1"
+            multiple={false}
+            maxFileSize={30}
+            autoUpload={true}
+            editValue={user.image}
+          />
+        )}
         <CustomInput
           label="firstName"
           name="firstname"
@@ -150,32 +163,38 @@ export default function ProfileForm() {
           control={control}
           errors={errors}
         />
-        <Uploader
-          name="national_id_image"
-          InputChange={(name, file) => {
-            setValue(name, file)
-          }}
-          label="national_id_image"
-          width="100%"
-          accept={['image/*']}
-          aspectRatio="1:1"
-          multiple={false}
-          maxFileSize={30}
-          autoUpload={true}
-        />
-        <Uploader
-          name="certificate_image"
-          InputChange={(name, file) => {
-            setValue(name, file)
-          }}
-          label="certificate_image"
-          width="100%"
-          accept={['image/*']}
-          aspectRatio="1:1"
-          multiple={false}
-          maxFileSize={30}
-          autoUpload={true}
-        />
+        {user.nationalidimage && (
+          <Uploader
+            name="national_id_image"
+            InputChange={(name, file) => {
+              setValue(name, file)
+            }}
+            label="national_id_image"
+            width="100%"
+            accept={['image/*']}
+            aspectRatio="1:1"
+            multiple={false}
+            maxFileSize={30}
+            autoUpload={true}
+            editValue={user.nationalidimage}
+          />
+        )}
+        {user.certificateimage && (
+          <Uploader
+            name="certificate_image"
+            InputChange={(name, file) => {
+              setValue(name, file)
+            }}
+            label="certificate_image"
+            width="100%"
+            accept={['image/*']}
+            aspectRatio="1:1"
+            multiple={false}
+            maxFileSize={30}
+            autoUpload={true}
+            editValue={user.certificateimage}
+          />
+        )}
       </Stack>
       <Stack
         direction="row"

@@ -108,5 +108,21 @@
   "update_lesson": "Update Lesson",
   "edit_lesson": "Edit Lesson",
   "section": "Section",
-  "section_num": "Section Number"
+  "section_num": "Section Number",
+  "lesson_info": "Lesson Info",
+  "modules": "Modules",
+  "file_name": "File Name",
+  "file_url": "File Url",
+  "highlight": "Highlight",
+  "lesson_activities": "Lesson Activities",
+  "new_lesson_activity": "New Lesson Activity",
+  "add_activity": "Add Activity",
+  "activities": "Activities",
+  "BigBlueButton": "BigBlueButton",
+  "File": "File",
+  "URL": "URL",
+  "Folder": "Folder",
+  "Choice": "Choice",
+  "add_file": "Add File",
+  "add_url": "Add URL"
 }

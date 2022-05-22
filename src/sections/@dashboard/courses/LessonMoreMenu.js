@@ -14,7 +14,12 @@ import {FormattedMessage} from 'react-intl'
 
 // ----------------------------------------------------------------------
 
-export default function LessonMoreMenu({row, setOpen, setLesson}) {
+export default function LessonMoreMenu({
+  row,
+  setOpen,
+  setOpenShowModla,
+  setLesson,
+}) {
   const ref = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
@@ -28,7 +33,9 @@ export default function LessonMoreMenu({row, setOpen, setLesson}) {
       <Menu
         open={isOpen}
         anchorEl={ref.current}
-        onClose={() => setIsOpen(false)}
+        onClose={() => {
+          setIsOpen(false)
+        }}
         PaperProps={{
           sx: {width: 200, maxWidth: '100%'},
         }}
@@ -37,7 +44,7 @@ export default function LessonMoreMenu({row, setOpen, setLesson}) {
       >
         <MenuItem
           sx={{color: 'text.secondary'}}
-          onClick={() => navigate(`/dashboard/courses/${row.id}/show`)}
+          onClick={() => navigate(`lessons/${row.id}/show`)}
         >
           <ListItemIcon>
             <Iconify icon="carbon:view" width={24} height={24} />
