@@ -18,7 +18,6 @@ export default function MultiSelect({
   errors,
   multiple = false,
   handleChange,
-  groupBy,
 }) {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
@@ -67,7 +66,6 @@ export default function MultiSelect({
           onClose={() => {
             setOpen(false)
           }}
-          groupBy={option => String(option[groupBy])}
           loading={loading}
           options={options}
           isOptionEqualToValue={(option, value) =>

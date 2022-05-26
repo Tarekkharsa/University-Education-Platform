@@ -9,6 +9,7 @@ import PropTypes from 'prop-types'
 import * as React from 'react'
 import {FormattedMessage} from 'react-intl'
 import {Link as RouterLink, useParams} from 'react-router-dom'
+import CourseUsers from '../Partials/CourseUsers'
 import Lessons from '../Partials/Lessons'
 import ShowCourse from './showCourseDetails'
 
@@ -91,6 +92,7 @@ export default function VerticalTabs() {
                 label={<FormattedMessage id="lessons" />}
                 {...a11yProps(1)}
               />
+              <Tab label={<FormattedMessage id="users" />} {...a11yProps(2)} />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
@@ -98,6 +100,9 @@ export default function VerticalTabs() {
           </TabPanel>
           <TabPanel value={value} index={1}>
             <Lessons />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <CourseUsers />
           </TabPanel>
         </Box>
       </Container>

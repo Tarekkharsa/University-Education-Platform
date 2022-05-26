@@ -1,7 +1,9 @@
-import Box from '@mui/material/Box'
-import Modal from '@mui/material/Modal'
 import * as React from 'react'
-import TreeTable from '../Table'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import Modal from '@mui/material/Modal'
+import UsersForm from '../Partials/UsersForm'
 
 const style = {
   position: 'absolute',
@@ -13,11 +15,9 @@ const style = {
   // border: '2px solid #000',
   //   boxShadow: 24,
   p: 4,
-  maxHeight: '80%',
-  overflow: 'scroll',
 }
 
-export default function CategoryModal({open, handleClose, setValue}) {
+export default function AddUsers({open, handleClose, handleOpen}) {
   return (
     <Modal
       open={open}
@@ -26,7 +26,7 @@ export default function CategoryModal({open, handleClose, setValue}) {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <TreeTable handleClose={handleClose} setValue={setValue} />
+        <UsersForm handleClose={handleClose} />
       </Box>
     </Modal>
   )

@@ -17,7 +17,6 @@ import {FullPageSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
 import {useTheme} from '@mui/styles'
 import {FormattedMessage} from 'react-intl'
-
 // ----------------------------------------------------------------------
 
 export default function Courses() {

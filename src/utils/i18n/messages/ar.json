@@ -124,5 +124,8 @@
   "Folder": "مجلد",
   "Choice": "اختيار",
   "add_file": "إضافة ملف",
-  "add_url": "إضافة رابط"
+  "add_url": "إضافة رابط",
+  "select_category": "اختر الفئة",
+  "new_users": "مستخدمين جدد",
+  "delete_group": "حذف مجموعة"
 }

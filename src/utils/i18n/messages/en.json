@@ -124,5 +124,8 @@
   "Folder": "Folder",
   "Choice": "Choice",
   "add_file": "Add File",
-  "add_url": "Add URL"
+  "add_url": "Add URL",
+  "select_category": "Select Category",
+  "new_users": "New Users",
+  "delete_group": "Delete Group"
 }

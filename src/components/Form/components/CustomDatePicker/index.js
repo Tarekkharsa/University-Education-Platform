@@ -15,7 +15,6 @@ const CustomDatePicker = ({name, label, control, errors}) => {
         render={({field: {onChange, value}, fieldState: {error, invalid}}) => (
           <DatePicker
             label={<FormattedMessage id={label} />}
-            disableFuture
             value={value}
             onChange={value => onChange(value)}
             renderInput={params => (
