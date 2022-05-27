@@ -72,15 +72,15 @@ export default function ShowLesson() {
   }
   const client = useClient()
 
-  const {isLoading, error, data, refetch} = useQuery({
-    queryKey: 'lesson',
+  const {isLoading, isFetching, error, data, refetch} = useQuery({
+    queryKey: `lesson${lessonId}`,
     queryFn: () =>
       client(
         `course/getCourseLessonsWithDetailsByLessonId?id=${id}&lesson_id=${lessonId}`,
       ).then(data => data.data),
   })
 
-  if (isLoading) {
+  if (isFetching) {
     return <FullPageSpinner />
   }
 
@@ -118,11 +118,13 @@ export default function ShowLesson() {
             <LessonInfo data={data?.lessons[0]} />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <LessonModules
-              modules={data?.lessons[0]?.modules}
-              token={data?.tokenfile}
-              section={data?.lessons[0]?.section}
-            />
+            {data && (
+              <LessonModules
+                modules={data?.lessons[0]?.modules}
+                token={data?.tokenfile}
+                section={data?.lessons[0]?.section}
+              />
+            )}
           </TabPanel>
         </Box>
       </Container>

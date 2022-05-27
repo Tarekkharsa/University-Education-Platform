@@ -24,7 +24,10 @@ export default function Lessons() {
 
   const [openEditModla, setOpenEditModla] = useState(false)
   const handleEditOpen = () => setOpenEditModla(true)
-  const handleEditClose = () => setOpenEditModla(false)
+  const handleEditClose = () => {
+    setOpenEditModla(false)
+    setLesson(null)
+  }
 
   let newTableColumns = [
     ...tableColumns,
@@ -32,7 +35,6 @@ export default function Lessons() {
       Header: 'actions',
       accessor: 'actions',
       Cell: ({row}) => {
-        console.log('row', row)
         return (
           <LessonMoreMenu
             setOpen={setOpenEditModla}

@@ -3,12 +3,10 @@ import {LoadingButton} from '@mui/lab'
 import {Alert, Stack} from '@mui/material'
 import CustomCheckbox from 'components/Form/components/CustomCheckbox'
 import CustomInput from 'components/Form/components/CustomInput'
-import Dropdown from 'components/Form/components/Dropdown'
-import MultiSelect from 'components/Form/components/MultiDropdown'
 import RichText from 'components/Form/components/RichText'
-import {FullPageSpinner} from 'components/lib'
+import {ModalSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
-import {useEffect, useState} from 'react'
+import {useEffect} from 'react'
 import {Controller, useForm} from 'react-hook-form'
 import {FormattedMessage} from 'react-intl'
 import {useMutation, useQuery, useQueryClient} from 'react-query'
@@ -18,7 +16,6 @@ import * as Yup from 'yup'
 // ----------------------------------------------------------------------
 
 export default function LessonForm({handleClose, lesson = null}) {
-  console.log('lesson', lesson)
   const {id} = useParams()
   const client = useClient()
   const queryClient = useQueryClient()
@@ -55,7 +52,7 @@ export default function LessonForm({handleClose, lesson = null}) {
     error: getOneError,
     data: lessonData,
   } = useQuery({
-    queryKey: 'lesson',
+    queryKey: `lesson${lesson?.id}`,
     queryFn: () =>
       client(
         `course/lesson/getLessonById?course_id=${id}&section_num=${lesson.section}`,
@@ -87,6 +84,7 @@ export default function LessonForm({handleClose, lesson = null}) {
         ...lessonData,
         section_num: lessonData.sectionnum,
         description: lessonData.summary,
+        visible: lessonData.visible === 1 ? true : false,
       })
     }
   }, [lessonData])
@@ -101,7 +99,7 @@ export default function LessonForm({handleClose, lesson = null}) {
   }
 
   if (fetchLoading) {
-    return <FullPageSpinner />
+    return <ModalSpinner />
   }
   return (
     <form noValidate onSubmit={handleSubmit(onSubmitForm)}>
