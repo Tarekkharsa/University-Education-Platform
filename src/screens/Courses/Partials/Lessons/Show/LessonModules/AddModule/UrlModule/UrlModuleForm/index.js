@@ -6,7 +6,7 @@ import CustomCheckbox from 'components/Form/components/CustomCheckbox'
 import CustomInput from 'components/Form/components/CustomInput'
 import RichText from 'components/Form/components/RichText'
 import Uploader from 'components/Form/components/Uploader'
-import {FullPageSpinner} from 'components/lib'
+import {FullPageSpinner, ModalSpinner} from 'components/lib'
 import {useAuth, useClient} from 'context/auth-context'
 import {useEffect, useState} from 'react'
 import {Controller, useForm} from 'react-hook-form'
@@ -17,12 +17,12 @@ import * as Yup from 'yup'
 
 // ----------------------------------------------------------------------
 
-export default function UrlModuleForm({data, section, module_id, handleClose}) {
+export default function UrlModuleForm({section, module_id, handleClose}) {
   const location = useLocation()
   const {state} = location
   const client = useClient()
   const {user} = useAuth()
-  const {id} = useParams()
+  const {id, lessonId} = useParams()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const UserUrlSchema = Yup.object().shape({
@@ -37,6 +37,18 @@ export default function UrlModuleForm({data, section, module_id, handleClose}) {
   })
 
   const {
+    isFetching: fetchLoading,
+    error: getOneError,
+    data: module,
+  } = useQuery({
+    queryKey: 'UrlModule',
+    queryFn: () =>
+      client(
+        `course/getModuleById?id=${module_id}&lesson_id=${lessonId}&course_id=${id}`,
+      ).then(data => data?.data?.module[0]),
+    enabled: module_id !== undefined,
+  })
+  const {
     control,
     handleSubmit,
     reset,
@@ -46,25 +58,34 @@ export default function UrlModuleForm({data, section, module_id, handleClose}) {
     formState: {errors, isSubmitting},
   } = useForm({
     resolver: yupResolver(UserUrlSchema),
-    defaultValues: data
-      ? {url: data.fileurl, name: data.filename, visible: false}
-      : {
-          url: '',
-          name: '',
-          visible: false,
-        },
+    defaultValues: {
+      url: '',
+      name: '',
+      visible: false,
+    },
   })
+
+  useEffect(() => {
+    if (module && module_id !== undefined) {
+      reset({
+        ...module,
+        url: module.contents[0].fileurl,
+        name: module.contents[0].filename,
+        visible: module.visible === 1 ? true : false,
+      })
+    }
+  }, [module])
 
   const {mutate, isError, error, isLoading} = useMutation(
     data =>
-      client(data ? 'module/url/update' : `module/url/create`, {
+      client(module_id ? 'module/url/update' : `module/url/create`, {
         method: 'POST',
         data: data,
       }),
     {
       onSuccess: data => {
-        queryClient.invalidateQueries('lesson')
-        if (!data) {
+        queryClient.invalidateQueries(`lesson${lessonId}`)
+        if (!module_id) {
           navigate(-1)
         } else {
           handleClose()
@@ -78,20 +99,20 @@ export default function UrlModuleForm({data, section, module_id, handleClose}) {
     mutate({
       ...data,
       course_id: id,
-      section_num: !data ? state.section : section,
+      section_num: !module_id ? state.section : section,
       visible: data.visible ? 1 : 0,
       url_module_id: data ? module_id : undefined,
     })
   }
   const onCancel = () => {
-    if (!data) {
+    if (!module_id) {
       navigate(-1)
     } else {
       handleClose()
     }
   }
-  if (isLoading) {
-    return <FullPageSpinner />
+  if (fetchLoading) {
+    return <ModalSpinner />
   }
 
   return (
@@ -122,7 +143,7 @@ export default function UrlModuleForm({data, section, module_id, handleClose}) {
         sx={{my: 2}}
       >
         <LoadingButton
-          onClick={handleClose}
+          onClick={onCancel}
           size="large"
           variant="contained"
           sx={{mr: 2}}

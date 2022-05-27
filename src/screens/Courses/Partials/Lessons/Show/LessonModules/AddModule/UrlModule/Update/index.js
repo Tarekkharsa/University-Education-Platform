@@ -21,7 +21,6 @@ export default function UpdateUrlModule({
   handleOpen,
   section,
   module_id,
-  data,
 }) {
   return (
     <Modal
@@ -32,7 +31,6 @@ export default function UpdateUrlModule({
     >
       <Box sx={style}>
         <UrlModuleForm
-          data={data}
           section={section}
           module_id={module_id}
           handleClose={handleClose}

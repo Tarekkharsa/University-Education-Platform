@@ -15,7 +15,7 @@ import useStyles from './styles'
 
 const Item = styled(Paper)(({theme}) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#f8f3f39c',
-  ...theme.typography.body2,
+  // ...theme.typography.body2,
   padding: theme.spacing(2),
   textAlign: 'center',
   color: theme.palette.text.secondary,

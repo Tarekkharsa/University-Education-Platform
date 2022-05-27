@@ -93,7 +93,7 @@ export default function ShowLesson() {
           justifyContent="space-between"
           mb={5}
         >
-          <Typography variant="h4" gutterBottom>
+          <Typography>
             <FormattedMessage id="lessons" />
           </Typography>
         </Stack>

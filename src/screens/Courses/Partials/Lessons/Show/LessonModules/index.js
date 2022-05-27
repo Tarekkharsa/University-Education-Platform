@@ -4,12 +4,14 @@ import {useClient} from 'context/auth-context'
 import React, {useState} from 'react'
 import {FormattedMessage} from 'react-intl'
 import {useMutation, useQueryClient} from 'react-query'
+import {useParams} from 'react-router-dom'
 import AddModule from './AddModule'
 import ShowFile from './File'
 import useStyles from './styles'
 import ShowUrl from './Url'
 
 export default function LessonModules({modules, token, section}) {
+  const {lessonId} = useParams()
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
@@ -24,7 +26,7 @@ export default function LessonModules({modules, token, section}) {
       }),
     {
       onSuccess: data => {
-        queryClient.invalidateQueries('lesson')
+        queryClient.invalidateQueries(`lesson${lessonId}`)
       },
     },
   )

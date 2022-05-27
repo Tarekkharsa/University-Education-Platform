@@ -42,10 +42,8 @@ export default function ShowUrl({data, module_id, deleteUrl, section}) {
         </IconButton>
       </ListItem>
       <Divider variant="inset" component="li" />
-      <UpdateUrlModule />
       {open && (
         <UpdateUrlModule
-          data={data}
           section={section}
           module_id={module_id}
           open={open}

@@ -1,24 +1,16 @@
-import * as React from 'react'
-import PropTypes from 'prop-types'
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
-import Typography from '@mui/material/Typography'
+import {Button, Container, Stack} from '@mui/material'
 import Box from '@mui/material/Box'
-import {
-  Button,
-  Container,
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  Stack,
-} from '@mui/material'
-import {Link as RouterLink, useParams} from 'react-router-dom'
+import Tab from '@mui/material/Tab'
+import Tabs from '@mui/material/Tabs'
+import Typography from '@mui/material/Typography'
 import Iconify from 'components/Iconify'
 import Page from 'components/Page'
-import ShowGroup from './showGroupDetails'
-import Members from '../Partials/Members'
+import PropTypes from 'prop-types'
+import * as React from 'react'
 import {FormattedMessage} from 'react-intl'
+import {Link as RouterLink, useParams} from 'react-router-dom'
+import Members from '../Partials/Members'
+import ShowGroup from './showGroupDetails'
 
 function TabPanel(props) {
   const {children, value, index, ...other} = props
