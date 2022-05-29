@@ -1,22 +1,17 @@
 // material
 import {Button, Container, Stack, Typography} from '@mui/material'
-import ReactTable from 'components/ReactTable'
-import {useCallback, useEffect, useMemo, useState} from 'react'
-import {Link as RouterLink} from 'react-router-dom'
+import {useTheme} from '@mui/styles'
 import Iconify from 'components/Iconify'
+import {FullPageSpinner} from 'components/lib'
 // components
 import Page from 'components/Page'
-import {UserMoreMenu} from 'sections/@dashboard/user'
-//
-import USERLIST from '_mocks_/user'
-import categoriesLIST from '_mocks_/categories'
-import {tableColumns, tableHiddenColumns} from './data'
-import {queryCache, useMutation, useQuery, useQueryClient} from 'react-query'
-import {useAuth} from 'context/auth-context'
-import {FullPageSpinner} from 'components/lib'
+import ReactTable from 'components/ReactTable'
 import {useClient} from 'context/auth-context'
-import {useTheme} from '@mui/styles'
+import {useCallback, useMemo, useState} from 'react'
 import {FormattedMessage} from 'react-intl'
+import {useMutation, useQuery, useQueryClient} from 'react-query'
+import {Link as RouterLink} from 'react-router-dom'
+import {tableColumns, tableHiddenColumns} from './data'
 // ----------------------------------------------------------------------
 
 export default function Courses() {

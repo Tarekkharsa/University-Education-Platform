@@ -127,5 +127,9 @@
   "add_url": "إضافة رابط",
   "select_category": "اختر الفئة",
   "new_users": "مستخدمين جدد",
-  "delete_group": "حذف مجموعة"
+  "delete_group": "حذف مجموعة",
+  "option": "خيار",
+  "new_option": "خيار جديد",
+  "add_new_option": "إضافة خيار جديد",
+  "add": "إضافة"
 }

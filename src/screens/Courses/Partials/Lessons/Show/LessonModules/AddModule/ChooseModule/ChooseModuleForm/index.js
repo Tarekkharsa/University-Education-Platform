@@ -1,23 +1,20 @@
 import {yupResolver} from '@hookform/resolvers/yup' // material
 import {LoadingButton} from '@mui/lab'
-import {Alert, Stack} from '@mui/material'
-import axios from 'axios'
+import {Alert, Chip, Stack} from '@mui/material'
 import CustomCheckbox from 'components/Form/components/CustomCheckbox'
 import CustomInput from 'components/Form/components/CustomInput'
-import RichText from 'components/Form/components/RichText'
-import Uploader from 'components/Form/components/Uploader'
-import {FullPageSpinner, ModalSpinner} from 'components/lib'
 import {useAuth, useClient} from 'context/auth-context'
-import {useEffect, useState} from 'react'
-import {Controller, useForm} from 'react-hook-form'
+import {useState} from 'react'
+import {useForm} from 'react-hook-form'
 import {FormattedMessage} from 'react-intl'
-import {useMutation, useQuery, useQueryClient} from 'react-query'
+import {useMutation, useQueryClient} from 'react-query'
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
 import * as Yup from 'yup'
 
 // ----------------------------------------------------------------------
 
-export default function UrlModuleForm({section, module_id, handleClose}) {
+export default function ChooseModuleForm({section, module_id, handleClose}) {
+  const [options, setOptions] = useState([])
   const location = useLocation()
   const {state} = location
   const client = useClient()
@@ -26,59 +23,32 @@ export default function UrlModuleForm({section, module_id, handleClose}) {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const UserUrlSchema = Yup.object().shape({
-    url: Yup.string()
-      .matches(
-        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        'Enter correct url!',
-      )
-      .required('Please enter url'),
+    new_option: Yup.string(),
     name: Yup.string().required(),
     visible: Yup.boolean().required(),
   })
 
   const {
-    isFetching: fetchLoading,
-    error: getOneError,
-    data: module,
-  } = useQuery({
-    queryKey: 'UrlModule',
-    queryFn: () =>
-      client(
-        `course/getModuleById?id=${module_id}&lesson_id=${lessonId}&course_id=${id}`,
-      ).then(data => data?.data?.module[0]),
-    enabled: module_id !== undefined,
-  })
-  const {
     control,
     handleSubmit,
     reset,
     setValue,
+    getValues,
     register,
     setError,
     formState: {errors, isSubmitting},
   } = useForm({
     resolver: yupResolver(UserUrlSchema),
     defaultValues: {
-      url: '',
+      new_option: '',
       name: '',
       visible: false,
     },
   })
 
-  useEffect(() => {
-    if (module && module_id !== undefined) {
-      reset({
-        ...module,
-        url: module.contents[0].fileurl,
-        name: module.contents[0].filename,
-        visible: module.visible === 1 ? true : false,
-      })
-    }
-  }, [module])
-
   const {mutate, isError, error, isLoading} = useMutation(
     data =>
-      client(module_id ? 'module/url/update' : `module/url/create`, {
+      client('module/choice/create', {
         method: 'POST',
         data: data,
       }),
@@ -96,23 +66,36 @@ export default function UrlModuleForm({section, module_id, handleClose}) {
   )
 
   const onSubmitForm = data => {
+    if (options.length === 0) {
+      setError('new_option', {
+        type: 'custom',
+        message: 'You must add at least one option',
+      })
+      return
+    }
+    delete data?.new_option
+
     mutate({
       ...data,
       course_id: id,
       section_num: !module_id ? state.section : section,
       visible: data.visible ? 1 : 0,
-      url_module_id: module_id ? module_id : undefined,
+      options: options,
     })
   }
   const onCancel = () => {
-    if (!module_id) {
-      navigate(-1)
-    } else {
-      handleClose()
+    navigate(-1)
+  }
+  const addOption = () => {
+    if (getValues('new_option')) {
+      setOptions([...options, getValues('new_option')])
+      setValue('new_option', '')
     }
   }
-  if (fetchLoading) {
-    return <ModalSpinner />
+  const deleteOption = item => {
+    if (item) {
+      setOptions(options.filter(option => option !== item))
+    }
   }
 
   return (
@@ -133,8 +116,39 @@ export default function UrlModuleForm({section, module_id, handleClose}) {
           control={control}
           errors={errors}
         />
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="flex-end"
+          width={'100%'}
+        >
+          <CustomInput
+            label="new_option"
+            name="new_option"
+            control={control}
+            errors={errors}
+          />
 
-        <CustomInput label="url" name="url" control={control} errors={errors} />
+          <LoadingButton
+            onClick={addOption}
+            size="large"
+            width="20%"
+            variant="contained"
+            sx={{ml: 1}}
+          >
+            <FormattedMessage id="add" />
+          </LoadingButton>
+        </Stack>
+        <Stack>
+          {options.map((option, index) => (
+            <Chip
+              sx={{mb: 2}}
+              width={'100%'}
+              label={option}
+              onDelete={() => deleteOption(option)}
+            />
+          ))}
+        </Stack>
       </Stack>
       <Stack
         direction="row"

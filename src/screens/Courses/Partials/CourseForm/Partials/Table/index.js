@@ -99,7 +99,6 @@ export default function TreeTable({handleClose, setValue}) {
   ])
 
   const onSelectionChange = selection => {
-    console.log('selection', selection)
     setSelection(selection)
   }
   const save = () => {

@@ -127,5 +127,9 @@
   "add_url": "Add URL",
   "select_category": "Select Category",
   "new_users": "New Users",
-  "delete_group": "Delete Group"
+  "delete_group": "Delete Group",
+  "option": "Option",
+  "new_option": "New Option",
+  "add_new_option": "Add New Option",
+  "add": "Add"
 }

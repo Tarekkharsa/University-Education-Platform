@@ -6,6 +6,7 @@ import {FormattedMessage} from 'react-intl'
 import {useMutation, useQueryClient} from 'react-query'
 import {useParams} from 'react-router-dom'
 import AddModule from './AddModule'
+import ShowChoose from './choose'
 import ShowFile from './File'
 import useStyles from './styles'
 import ShowUrl from './Url'
@@ -76,6 +77,15 @@ export default function LessonModules({modules, token, section}) {
                     module_id={module?.id}
                     data={module?.contents[0]}
                     section={section}
+                  />
+                )
+              }
+              if (module && module.modname === 'choice') {
+                return (
+                  <ShowChoose
+                    deleteUrl={mutate}
+                    id={module?.instance}
+                    module_id={module?.id}
                   />
                 )
               }

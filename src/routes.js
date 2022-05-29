@@ -41,6 +41,7 @@ import ShowCourse from 'screens/Courses/ShowCourse'
 import ShowLesson from 'screens/Courses/Partials/Lessons/Show'
 import FileModule from 'screens/Courses/Partials/Lessons/Show/LessonModules/AddModule/FileModule'
 import UrlModule from 'screens/Courses/Partials/Lessons/Show/LessonModules/AddModule/UrlModule'
+import ChooseModule from 'screens/Courses/Partials/Lessons/Show/LessonModules/AddModule/ChooseModule'
 
 // ----------------------------------------------------------------------
 
@@ -82,6 +83,10 @@ export default function Router() {
         {
           path: 'courses/:id/show/lessons/:lessonId/show/files',
           element: <FileModule />,
+        },
+        {
+          path: 'courses/:id/show/lessons/:lessonId/show/choose',
+          element: <ChooseModule />,
         },
         {
           path: 'courses/:id/show/lessons/:lessonId/show/url',
