@@ -131,5 +131,11 @@
   "option": "Option",
   "new_option": "New Option",
   "add_new_option": "Add New Option",
-  "add": "Add"
+  "add": "Add",
+  "manage_courses": "Manage Courses",
+  "calendar": "Calender",
+  "new_event": "New Event",
+  "time_start": "Time Start",
+  "time_end": "Time End",
+  "title": "Title"
 }

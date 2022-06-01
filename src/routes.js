@@ -34,14 +34,17 @@ import {useEffect} from 'react'
 import EditProfile from 'screens/Profile/Partials/EditProfile'
 import useRoles from 'hooks/useRoles'
 
+import Calendar from 'screens/Calendar'
 import Courses from 'screens/Courses'
-import AddCourse from 'screens/Courses/Add'
-import EditCourse from 'screens/Courses/EditCourse'
-import ShowCourse from 'screens/Courses/ShowCourse'
-import ShowLesson from 'screens/Courses/Partials/Lessons/Show'
-import FileModule from 'screens/Courses/Partials/Lessons/Show/LessonModules/AddModule/FileModule'
-import UrlModule from 'screens/Courses/Partials/Lessons/Show/LessonModules/AddModule/UrlModule'
-import ChooseModule from 'screens/Courses/Partials/Lessons/Show/LessonModules/AddModule/ChooseModule'
+
+import ManageCourses from 'screens/ManageCourses'
+import AddCourse from 'screens/ManageCourses/Add'
+import EditCourse from 'screens/ManageCourses/EditCourse'
+import ShowCourse from 'screens/ManageCourses/ShowCourse'
+import ShowLesson from 'screens/ManageCourses/Partials/Lessons/Show'
+import FileModule from 'screens/ManageCourses/Partials/Lessons/Show/LessonModules/AddModule/FileModule'
+import UrlModule from 'screens/ManageCourses/Partials/Lessons/Show/LessonModules/AddModule/UrlModule'
+import ChooseModule from 'screens/ManageCourses/Partials/Lessons/Show/LessonModules/AddModule/ChooseModule'
 
 // ----------------------------------------------------------------------
 
@@ -72,24 +75,28 @@ export default function Router() {
         {path: 'profile', element: <Profile />},
         {path: 'profile/edit', element: <EditProfile />},
 
+        {path: 'calendar', element: <Calendar />},
+
         {path: 'courses', element: <Courses />},
-        {path: 'courses/add', element: <AddCourse />},
-        {path: 'courses/:id/edit', element: <EditCourse />},
-        {path: 'courses/:id/show', element: <ShowCourse />},
+
+        {path: 'manage-courses', element: <ManageCourses />},
+        {path: 'manage-courses/add', element: <AddCourse />},
+        {path: 'manage-courses/:id/edit', element: <EditCourse />},
+        {path: 'manage-courses/:id/show', element: <ShowCourse />},
         {
-          path: 'courses/:id/show/lessons/:lessonId/show',
+          path: 'manage-courses/:id/show/lessons/:lessonId/show',
           element: <ShowLesson />,
         },
         {
-          path: 'courses/:id/show/lessons/:lessonId/show/files',
+          path: 'manage-courses/:id/show/lessons/:lessonId/show/files',
           element: <FileModule />,
         },
         {
-          path: 'courses/:id/show/lessons/:lessonId/show/choose',
+          path: 'manage-courses/:id/show/lessons/:lessonId/show/choose',
           element: <ChooseModule />,
         },
         {
-          path: 'courses/:id/show/lessons/:lessonId/show/url',
+          path: 'manage-courses/:id/show/lessons/:lessonId/show/url',
           element: <UrlModule />,
         },
         {

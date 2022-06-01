@@ -94,7 +94,7 @@ export default function CourseForm() {
       }),
     {
       onSuccess: data => {
-        queryClient.invalidateQueries('courses')
+        queryClient.invalidateQueries('manage-courses')
         navigate(-1)
         reset()
       },
@@ -193,7 +193,7 @@ export default function CourseForm() {
           sx={{my: 2}}
         >
           <LoadingButton
-            onClick={() => navigate('/dashboard/courses')}
+            onClick={() => navigate('/dashboard/manage-courses')}
             size="large"
             type="submit"
             variant="contained"

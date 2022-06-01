@@ -41,15 +41,28 @@ const sidebarConfig = [
     roles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
   },
   {
-    title: 'courses',
-    path: '/dashboard/courses',
+    title: 'manage_courses',
+    path: '/dashboard/manage-courses',
     roles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_TEACHER'],
     icon: getIcon('fluent:learning-app-20-regular'),
+  },
+  {
+    title: 'courses',
+    path: '/dashboard/courses',
+    roles: ['ROLE_STUDENT'],
+    icon: getIcon('fluent:learning-app-20-regular'),
+  },
+  {
+    title: 'calendar',
+    path: '/dashboard/calendar',
+    roles: ['ROLE_STUDENT'],
+    icon: getIcon('bi:calendar-week'),
   },
   // {
   //   title: 'product',
   //   path: '/dashboard/products',
   //   icon: getIcon('eva:shopping-bag-fill'),
+  //   roles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
   // },
   // {
   //   title: 'blog',

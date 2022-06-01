@@ -2,7 +2,7 @@ import React from 'react'
 import {Controller} from 'react-hook-form'
 import {TextField} from '@mui/material'
 import {FormattedMessage} from 'react-intl'
-import {LocalizationProvider, DatePicker} from '@mui/lab'
+import {LocalizationProvider, DatePicker, DateTimePicker} from '@mui/lab'
 import moment from 'moment'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 const CustomDatePicker = ({name, label, control, errors}) => {
@@ -13,7 +13,7 @@ const CustomDatePicker = ({name, label, control, errors}) => {
         control={control}
         // defaultValue={null}
         render={({field: {onChange, value}, fieldState: {error, invalid}}) => (
-          <DatePicker
+          <DateTimePicker
             label={<FormattedMessage id={label} />}
             value={value}
             onChange={value => onChange(value)}

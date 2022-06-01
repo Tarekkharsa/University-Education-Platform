@@ -11,6 +11,7 @@ import {FormattedMessage} from 'react-intl'
 import {Link as RouterLink, useParams} from 'react-router-dom'
 import CourseUsers from '../Partials/CourseUsers'
 import Lessons from '../Partials/Lessons'
+import ManageCalendar from '../Partials/ManageCalendar'
 import ShowCourse from './showCourseDetails'
 
 function TabPanel(props) {
@@ -71,7 +72,7 @@ export default function VerticalTabs() {
           <Button
             variant="contained"
             component={RouterLink}
-            to={`/dashboard/courses/${id}/edit`}
+            to={`/dashboard/manage-courses/${id}/edit`}
             startIcon={<Iconify icon="eva:edit-fill" />}
           >
             <FormattedMessage id="edit_course" />
@@ -93,6 +94,10 @@ export default function VerticalTabs() {
                 {...a11yProps(1)}
               />
               <Tab label={<FormattedMessage id="users" />} {...a11yProps(2)} />
+              <Tab
+                label={<FormattedMessage id="calendar" />}
+                {...a11yProps(3)}
+              />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
@@ -103,6 +108,9 @@ export default function VerticalTabs() {
           </TabPanel>
           <TabPanel value={value} index={2}>
             <CourseUsers />
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            <ManageCalendar />
           </TabPanel>
         </Box>
       </Container>
