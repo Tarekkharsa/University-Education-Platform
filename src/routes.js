@@ -73,7 +73,14 @@ export default function Router() {
             </PrivateRoute>
           ),
         },
-        {path: 'profile', element: <Profile />},
+        {
+          path: 'profile',
+          element: (
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          ),
+        },
         {path: 'profile/edit', element: <EditProfile />},
 
         {path: 'bbb', element: <BigBlueButton />},
