@@ -63,9 +63,10 @@ export default function Lessons() {
   const {isLoading, error, data, refetch} = useQuery({
     queryKey: 'lessons',
     queryFn: () =>
-      client(`course/getCourseLessonsWithDetails?id=${id}`).then(
-        data => data.data.lessons,
-      ),
+      client(`course/getCourseLessonsWithDetails?id=${id}`).then(data => {
+        let lessons = data.data.lessons.filter(lesson => lesson.section !== 0)
+        return lessons
+      }),
   })
 
   const {mutate: handleRemoveClick} = useMutation(

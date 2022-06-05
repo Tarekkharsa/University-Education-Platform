@@ -126,7 +126,7 @@ export default function CourseUsers() {
             variant="contained"
             color="error"
             onClick={handleOpenRemoveGroupModal}
-            startIcon={<Iconify icon="eva:plus-fill" />}
+            startIcon={<Iconify icon="eva:trash-2-fill" />}
           >
             <FormattedMessage id="delete_group" />
           </Button>

@@ -143,5 +143,6 @@
   "grade_max": "Grade Max",
   "grade_theo_max": "Grade Theo Max",
   "grade_prac_max": "Grade Prac Max",
-  "grade_passed": "Grade Passed"
+  "grade_passed": "Grade Passed",
+  "is_theoretical": "Is Theoretical"
 }

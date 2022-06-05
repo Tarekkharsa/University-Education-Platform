@@ -22,11 +22,9 @@ export default function LessonForm({handleClose, lesson = null}) {
   const navigate = useNavigate()
 
   const LessonSchema = Yup.object().shape({
-    section_num: Yup.string().required(),
     name: Yup.string().required(),
     description: Yup.string().required(),
     visible: Yup.boolean().required(),
-    highlight: Yup.boolean().required(),
   })
 
   const {
@@ -39,11 +37,10 @@ export default function LessonForm({handleClose, lesson = null}) {
   } = useForm({
     resolver: yupResolver(LessonSchema),
     defaultValues: {
-      section_num: '',
+      section_num: null,
       name: '',
       description: '',
       visible: false,
-      highlight: false,
     },
   })
 
@@ -82,7 +79,6 @@ export default function LessonForm({handleClose, lesson = null}) {
     if (lessonData && lesson !== null) {
       reset({
         ...lessonData,
-        section_num: lessonData.sectionnum,
         description: lessonData.summary,
         visible: lessonData.visible === 1 ? true : false,
       })
@@ -92,9 +88,9 @@ export default function LessonForm({handleClose, lesson = null}) {
   const onSubmitForm = data => {
     mutate({
       ...data,
+      section_num: 1,
       course_id: id,
       visible: data.visible === true ? '1' : '0',
-      highlight: data.visible === true ? '1' : '0',
     })
   }
 
@@ -111,24 +107,13 @@ export default function LessonForm({handleClose, lesson = null}) {
           control={control}
           errors={errors}
         />
-        <CustomInput
-          label="section_num"
-          name="section_num"
-          control={control}
-          errors={errors}
-        />
         <CustomCheckbox
           label="visible"
           name="visible"
           control={control}
           errors={errors}
         />
-        <CustomCheckbox
-          label="highlight"
-          name="highlight"
-          control={control}
-          errors={errors}
-        />
+
         <Controller
           control={control}
           name="description"

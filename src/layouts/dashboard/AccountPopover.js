@@ -1,5 +1,5 @@
 import {useRef, useState} from 'react'
-import {Link as RouterLink} from 'react-router-dom'
+import {Link as RouterLink, useNavigate} from 'react-router-dom'
 // material
 import {alpha} from '@mui/material/styles'
 import {
@@ -45,6 +45,7 @@ export default function AccountPopover() {
   const anchorRef = useRef(null)
   const [open, setOpen] = useState(false)
   const {user, logout} = useAuth()
+  const navigate = useNavigate()
 
   const handleOpen = () => {
     setOpen(true)
@@ -119,7 +120,15 @@ export default function AccountPopover() {
         ))}
 
         <Box sx={{p: 2, pt: 1.5}}>
-          <Button fullWidth color="inherit" variant="outlined" onClick={logout}>
+          <Button
+            fullWidth
+            color="inherit"
+            variant="outlined"
+            onClick={() => {
+              logout()
+              navigate('/')
+            }}
+          >
             <FormattedMessage id="logout" />
           </Button>
         </Box>

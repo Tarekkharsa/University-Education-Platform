@@ -1,6 +1,7 @@
 import {yupResolver} from '@hookform/resolvers/yup' // material
 import {LoadingButton} from '@mui/lab'
 import {Alert, Stack} from '@mui/material'
+import Dropdown from 'components/Form/components/Dropdown'
 import MultiSelect from 'components/Form/components/MultiDropdown'
 import {ModalSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
@@ -29,11 +30,13 @@ export default function UsersForm({handleClose}) {
     setValue,
     getValues,
     reset,
+    watch,
     formState: {errors, isSubmitting},
   } = useForm({
     resolver: yupResolver(UsersSchema),
     defaultValues: {user_ids: [], role_id: null},
   })
+  const isTeacher = watch('role_id')?.id === 3
 
   const {mutate, isError, error, isLoading} = useMutation(
     data =>
@@ -51,9 +54,14 @@ export default function UsersForm({handleClose}) {
   )
 
   const onSubmitForm = data => {
-    let {user_ids, role_id} = data
+    let {user_ids, role_id, is_theoretical} = data
     let ids = user_ids.map(user => user.id)
-    mutate({user_ids: ids, course_id: id, role_id: role_id?.id})
+    mutate({
+      user_ids: ids,
+      course_id: id,
+      role_id: role_id?.id,
+      is_theoretical: is_theoretical ? Boolean(is_theoretical) : undefined,
+    })
   }
 
   if (isLoading) {
@@ -82,6 +90,17 @@ export default function UsersForm({handleClose}) {
           control={control}
           handleChange={value => setValue('role_id', value)}
         />
+        {isTeacher && (
+          <Dropdown
+            name={'is_theoretical'}
+            title={'is_theoretical'}
+            options={['true', 'false']}
+            setValue={setValue}
+            errors={errors}
+            control={control}
+            handleChange={value => setValue('is_theoretical', value)}
+          />
+        )}
       </Stack>
       <Stack
         direction="row"

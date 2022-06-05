@@ -143,5 +143,6 @@
   "grade_max": "الدرجة القصوى",
   "grade_theo_max": "الدرجة النظرية القصوى",
   "grade_prac_max": "الدرجة العملية القصوى",
-  "grade_passed": "الدرجة المطلوبة"
+  "grade_passed": "الدرجة المطلوبة",
+  "is_theoretical": "نظري"
 }
