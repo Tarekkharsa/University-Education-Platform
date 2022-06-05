@@ -48,7 +48,7 @@ export default function GroupMoreMenu({id}) {
           />
         </MenuItem>
 
-        <MenuItem
+        {/* <MenuItem
           sx={{color: 'text.secondary'}}
           onClick={() => navigate(`${id}/edit`)}
         >
@@ -59,7 +59,7 @@ export default function GroupMoreMenu({id}) {
             primary={<FormattedMessage id="edit" />}
             primaryTypographyProps={{variant: 'body2'}}
           />
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
     </>
   )

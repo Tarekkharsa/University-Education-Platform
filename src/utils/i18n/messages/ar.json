@@ -1,5 +1,5 @@
 {
-  "dashboard": "لوحة القيادة",
+  "dashboard": "لوحة التحكم",
   "users": "المستخدمين",
   "categories": "الفئات",
   "groups": "المجموعات",
@@ -137,5 +137,11 @@
   "new_event": "حدث جديد",
   "time_start": "وقت البدء",
   "time_end": "وقت الانتهاء",
-  "title": "العنوان"
+  "title": "العنوان",
+  "specifications": "الاختصاصات",
+  "level": "المستوى",
+  "grade_max": "الدرجة القصوى",
+  "grade_theo_max": "الدرجة النظرية القصوى",
+  "grade_prac_max": "الدرجة العملية القصوى",
+  "grade_passed": "الدرجة المطلوبة"
 }

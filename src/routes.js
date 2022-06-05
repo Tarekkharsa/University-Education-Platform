@@ -45,6 +45,7 @@ import ShowLesson from 'screens/ManageCourses/Partials/Lessons/Show'
 import FileModule from 'screens/ManageCourses/Partials/Lessons/Show/LessonModules/AddModule/FileModule'
 import UrlModule from 'screens/ManageCourses/Partials/Lessons/Show/LessonModules/AddModule/UrlModule'
 import ChooseModule from 'screens/ManageCourses/Partials/Lessons/Show/LessonModules/AddModule/ChooseModule'
+import BigBlueButton from 'screens/BigBlueButton'
 
 // ----------------------------------------------------------------------
 
@@ -74,6 +75,8 @@ export default function Router() {
         },
         {path: 'profile', element: <Profile />},
         {path: 'profile/edit', element: <EditProfile />},
+
+        {path: 'bbb', element: <BigBlueButton />},
 
         {path: 'calendar', element: <Calendar />},
 
@@ -120,7 +123,7 @@ export default function Router() {
           ),
         },
         {path: 'groups/add', element: <AddGroup />},
-        {path: 'groups/:id/edit', element: <EditGroup />},
+        // {path: 'groups/:id/edit', element: <EditGroup />},
         {path: 'groups/:id/show', element: <ShowGroup />},
 
         {

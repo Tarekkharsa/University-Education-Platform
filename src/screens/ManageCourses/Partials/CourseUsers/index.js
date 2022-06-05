@@ -69,12 +69,19 @@ export default function CourseUsers() {
   }, [])
 
   const onDelete = selectedRows => {
+    console.log('selectedRows', selectedRows)
     selectedRowsIds = []
+    let roleId
     selectedRows.length > 0 &&
       selectedRows.map((row, i) => {
         selectedRowsIds.push(row.values.id)
+        roleId = row.values.roles[0].id
       })
-    handleRemoveClick({user_ids: selectedRowsIds, course_id: id})
+    handleRemoveClick({
+      user_ids: selectedRowsIds,
+      role_id: roleId,
+      course_id: id,
+    })
   }
 
   if (isLoading && !data) {

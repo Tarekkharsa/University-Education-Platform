@@ -8,8 +8,8 @@ export const tableColumns = [
     disableFilters: true,
   },
   {
-    Header: 'fullname',
-    accessor: 'fullname',
+    Header: 'name',
+    accessor: 'name',
   },
   {
     Header: 'actions',

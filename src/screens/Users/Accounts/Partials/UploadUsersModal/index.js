@@ -49,6 +49,9 @@ const UploadUsersModal = ({open, handleClose}) => {
         queryClient.invalidateQueries('users')
         handleClose()
       },
+      onError: error => {
+        console.log('error', error)
+      },
     },
   )
 

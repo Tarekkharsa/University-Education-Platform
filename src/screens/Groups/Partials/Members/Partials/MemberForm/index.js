@@ -1,16 +1,11 @@
 import {yupResolver} from '@hookform/resolvers/yup' // material
 import {LoadingButton} from '@mui/lab'
 import {Alert, Stack} from '@mui/material'
-import CustomInput from 'components/Form/components/CustomInput'
-import Dropdown from 'components/Form/components/Dropdown'
 import MultiSelect from 'components/Form/components/MultiDropdown'
-import RichText from 'components/Form/components/RichText'
-import {FullPageSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
-import {useEffect, useState} from 'react'
 import {useForm} from 'react-hook-form'
 import {FormattedMessage} from 'react-intl'
-import {useMutation, useQuery, useQueryClient} from 'react-query'
+import {useMutation, useQueryClient} from 'react-query'
 import {useNavigate, useParams} from 'react-router-dom'
 import * as Yup from 'yup'
 

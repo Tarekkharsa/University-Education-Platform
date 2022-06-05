@@ -137,5 +137,11 @@
   "new_event": "New Event",
   "time_start": "Time Start",
   "time_end": "Time End",
-  "title": "Title"
+  "title": "Title",
+  "specifications": "Specifications",
+  "level": "Level",
+  "grade_max": "Grade Max",
+  "grade_theo_max": "Grade Theo Max",
+  "grade_prac_max": "Grade Prac Max",
+  "grade_passed": "Grade Passed"
 }

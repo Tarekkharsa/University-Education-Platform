@@ -4,6 +4,7 @@ import {Alert, Link, Stack} from '@mui/material'
 import CustomCheckbox from 'components/Form/components/CustomCheckbox'
 import CustomInput from 'components/Form/components/CustomInput'
 import InputPassword from 'components/Form/components/InputPassword'
+import MultiSelect from 'components/Form/components/MultiDropdown'
 import RichText from 'components/Form/components/RichText'
 import Uploader from 'components/Form/components/Uploader'
 import {useClient} from 'context/auth-context'
@@ -30,12 +31,16 @@ export default function UserForm({onSubmit}) {
     lastname: Yup.string().required('Last name is required'),
     password: !id ? Yup.string().required('Password is required') : '',
     username: Yup.string(),
+    role_id: Yup.object().required(),
+    group_id: Yup.object().nullable(),
   })
 
   const {
     control,
     handleSubmit,
     reset,
+    setValue,
+    watch,
     formState: {errors, isSubmitting},
   } = useForm({
     resolver: yupResolver(UserSchema),
@@ -45,8 +50,12 @@ export default function UserForm({onSubmit}) {
       email: '',
       password: '',
       username: '',
+      role_id: null,
+      group_id: null,
     },
   })
+  console.log('errors', errors)
+  const renderGroup = watch('role_id')?.id === 4
 
   const {
     isLoading: fetchLoading,
@@ -77,7 +86,8 @@ export default function UserForm({onSubmit}) {
     },
   )
   const onSubmitForm = data => {
-    let {firstname, lastname, email, password, username} = data
+    let {firstname, lastname, email, password, username, role_id, group_id} =
+      data
     mutate({
       firstname,
       lastname,
@@ -85,6 +95,10 @@ export default function UserForm({onSubmit}) {
       password: id ? undefined : password,
       user_id: id ? id : undefined,
       username: id ? username : undefined,
+      specification_id: '1', // TODO: refactor
+      level: 1, // TODO: refactor
+      role_id: role_id?.id,
+      group_id: group_id ? group_id?.id : undefined,
     })
   }
 
@@ -104,6 +118,26 @@ export default function UserForm({onSubmit}) {
           control={control}
           errors={errors}
         />
+        <MultiSelect
+          name={'role_id'}
+          title={'user_roles'}
+          optionLable={'name'}
+          optionUrl={'getAllRoles'}
+          errors={errors}
+          control={control}
+          handleChange={value => setValue('role_id', value)}
+        />
+        {renderGroup && (
+          <MultiSelect
+            name={'group_id'}
+            title={'groups'}
+            optionLable={'name'}
+            optionUrl={'group/getAllGroups'}
+            errors={errors}
+            control={control}
+            handleChange={value => setValue('group_id', value)}
+          />
+        )}
         {id && (
           <CustomInput
             label="userName"

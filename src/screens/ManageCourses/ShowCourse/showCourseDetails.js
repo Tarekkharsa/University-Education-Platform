@@ -26,7 +26,7 @@ export default function ShowCourse() {
   const {isLoading, error, data} = useQuery({
     queryKey: 'course',
     queryFn: () =>
-      client(`course/getCourseById?id=${id}`).then(data => data.data[0]),
+      client(`course/getCourseById?id=${id}`).then(data => data.data),
   })
 
   if (isLoading) {
@@ -39,7 +39,7 @@ export default function ShowCourse() {
         <ListItemIcon>
           <FormattedMessage id="fullname" />
         </ListItemIcon>
-        <div>{data?.fullname}</div>
+        <div>{data?.name}</div>
       </ListItem>
       <Divider variant="inset" component="li" />
 

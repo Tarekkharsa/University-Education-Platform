@@ -38,7 +38,7 @@ const sidebarConfig = [
     title: 'groups',
     path: '/dashboard/groups',
     icon: getIcon('ic:outline-groups'),
-    roles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+    roles: ['ROLE_ADMIN'],
   },
   {
     title: 'manage_courses',
@@ -58,6 +58,12 @@ const sidebarConfig = [
     roles: ['ROLE_STUDENT'],
     icon: getIcon('bi:calendar-week'),
   },
+  // {
+  //   title: 'bigbluebutton',
+  //   path: '/dashboard/bbb',
+  //   roles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_TEACHER'],
+  //   icon: getIcon('simple-icons:bigbluebutton'),
+  // },
   // {
   //   title: 'product',
   //   path: '/dashboard/products',
