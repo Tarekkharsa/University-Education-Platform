@@ -46,6 +46,8 @@ import FileModule from 'screens/ManageCourses/Partials/Lessons/Show/LessonModule
 import UrlModule from 'screens/ManageCourses/Partials/Lessons/Show/LessonModules/AddModule/UrlModule'
 import ChooseModule from 'screens/ManageCourses/Partials/Lessons/Show/LessonModules/AddModule/ChooseModule'
 import BigBlueButton from 'screens/BigBlueButton'
+import ShowUserCourse from 'screens/Courses/Show'
+import ShowUserLesson from 'screens/Courses/ShowUserLesson'
 
 // ----------------------------------------------------------------------
 
@@ -88,6 +90,11 @@ export default function Router() {
         {path: 'calendar', element: <Calendar />},
 
         {path: 'courses', element: <Courses />},
+        {path: 'courses/:id/show', element: <ShowUserCourse />},
+        {
+          path: 'courses/:id/show/lessons/:lessonId/show',
+          element: <ShowUserLesson />,
+        },
 
         {path: 'manage-courses', element: <ManageCourses />},
         {path: 'manage-courses/add', element: <AddCourse />},

@@ -49,9 +49,6 @@ const UploadUsersModal = ({open, handleClose}) => {
         queryClient.invalidateQueries('users')
         handleClose()
       },
-      onError: error => {
-        console.log('error', error)
-      },
     },
   )
 
@@ -73,7 +70,11 @@ const UploadUsersModal = ({open, handleClose}) => {
             noValidate
             onSubmit={handleSubmit(onSubmitForm)}
           >
-            {isError ? <Alert severity="error">{error.message}</Alert> : null}
+            {isError ? (
+              <Alert severity="error">
+                {JSON.stringify(error?.response?.data?.message)}
+              </Alert>
+            ) : null}
 
             <Uploader
               name="file"

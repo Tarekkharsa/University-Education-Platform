@@ -1,3 +1,5 @@
+// ShowUserCourse
+
 // material
 import {
   Container,
@@ -6,16 +8,17 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
+import {styled} from '@mui/material/styles'
+import Iconify from 'components/Iconify'
 import {FullPageSpinner} from 'components/lib'
 // components
 import Page from 'components/Page'
-import {useAuth, useClient} from 'context/auth-context'
-import {useMemo, useState} from 'react'
+import {useClient} from 'context/auth-context'
+import {useState} from 'react'
 import {FormattedMessage} from 'react-intl'
 import {useQuery} from 'react-query'
-import CourseList from 'sections/@dashboard/sections/CourseList'
-import {styled} from '@mui/material/styles'
-import Iconify from 'components/Iconify'
+import {useParams} from 'react-router-dom'
+import LessonList from 'sections/@dashboard/sections/LessonList'
 
 const SearchStyle = styled(OutlinedInput)(({theme}) => ({
   width: '90%',
@@ -29,28 +32,27 @@ const SearchStyle = styled(OutlinedInput)(({theme}) => ({
     borderColor: `${theme.palette.grey[500_32]} !important`,
   },
 }))
-export default function Courses() {
+export default function ShowUserCourse() {
   const client = useClient()
-  const {user} = useAuth()
-
+  const {id} = useParams()
   const [value, setValue] = useState('')
 
-  const {isLoading, error, data} = useQuery({
-    queryKey: 'courses',
+  const {isLoading, error, data, isFetching} = useQuery({
+    queryKey: 'userCourses',
     queryFn: () =>
-      client(`course/enroll/getUserCourses?user_id=${user.id}`).then(
-        data => data.data,
+      client(`course/getCourseLessonsWithDetails?id=${id}`).then(
+        data => data.data.lessons,
       ),
   })
 
-  if (isLoading && !data) {
+  if (isFetching && !data) {
     return <FullPageSpinner />
   }
   return (
-    <Page title="Courses">
+    <Page title="Lessons">
       <Container>
         <Typography variant="h4" sx={{mb: 5}}>
-          <FormattedMessage id="courses" />
+          <FormattedMessage id="lessons" />
         </Typography>
 
         <Stack
@@ -84,7 +86,7 @@ export default function Courses() {
           </Stack>
         </Stack>
 
-        <CourseList courses={data} value={value} />
+        <LessonList lessons={data} value={value} />
       </Container>
     </Page>
   )

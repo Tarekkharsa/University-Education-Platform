@@ -8,7 +8,7 @@ import {
   ProductList,
   ProductCartWidget,
   ProductFilterSidebar,
-} from '../sections/@dashboard/products'
+} from '../sections/@dashboard/sections'
 //
 import PRODUCTS from '../_mocks_/products'
 

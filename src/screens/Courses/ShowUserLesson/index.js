@@ -1,3 +1,5 @@
+// ShowUserCourse
+
 // material
 import {
   Container,
@@ -16,6 +18,7 @@ import {useQuery} from 'react-query'
 import CourseList from 'sections/@dashboard/sections/CourseList'
 import {styled} from '@mui/material/styles'
 import Iconify from 'components/Iconify'
+import {useParams} from 'react-router-dom'
 
 const SearchStyle = styled(OutlinedInput)(({theme}) => ({
   width: '90%',
@@ -29,62 +32,30 @@ const SearchStyle = styled(OutlinedInput)(({theme}) => ({
     borderColor: `${theme.palette.grey[500_32]} !important`,
   },
 }))
-export default function Courses() {
+export default function ShowUserLesson() {
   const client = useClient()
-  const {user} = useAuth()
-
+  const {id, lessonId} = useParams()
   const [value, setValue] = useState('')
 
   const {isLoading, error, data} = useQuery({
-    queryKey: 'courses',
+    queryKey: 'userLessons',
     queryFn: () =>
-      client(`course/enroll/getUserCourses?user_id=${user.id}`).then(
-        data => data.data,
-      ),
+      client(
+        `course/getCourseLessonsWithDetailsByLessonId?id=${id}&lesson_id=${lessonId}`,
+      ).then(data => data.data.lessons[0]),
   })
 
+  console.log('data', data)
   if (isLoading && !data) {
     return <FullPageSpinner />
   }
   return (
-    <Page title="Courses">
+    <Page title="Lesson Info">
       <Container>
         <Typography variant="h4" sx={{mb: 5}}>
-          <FormattedMessage id="courses" />
+          <FormattedMessage id="lesson_info" />
         </Typography>
-
-        <Stack
-          direction="row"
-          flexWrap="wrap-reverse"
-          alignItems="center"
-          justifyContent="flex-end"
-          sx={{mb: 5}}
-        >
-          <Stack
-            direction="row"
-            width={'100%'}
-            spacing={1}
-            justifyContent={'center'}
-          >
-            <SearchStyle
-              value={value || ''}
-              onChange={e => {
-                setValue(e.target.value)
-              }}
-              placeholder={`...`}
-              startAdornment={
-                <InputAdornment position="start">
-                  <Iconify
-                    icon="eva:search-fill"
-                    sx={{color: 'text.disabled'}}
-                  />
-                </InputAdornment>
-              }
-            />
-          </Stack>
-        </Stack>
-
-        <CourseList courses={data} value={value} />
+        info
       </Container>
     </Page>
   )

@@ -12,7 +12,7 @@ import {mockImgCourse} from 'utils/mockImages'
 
 // ----------------------------------------------------------------------
 
-const CourseImgStyle = styled('img')({
+const LessonImgStyle = styled('img')({
   top: 0,
   width: '100%',
   height: '100%',
@@ -22,37 +22,26 @@ const CourseImgStyle = styled('img')({
 
 // ----------------------------------------------------------------------
 
-CourseCard.propTypes = {
-  product: PropTypes.object,
+LessonCard.propTypes = {
+  lesson: PropTypes.object,
 }
 
-export default function CourseCard({course}) {
-  const {name, cover, active, category} = course
+export default function LessonCard({lesson}) {
+  const {name, cover, id} = lesson
 
   return (
     <Card>
       <Box sx={{pt: '100%', position: 'relative'}}>
-        {active && (
-          <Label
-            variant="filled"
-            // color={(active === 'sale' && 'error') || 'info'}
-            color={active ? 'info' : 'error'}
-            sx={{
-              zIndex: 9,
-              top: 16,
-              right: 16,
-              position: 'absolute',
-              textTransform: 'uppercase',
-            }}
-          >
-            {active ? 'Active' : 'Inactive'}
-          </Label>
-        )}
-        <CourseImgStyle alt={name} src={mockImgCourse()} />
+        <LessonImgStyle alt={name} src={mockImgCourse()} />
       </Box>
 
       <Stack spacing={2} sx={{p: 3}}>
-        <Link to="#" color="inherit" underline="hover" component={RouterLink}>
+        <Link
+          to={`lessons/${id}/show`}
+          color="inherit"
+          underline="hover"
+          component={RouterLink}
+        >
           <Typography variant="subtitle2" noWrap>
             {name}
           </Typography>

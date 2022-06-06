@@ -104,6 +104,13 @@ export default function CourseForm() {
         end_date: new Date(course.enddate * 1000),
         start_date: new Date(course.startdate * 1000),
         visible: Boolean(course.visible),
+        active: course.active,
+        specification_id: course.specificationid,
+        level: course.level,
+        grade_max: course.grademax,
+        grade_theo_max: course.gradetheoreticalmax,
+        grade_prac_max: course.gradepracticalmax,
+        grade_passed: course.gradepassed,
       })
     }
   }, [course])

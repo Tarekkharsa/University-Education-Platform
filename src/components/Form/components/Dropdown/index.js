@@ -17,41 +17,80 @@ export default function Dropdown({
   errors,
   multiple = false,
   options,
+  handleChange,
 }) {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
   return (
     <Controller
-      render={props => (
+      control={control}
+      name={name}
+      render={({field: {onChange, value}}) => (
         <Autocomplete
+          multiple={multiple}
           sx={{flexBasis: !!width ? width : '100%'}}
-          {...props}
-          options={options}
-          onChange={(_, data) => {
-            setValue(name, data)
+          open={open}
+          onOpen={() => {
+            setOpen(true)
           }}
-          renderInput={params => (
-            <TextField
-              {...params}
-              label={<FormattedMessage id={title} />}
-              className={classes.input}
-              helperText={errors[name] && `${name} is a required field`}
-              InputProps={{
-                ...params.InputProps,
-                endAdornment: (
-                  <React.Fragment>
-                    {params.InputProps.endAdornment}
-                  </React.Fragment>
-                ),
-              }}
-            />
-          )}
+          onClose={() => {
+            setOpen(false)
+          }}
+          options={options}
+          renderInput={params => {
+            return (
+              <TextField
+                {...params}
+                label={<FormattedMessage id={title} />}
+                className={classes.input}
+                helperText={errors[name] && `${name} is a required field`}
+                InputProps={{
+                  ...params.InputProps,
+                  endAdornment: (
+                    <React.Fragment>
+                      {params.InputProps.endAdornment}
+                    </React.Fragment>
+                  ),
+                }}
+                onChange={onChange}
+              />
+            )
+          }}
+          onChange={(event, values, reason) => handleChange(values)}
+          value={value}
         />
       )}
-      name={name}
-      control={control}
-      defaultValue={editValue ? editValue : ''}
     />
   )
+  // <Controller
+  //   render={({field: {onChange, value}}) => (
+  //     <Autocomplete
+  //       sx={{flexBasis: !!width ? width : '100%'}}
+  //       options={options}
+  //       onChange={(_, data) => {
+  //         setValue(name, data)
+  //       }}
+  //       renderInput={params => (
+  //         <TextField
+  //           {...params}
+  //           label={<FormattedMessage id={title} />}
+  //           className={classes.input}
+  //           helperText={errors[name] && `${name} is a required field`}
+  //           InputProps={{
+  //             ...params.InputProps,
+  //             endAdornment: (
+  //               <React.Fragment>
+  //                 {params.InputProps.endAdornment}
+  //               </React.Fragment>
+  //             ),
+  //           }}
+  //         />
+  //       )}
+  //     />
+  //   )}
+  //   name={name}
+  //   control={control}
+  //   defaultValue={editValue ? editValue : ''}
+  // />
 }
