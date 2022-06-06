@@ -168,6 +168,15 @@ export default function UserForm({onSubmit}) {
         sx={{my: 2}}
       >
         <LoadingButton
+          onClick={() => navigate(-1)}
+          size="large"
+          type="submit"
+          variant="contained"
+          sx={{mr: 2}}
+        >
+          <FormattedMessage id="cancel" />
+        </LoadingButton>
+        <LoadingButton
           size="large"
           type="submit"
           variant="contained"
