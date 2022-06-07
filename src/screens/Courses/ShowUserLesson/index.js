@@ -109,7 +109,7 @@ export default function ShowUserLesson() {
           <CardMedia
             component="img"
             height="340"
-            image={`/images/courses/course_3.jpg`}
+            image={`/images/courses/course_1.jpg`}
             alt="green iguana"
           />
         </Card>

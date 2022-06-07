@@ -34,8 +34,8 @@ export default function UserForm({onSubmit}) {
     username: Yup.string(),
     role_ids: Yup.array().min(1).required(),
     group_id: Yup.object().nullable(),
-    specification_id: Yup.object(),
-    level: Yup.number(),
+    specification_id: Yup.object().nullable(),
+    level: Yup.number().nullable(),
   })
 
   const {
@@ -114,7 +114,7 @@ export default function UserForm({onSubmit}) {
       username: id ? username : undefined,
       specification_id:
         renderGroup() && id ? data.specification_id?.id : undefined,
-      level: data?.level && renderGroup() && !id ? data?.level : undefined,
+      level: data?.level && renderGroup() && id ? data?.level : undefined,
       role_ids: role_ids.map(role => role.id),
       group_id: group_id ? group_id?.id : undefined,
     })
@@ -136,16 +136,18 @@ export default function UserForm({onSubmit}) {
           control={control}
           errors={errors}
         />
-        <MultiSelect
-          multiple
-          name={'role_ids'}
-          title={'user_roles'}
-          optionLable={'name'}
-          optionUrl={'getAllRoles'}
-          errors={errors}
-          control={control}
-          handleChange={value => setValue('role_ids', value)}
-        />
+        {!id && (
+          <MultiSelect
+            multiple
+            name={'role_ids'}
+            title={'user_roles'}
+            optionLable={'name'}
+            optionUrl={'getAllRoles'}
+            errors={errors}
+            control={control}
+            handleChange={value => setValue('role_ids', value)}
+          />
+        )}
         {renderGroup() && !id && (
           <MultiSelect
             name={'group_id'}
@@ -212,7 +214,6 @@ export default function UserForm({onSubmit}) {
         <LoadingButton
           onClick={() => navigate(-1)}
           size="large"
-          type="submit"
           variant="contained"
           sx={{mr: 2}}
         >

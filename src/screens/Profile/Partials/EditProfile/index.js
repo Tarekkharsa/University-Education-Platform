@@ -4,6 +4,7 @@ import Page from 'components/Page'
 import React from 'react'
 import {FormattedMessage} from 'react-intl'
 import {Link as RouterLink, useParams} from 'react-router-dom'
+import EditProfileForm from '../EditProfileForm'
 import ProfileForm from '../ProfileForm'
 
 export default function EditProfile() {
@@ -20,7 +21,7 @@ export default function EditProfile() {
             <FormattedMessage id="update_profile" />
           </Typography>
         </Stack>
-        <ProfileForm />
+        <EditProfileForm />
       </Container>
     </Page>
   )

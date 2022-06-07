@@ -24,7 +24,7 @@ export default function CategoryForm({onSubmit}) {
 
   const CategorySchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-    description: Yup.string(),
+    // description: Yup.string(),
   })
   const [ritchText, setRitchText] = useState('')
 
@@ -37,7 +37,7 @@ export default function CategoryForm({onSubmit}) {
     formState: {errors, isSubmitting},
   } = useForm({
     resolver: yupResolver(CategorySchema),
-    defaultValues: {name: '', description: ''},
+    defaultValues: {name: ''},
   })
 
   const {
@@ -46,8 +46,7 @@ export default function CategoryForm({onSubmit}) {
     data: category,
   } = useQuery({
     queryKey: 'category',
-    queryFn: () =>
-      client(`getCategories?key=id&value=${id}`).then(data => data.data[0]),
+    queryFn: () => client(`getCategoryById?id=${id}`).then(data => data.data),
     enabled: id !== undefined,
   })
 
@@ -73,10 +72,10 @@ export default function CategoryForm({onSubmit}) {
   )
 
   const onSubmitForm = data => {
-    let {name, description} = data
+    let {name} = data
     mutate({
       name,
-      description,
+      // description,
       parent_id: state !== null ? state.id : 0,
       id: id ? id : undefined,
     })
@@ -96,20 +95,6 @@ export default function CategoryForm({onSubmit}) {
           name="name"
           control={control}
           errors={errors}
-        />
-        <Controller
-          control={control}
-          name="description"
-          render={({field: {onChange, value}}) => (
-            <RichText
-              label="Description"
-              errorText={errors ? errors?.description?.message : ''}
-              width="100%"
-              InputChange={values => onChange(values)}
-              value={value}
-              editValue={value}
-            />
-          )}
         />
       </Stack>
       <Stack

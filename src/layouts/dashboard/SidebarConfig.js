@@ -16,7 +16,7 @@ const sidebarConfig = [
     title: 'users',
     path: '/dashboard/users',
     icon: getIcon('eva:people-fill'),
-    roles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+    roles: ['ROLE_ADMIN'],
     children: [
       {
         title: 'accounts',
@@ -32,7 +32,7 @@ const sidebarConfig = [
     title: 'categories',
     path: '/dashboard/categories',
     icon: getIcon('carbon:categories'),
-    roles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+    roles: ['ROLE_ADMIN'],
   },
   {
     title: 'groups',

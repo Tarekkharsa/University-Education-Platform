@@ -6,7 +6,8 @@ import {FullPageSpinner} from 'components/lib'
 // components
 import Page from 'components/Page'
 import ReactTable from 'components/ReactTable'
-import {useClient} from 'context/auth-context'
+import {useAuth, useClient} from 'context/auth-context'
+import useRoles from 'hooks/useRoles'
 import {useCallback, useMemo, useState} from 'react'
 import {FormattedMessage} from 'react-intl'
 import {useMutation, useQuery, useQueryClient} from 'react-query'
@@ -20,13 +21,19 @@ export default function ManageCourses() {
   const hiddenColumns = useMemo(() => tableHiddenColumns, [])
   const [rows, setRows] = useState([])
   let selectedRowsIds = []
-
+  const {checkIfRolesInUserRoles} = useRoles()
+  const {user} = useAuth()
   const client = useClient()
   const queryClient = useQueryClient()
 
   const {isLoading, error, data, refetch} = useQuery({
     queryKey: 'manage-courses',
-    queryFn: () => client('course/getAll').then(data => data.data),
+    queryFn: () =>
+      client(
+        checkIfRolesInUserRoles(['ROLE_ADMIN'])
+          ? 'course/getAll'
+          : `course/enroll/getUserCourses?user_id=${user.id}`,
+      ).then(data => data.data),
   })
 
   const {mutate: handleRemoveClick} = useMutation(
@@ -71,14 +78,16 @@ export default function ManageCourses() {
           <Typography variant="h4" gutterBottom>
             <FormattedMessage id="courses" />
           </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="/dashboard/manage-courses/add"
-            startIcon={<Iconify icon="eva:plus-fill" />}
-          >
-            <FormattedMessage id="new_course" />
-          </Button>
+          {checkIfRolesInUserRoles(['ROLE_ADMIN', 'ROLE_MANAGER']) && (
+            <Button
+              variant="contained"
+              component={RouterLink}
+              to="/dashboard/manage-courses/add"
+              startIcon={<Iconify icon="eva:plus-fill" />}
+            >
+              <FormattedMessage id="new_course" />
+            </Button>
+          )}
         </Stack>
         <ReactTable
           columns={columns}

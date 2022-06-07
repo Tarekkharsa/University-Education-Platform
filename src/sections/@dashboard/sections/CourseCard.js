@@ -47,7 +47,7 @@ export default function CourseCard({course}) {
             {active ? 'Active' : 'Inactive'}
           </Label>
         )}
-        <CourseImgStyle alt={name} src={mockImgCourse()} />
+        <CourseImgStyle alt={name} src={`/images/courses/ahmad_course.png`} />
       </Box>
 
       <Stack spacing={2} sx={{p: 3}}>

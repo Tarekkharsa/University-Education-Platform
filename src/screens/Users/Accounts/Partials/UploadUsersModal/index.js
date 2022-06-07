@@ -56,7 +56,6 @@ const UploadUsersModal = ({open, handleClose}) => {
   )
 
   const onSubmitForm = data => {
-    console.log('data', data)
     const formData = new FormData()
     formData.append('file', data.file.file)
     formData.append('group_id', data?.group_id?.id)

@@ -5,6 +5,7 @@ import Tabs from '@mui/material/Tabs'
 import Typography from '@mui/material/Typography'
 import Iconify from 'components/Iconify'
 import Page from 'components/Page'
+import useRoles from 'hooks/useRoles'
 import PropTypes from 'prop-types'
 import * as React from 'react'
 import {FormattedMessage} from 'react-intl'
@@ -51,6 +52,7 @@ function a11yProps(index) {
 export default function VerticalTabs() {
   const [value, setValue] = React.useState(0)
   const {id} = useParams()
+  const {checkIfRolesInUserRoles} = useRoles()
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
@@ -94,10 +96,12 @@ export default function VerticalTabs() {
                 {...a11yProps(1)}
               />
               <Tab label={<FormattedMessage id="users" />} {...a11yProps(2)} />
-              <Tab
-                label={<FormattedMessage id="calendar" />}
-                {...a11yProps(3)}
-              />
+              {!checkIfRolesInUserRoles(['ROLE_ADMIN']) && (
+                <Tab
+                  label={<FormattedMessage id="calendar" />}
+                  {...a11yProps(3)}
+                />
+              )}
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
@@ -109,9 +113,11 @@ export default function VerticalTabs() {
           <TabPanel value={value} index={2}>
             <CourseUsers />
           </TabPanel>
-          <TabPanel value={value} index={3}>
-            <ManageCalendar />
-          </TabPanel>
+          {!checkIfRolesInUserRoles(['ROLE_ADMIN']) && (
+            <TabPanel value={value} index={3}>
+              <ManageCalendar />
+            </TabPanel>
+          )}
         </Box>
       </Container>
     </Page>

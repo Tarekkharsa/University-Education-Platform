@@ -32,7 +32,7 @@ export default function LessonCard({lesson}) {
   return (
     <Card>
       <Box sx={{pt: '100%', position: 'relative'}}>
-        <LessonImgStyle alt={name} src={mockImgCourse()} />
+        <LessonImgStyle alt={name} src={`/images/courses/Lesson-Plan.png`} />
       </Box>
 
       <Stack spacing={2} sx={{p: 3}}>
