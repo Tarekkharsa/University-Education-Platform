@@ -10,6 +10,7 @@ import {useMutation, useQueryClient} from 'react-query'
 import * as Yup from 'yup'
 import useStyles from './styles'
 import axios, {post} from 'axios'
+import MultiSelect from 'components/Form/components/MultiDropdown'
 
 const UploadUsersModal = ({open, handleClose}) => {
   const classes = useStyles()
@@ -19,6 +20,7 @@ const UploadUsersModal = ({open, handleClose}) => {
   const queryClient = useQueryClient()
   const UserFileSchema = Yup.object().shape({
     file: Yup.mixed().required('File is required'),
+    group_id: Yup.object().required(),
   })
 
   const {
@@ -33,6 +35,7 @@ const UploadUsersModal = ({open, handleClose}) => {
     resolver: yupResolver(UserFileSchema),
     defaultValues: {
       file: '',
+      group_id: null,
     },
   })
 
@@ -53,8 +56,10 @@ const UploadUsersModal = ({open, handleClose}) => {
   )
 
   const onSubmitForm = data => {
+    console.log('data', data)
     const formData = new FormData()
     formData.append('file', data.file.file)
+    formData.append('group_id', data?.group_id?.id)
     mutate(formData)
   }
   return (
@@ -75,7 +80,15 @@ const UploadUsersModal = ({open, handleClose}) => {
                 {JSON.stringify(error?.response?.data?.message)}
               </Alert>
             ) : null}
-
+            <MultiSelect
+              name={'group_id'}
+              title={'groups'}
+              optionLable={'name'}
+              optionUrl={'group/getAllGroups'}
+              errors={errors}
+              control={control}
+              handleChange={value => setValue('group_id', value)}
+            />
             <Uploader
               name="file"
               InputChange={(name, files) => setValue(name, files)}
@@ -86,7 +99,6 @@ const UploadUsersModal = ({open, handleClose}) => {
               multiple={false}
               maxFileSize={30}
             />
-
             <Stack
               className={classes.buttons_wrapper}
               direction="row"

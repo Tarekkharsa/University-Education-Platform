@@ -3,6 +3,7 @@ import {LoadingButton} from '@mui/lab'
 import {Alert, Link, Stack} from '@mui/material'
 import CustomCheckbox from 'components/Form/components/CustomCheckbox'
 import CustomInput from 'components/Form/components/CustomInput'
+import Dropdown from 'components/Form/components/Dropdown'
 import InputPassword from 'components/Form/components/InputPassword'
 import MultiSelect from 'components/Form/components/MultiDropdown'
 import RichText from 'components/Form/components/RichText'
@@ -31,8 +32,10 @@ export default function UserForm({onSubmit}) {
     lastname: Yup.string().required('Last name is required'),
     password: !id ? Yup.string().required('Password is required') : '',
     username: Yup.string(),
-    role_id: Yup.object().required(),
+    role_ids: Yup.array().min(1).required(),
     group_id: Yup.object().nullable(),
+    specification_id: Yup.object(),
+    level: Yup.number(),
   })
 
   const {
@@ -50,12 +53,21 @@ export default function UserForm({onSubmit}) {
       email: '',
       password: '',
       username: '',
-      role_id: null,
+      role_ids: [],
       group_id: null,
+      specification_id: null,
+      level: null,
     },
   })
-  console.log('errors', errors)
-  const renderGroup = watch('role_id')?.id === 4
+  const renderGroup = () => {
+    if (watch('role_ids')?.length > 0) {
+      let isStudent = watch('role_ids')
+        ?.map(role => role.id)
+        ?.includes(4)
+      return isStudent
+    }
+    return false
+  }
 
   const {
     isLoading: fetchLoading,
@@ -68,7 +80,12 @@ export default function UserForm({onSubmit}) {
   })
   useEffect(() => {
     if (user && id !== undefined) {
-      reset(user)
+      reset({
+        ...user,
+        role_ids: user.roles,
+        specification_id: user.specification,
+        level: user.level,
+      })
     }
   }, [user])
   const {mutate, isError, error, isLoading} = useMutation(
@@ -80,13 +97,13 @@ export default function UserForm({onSubmit}) {
     {
       onSuccess: data => {
         queryClient.invalidateQueries('users')
-        navigate(-1)
+        navigate('/dashboard/users/accounts')
         reset()
       },
     },
   )
   const onSubmitForm = data => {
-    let {firstname, lastname, email, password, username, role_id, group_id} =
+    let {firstname, lastname, email, password, username, role_ids, group_id} =
       data
     mutate({
       firstname,
@@ -95,9 +112,10 @@ export default function UserForm({onSubmit}) {
       password: id ? undefined : password,
       user_id: id ? id : undefined,
       username: id ? username : undefined,
-      specification_id: '1', // TODO: refactor
-      level: 1, // TODO: refactor
-      role_id: role_id?.id,
+      specification_id:
+        renderGroup() && id ? data.specification_id?.id : undefined,
+      level: data?.level && renderGroup() && !id ? data?.level : undefined,
+      role_ids: role_ids.map(role => role.id),
       group_id: group_id ? group_id?.id : undefined,
     })
   }
@@ -119,15 +137,16 @@ export default function UserForm({onSubmit}) {
           errors={errors}
         />
         <MultiSelect
-          name={'role_id'}
+          multiple
+          name={'role_ids'}
           title={'user_roles'}
           optionLable={'name'}
           optionUrl={'getAllRoles'}
           errors={errors}
           control={control}
-          handleChange={value => setValue('role_id', value)}
+          handleChange={value => setValue('role_ids', value)}
         />
-        {renderGroup && (
+        {renderGroup() && !id && (
           <MultiSelect
             name={'group_id'}
             title={'groups'}
@@ -144,6 +163,29 @@ export default function UserForm({onSubmit}) {
             name="username"
             control={control}
             errors={errors}
+          />
+        )}
+        {renderGroup() && id && (
+          <MultiSelect
+            name={'specification_id'}
+            title={'specifications'}
+            optionLable={'name'}
+            optionUrl={'getSpecifications'}
+            errors={errors}
+            control={control}
+            handleChange={value => setValue('specification_id', value)}
+          />
+        )}
+        {renderGroup() && id && (
+          <Dropdown
+            name={'level'}
+            title={'level'}
+            optionLable={'name'}
+            options={[1, 2, 3, 4, 5]}
+            setValue={setValue}
+            errors={errors}
+            control={control}
+            handleChange={value => setValue('level', value)}
           />
         )}
         <CustomInput
