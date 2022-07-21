@@ -12,8 +12,8 @@ export const tableColumns = [
     disableFilters: true,
   },
   {
-    Header: 'firstName',
-    accessor: 'firstname',
+    Header: 'userName',
+    accessor: 'username',
     disableFilters: true,
     style: {
       padding: '0',
@@ -21,9 +21,9 @@ export const tableColumns = [
     Cell: ({row}) => {
       return (
         <Stack direction="row" alignItems="center" spacing={2}>
-          <Avatar alt={row.original.firstname} src={row.original.image} />
+          <Avatar alt={row.original.username} src={row.original.image} />
           <Typography variant="subtitle2" noWrap>
-            {row.original.firstname}
+            {row.original.username}
           </Typography>
         </Stack>
       )

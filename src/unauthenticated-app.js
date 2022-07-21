@@ -12,6 +12,8 @@ import Page from 'components/Page'
 import {LoginForm} from 'sections/authentication/login'
 import AuthSocial from 'sections/authentication/AuthSocial'
 import {FormattedMessage} from 'react-intl'
+import {RegisterForm} from 'sections/authentication/register'
+import {Button} from '@mui/material'
 
 // ----------------------------------------------------------------------
 
@@ -44,19 +46,34 @@ const ContentStyle = styled('div')(({theme}) => ({
 
 function UnauthenticatedApp() {
   const {login, register} = useAuth()
+  const [isLogin, setIsLogin] = React.useState(true)
   return (
     <RootStyle title="Login | Minimal-UI">
-      {/* <AuthLayout>
-        Don’t have an account? &nbsp;
-        <Link
-          underline="none"
-          variant="subtitle2"
-          component={RouterLink}
-          to="/register"
-        >
-          Get started
-        </Link>
-      </AuthLayout> */}
+      {isLogin && (
+        <AuthLayout>
+          Don’t have an account? &nbsp;
+          <Button
+            variant="text"
+            color="primary"
+            onClick={() => setIsLogin(false)}
+          >
+            Get started
+          </Button>
+        </AuthLayout>
+      )}
+
+      {!isLogin && (
+        <AuthLayout>
+          have an account? &nbsp;
+          <Button
+            variant="text"
+            color="primary"
+            onClick={() => setIsLogin(true)}
+          >
+            Login
+          </Button>
+        </AuthLayout>
+      )}
 
       <SectionStyle sx={{display: {xs: 'none', md: 'flex'}}}>
         <Typography variant="h3" sx={{px: 5, mt: 10, mb: 5}}>
@@ -77,26 +94,8 @@ function UnauthenticatedApp() {
           </Stack>
           {/* <AuthSocial /> */}
 
-          <LoginForm onSubmit={login} />
-
-          {/* <Typography
-            variant="body2"
-            align="center"
-            sx={{
-              mt: 3,
-              display: {sm: 'none'},
-            }}
-          >
-            Don’t have an account?&nbsp;
-            <Link
-              variant="subtitle2"
-              component={RouterLink}
-              to="register"
-              underline="hover"
-            >
-              Get started
-            </Link>
-          </Typography> */}
+          {isLogin && <LoginForm onSubmit={login} />}
+          {!isLogin && <RegisterForm onSubmit={register} />}
         </ContentStyle>
       </Container>
     </RootStyle>

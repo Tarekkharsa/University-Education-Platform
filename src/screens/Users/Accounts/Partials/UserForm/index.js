@@ -31,11 +31,13 @@ export default function UserForm({onSubmit}) {
     firstname: Yup.string().required('First name is required'),
     lastname: Yup.string().required('Last name is required'),
     password: !id ? Yup.string().required('Password is required') : '',
-    username: Yup.string(),
+    username: Yup.string().required('Username is required'),
     role_ids: Yup.array().min(1).required(),
     group_id: Yup.object().nullable(),
-    specification_id: Yup.object().nullable(),
-    level: Yup.number().nullable(),
+    father_name: Yup.string(),
+    national_id_number: Yup.string(),
+    mother_name: Yup.string(),
+    phone_number: Yup.string(),
   })
 
   const {
@@ -55,8 +57,10 @@ export default function UserForm({onSubmit}) {
       username: '',
       role_ids: [],
       group_id: null,
-      specification_id: null,
-      level: null,
+      father_name: '',
+      national_id_number: '',
+      mother_name: '',
+      phone_number: '',
     },
   })
   const renderGroup = () => {
@@ -83,8 +87,13 @@ export default function UserForm({onSubmit}) {
       reset({
         ...user,
         role_ids: user.roles,
-        specification_id: user.specification,
-        level: user.level,
+        certificate_image: user.certificateimage,
+        father_name: user.fathername,
+        user_image: user.image,
+        phone_number: user.phonenumber,
+        mother_name: user.mothername,
+        national_id_number: user.nationalidnumber,
+        national_id_image: user.nationalidimage,
       })
     }
   }, [user])
@@ -109,21 +118,46 @@ export default function UserForm({onSubmit}) {
       firstname,
       lastname,
       email,
-      password: id ? undefined : password,
+      username,
+      password,
       user_id: id ? id : undefined,
-      username: id ? username : undefined,
-      specification_id:
-        renderGroup() && id ? data.specification_id?.id : undefined,
-      level: data?.level && renderGroup() && id ? data?.level : undefined,
       role_ids: role_ids.map(role => role.id),
       group_id: group_id ? group_id?.id : undefined,
+      certificate_image: data.certificate_image
+        ? data.certificate_image
+        : undefined,
+      father_name: data.father_name ? data.father_name : undefined,
+      user_image: data.user_image ? data.user_image : undefined,
+      phone_number: data.phone_number ? data.phone_number : undefined,
+      mother_name: data.mother_name ? data.mother_name : undefined,
+      national_id_number: data.national_id_number
+        ? data.national_id_number
+        : undefined,
+      national_id_image: data.national_id_image
+        ? data.national_id_image
+        : undefined,
     })
   }
-
   return (
     <form autoComplete="off" noValidate onSubmit={handleSubmit(onSubmitForm)}>
       <Stack spacing={3}>
         {isError ? <Alert severity="error">{error.message}</Alert> : null}
+        {id && user?.image && (
+          <Uploader
+            name="user_image"
+            InputChange={(name, file) => {
+              setValue(name, file)
+            }}
+            label="user_image"
+            width="100%"
+            accept={['image/*']}
+            aspectRatio="1:1"
+            multiple={false}
+            maxFileSize={30}
+            autoUpload={true}
+            editValue={user?.image}
+          />
+        )}
         <CustomInput
           label="firstName"
           name="firstname"
@@ -133,6 +167,12 @@ export default function UserForm({onSubmit}) {
         <CustomInput
           label="lastName"
           name="lastname"
+          control={control}
+          errors={errors}
+        />
+        <CustomInput
+          label="userName"
+          name="username"
           control={control}
           errors={errors}
         />
@@ -159,37 +199,6 @@ export default function UserForm({onSubmit}) {
             handleChange={value => setValue('group_id', value)}
           />
         )}
-        {id && (
-          <CustomInput
-            label="userName"
-            name="username"
-            control={control}
-            errors={errors}
-          />
-        )}
-        {renderGroup() && id && (
-          <MultiSelect
-            name={'specification_id'}
-            title={'specifications'}
-            optionLable={'name'}
-            optionUrl={'getSpecifications'}
-            errors={errors}
-            control={control}
-            handleChange={value => setValue('specification_id', value)}
-          />
-        )}
-        {renderGroup() && id && (
-          <Dropdown
-            name={'level'}
-            title={'level'}
-            optionLable={'name'}
-            options={[1, 2, 3, 4, 5]}
-            setValue={setValue}
-            errors={errors}
-            control={control}
-            handleChange={value => setValue('level', value)}
-          />
-        )}
         <CustomInput
           label="email"
           name="email"
@@ -202,6 +211,70 @@ export default function UserForm({onSubmit}) {
             name="password"
             control={control}
             errors={errors}
+          />
+        )}
+        {id && user?.fathername && (
+          <CustomInput
+            label="father_name"
+            name="father_name"
+            control={control}
+            errors={errors}
+          />
+        )}
+        {id && user?.nationalidnumber && (
+          <CustomInput
+            label="national_id_number"
+            name="national_id_number"
+            control={control}
+            errors={errors}
+          />
+        )}
+        {id && user?.mothername && (
+          <CustomInput
+            label="mother_name"
+            name="mother_name"
+            control={control}
+            errors={errors}
+          />
+        )}
+        {id && user?.phonenumber && (
+          <CustomInput
+            label="phone_number"
+            name="phone_number"
+            control={control}
+            errors={errors}
+          />
+        )}
+        {id && user?.nationalidimage && (
+          <Uploader
+            name="national_id_image"
+            InputChange={(name, file) => {
+              setValue(name, file)
+            }}
+            label="national_id_image"
+            width="100%"
+            accept={['image/*']}
+            aspectRatio="1:1"
+            multiple={false}
+            maxFileSize={30}
+            autoUpload={true}
+            editValue={user?.nationalidimage}
+          />
+        )}
+        {id && user?.certificateimage && (
+          <Uploader
+            name="certificate_image"
+            InputChange={(name, file) => {
+              setValue(name, file)
+            }}
+            label="certificate_image"
+            width="100%"
+            accept={['image/*']}
+            aspectRatio="1:1"
+            multiple={false}
+            maxFileSize={30}
+            autoUpload={true}
+            editValue={user?.certificateimage}
           />
         )}
       </Stack>

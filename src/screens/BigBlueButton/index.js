@@ -14,7 +14,7 @@ export default function BigBlueButton() {
     <Page title="BigBlueButton">
       <Container>
         <Typography variant="h4" sx={{mb: 5}}>
-          <FormattedMessage id="calendar" />
+          <FormattedMessage id="BigBlueButton" />
         </Typography>
         <Stack
           direction="row"

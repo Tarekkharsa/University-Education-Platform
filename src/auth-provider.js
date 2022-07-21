@@ -27,8 +27,15 @@ function login({username, password}) {
   return client('login', {username, password}).then(handleUserResponse)
 }
 
-function register({username, password}) {
-  return client('register', {username, password}).then(handleUserResponse)
+function register({username, password, firstname, lastname, group_id, email}) {
+  return client('register', {
+    username,
+    password,
+    firstname,
+    lastname,
+    group_id,
+    email,
+  }).then(handleUserResponse)
 }
 
 async function logout() {

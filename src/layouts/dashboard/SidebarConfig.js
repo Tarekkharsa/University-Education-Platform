@@ -58,12 +58,12 @@ const sidebarConfig = [
     roles: ['ROLE_STUDENT', 'ROLE_TEACHER'],
     icon: getIcon('bi:calendar-week'),
   },
-  // {
-  //   title: 'bigbluebutton',
-  //   path: '/dashboard/bbb',
-  //   roles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_TEACHER'],
-  //   icon: getIcon('simple-icons:bigbluebutton'),
-  // },
+  {
+    title: 'bigbluebutton',
+    path: '/dashboard/bbb',
+    roles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_TEACHER'],
+    icon: getIcon('simple-icons:bigbluebutton'),
+  },
   // {
   //   title: 'product',
   //   path: '/dashboard/products',

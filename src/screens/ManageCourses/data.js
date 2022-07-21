@@ -9,7 +9,7 @@ export const tableColumns = [
   },
   {
     Header: 'name',
-    accessor: 'name',
+    accessor: 'fullname',
   },
   {
     Header: 'actions',
