@@ -33,26 +33,7 @@ export default function StdBigBlueButton() {
   const {isLoading, error, data, refetch} = useQuery({
     queryKey: 'Meetings',
     queryFn: () =>
-      client('bigBlueButton/getMeetings').then(data => [
-        {
-          returncode: 'SUCCESS',
-          meetingID: 'random-6565792',
-          meetingName: 'test',
-          internalMeetingID:
-            'd7f54653123c63d5869bbe4d6b836ca563a15113-1658409621476',
-          attendeePW: 'ap',
-          moderatorPW: 'mp',
-          metadata: '',
-          attendees: [],
-          createTime: 1658409621476,
-          startTime: 1658409621483,
-          voiceBridge: 731099204,
-          dialNumber: '18632080022',
-          createDate: 'Thu Jul 21 13:20:21 UTC 2022',
-          duration: 20,
-          breakout: false,
-        },
-      ]),
+      client('bigBlueButton/getMeetings').then(data => data?.data?.meetings),
   })
 
   if (isLoading && !data) {
