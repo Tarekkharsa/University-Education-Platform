@@ -145,5 +145,10 @@
   "grade_theo_max": "الدرجة النظرية القصوى",
   "grade_prac_max": "الدرجة العملية القصوى",
   "grade_passed": "الدرجة المطلوبة",
-  "is_theoretical": "نظري"
+  "is_theoretical": "نظري",
+  "new_Meeting": "اجتماع جديد",
+  "bbb": "BigBlueButton",
+  "meetingName": "اسم الجلسة",
+  "joinMeeting": "الانضمام إلى الجلسة",
+  "meetingPassword": "كلمة المرور للاجتماع"
 }

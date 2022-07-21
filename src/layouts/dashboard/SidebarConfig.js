@@ -64,6 +64,12 @@ const sidebarConfig = [
     roles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_TEACHER'],
     icon: getIcon('simple-icons:bigbluebutton'),
   },
+  {
+    title: 'bigbluebutton',
+    path: '/dashboard/std-bbb',
+    roles: ['ROLE_STUDENT'],
+    icon: getIcon('simple-icons:bigbluebutton'),
+  },
   // {
   //   title: 'product',
   //   path: '/dashboard/products',

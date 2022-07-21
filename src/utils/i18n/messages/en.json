@@ -145,5 +145,10 @@
   "grade_theo_max": "Grade Theo Max",
   "grade_prac_max": "Grade Prac Max",
   "grade_passed": "Grade Passed",
-  "is_theoretical": "Is Theoretical"
+  "is_theoretical": "Is Theoretical",
+  "new_Meeting": "New Meeting",
+  "bbb": "BigBlueButton",
+  "meetingName": "Meeting Name",
+  "joinMeeting": "Join Meeting",
+  "meetingPassword": "Meeting Password"
 }

@@ -20,7 +20,7 @@ import {FormattedMessage} from 'react-intl'
 
 // ----------------------------------------------------------------------
 
-export default function BBB() {
+export default function StdBigBlueButton() {
   const theme = useTheme()
   const columns = useMemo(() => tableColumns, [])
   const hiddenColumns = useMemo(() => tableHiddenColumns, [])
@@ -70,14 +70,6 @@ export default function BBB() {
           <Typography variant="h4" gutterBottom>
             <FormattedMessage id="bbb" />
           </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="/dashboard/bbb/add"
-            startIcon={<Iconify icon="eva:plus-fill" />}
-          >
-            <FormattedMessage id="new_Meeting" />
-          </Button>
         </Stack>
         <ReactTable
           columns={columns}

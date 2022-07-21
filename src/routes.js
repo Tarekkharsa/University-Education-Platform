@@ -48,6 +48,8 @@ import ChooseModule from 'screens/ManageCourses/Partials/Lessons/Show/LessonModu
 import BigBlueButton from 'screens/BigBlueButton'
 import ShowUserCourse from 'screens/Courses/Show'
 import ShowUserLesson from 'screens/Courses/ShowUserLesson'
+import AddMeeting from 'screens/BigBlueButton/Add'
+import StdBigBlueButton from 'screens/StdBigBlueButton'
 
 // ----------------------------------------------------------------------
 
@@ -84,8 +86,6 @@ export default function Router() {
           ),
         },
         {path: 'profile/edit', element: <EditProfile />},
-
-        {path: 'bbb', element: <BigBlueButton />},
 
         {path: 'calendar', element: <Calendar />},
 
@@ -139,6 +139,11 @@ export default function Router() {
         {path: 'groups/add', element: <AddGroup />},
         // {path: 'groups/:id/edit', element: <EditGroup />},
         {path: 'groups/:id/show', element: <ShowGroup />},
+
+        {path: 'std-bbb', element: <StdBigBlueButton />},
+
+        {path: 'bbb', element: <BigBlueButton />},
+        {path: 'bbb/add', element: <AddMeeting />},
 
         {
           path: 'users/roles',
