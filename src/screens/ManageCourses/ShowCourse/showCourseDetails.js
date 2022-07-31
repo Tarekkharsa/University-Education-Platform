@@ -26,9 +26,8 @@ export default function ShowCourse() {
   const {isLoading, error, data} = useQuery({
     queryKey: 'course',
     queryFn: () =>
-      client(`course/getCourseById?id=${id}`).then(data => data.data),
+      client(`course/getCourseById?id=${id}`).then(data => data.data[0]),
   })
-
   if (isLoading) {
     return <FullPageSpinner />
   }
@@ -39,7 +38,7 @@ export default function ShowCourse() {
         <ListItemIcon>
           <FormattedMessage id="fullname" />
         </ListItemIcon>
-        <div>{data?.name}</div>
+        <div>{data?.fullname}</div>
       </ListItem>
       <Divider variant="inset" component="li" />
 

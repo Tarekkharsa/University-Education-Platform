@@ -59,7 +59,7 @@ const sidebarConfig = [
     icon: getIcon('bi:calendar-week'),
   },
   {
-    title: 'bigbluebutton',
+    title: 'manage_bigbluebutton',
     path: '/dashboard/bbb',
     roles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_TEACHER'],
     icon: getIcon('simple-icons:bigbluebutton'),
@@ -69,6 +69,36 @@ const sidebarConfig = [
     path: '/dashboard/std-bbb',
     roles: ['ROLE_STUDENT'],
     icon: getIcon('simple-icons:bigbluebutton'),
+  },
+  {
+    title: 'manage_course_quizzes',
+    path: '/dashboard/course_quizzes',
+    roles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_TEACHER'],
+    icon: getIcon('fluent:quiz-new-20-regular'),
+  },
+  {
+    title: 'manage_course_assignments',
+    path: '/dashboard/course_assignments',
+    roles: ['ROLE_TEACHER'],
+    icon: getIcon('fluent:quiz-new-20-regular'),
+  },
+  {
+    title: 'course_quizzes',
+    path: '/dashboard/std_course_quizzes',
+    roles: ['ROLE_STUDENT'],
+    icon: getIcon('fluent:quiz-new-20-regular'),
+  },
+  {
+    title: 'quiz_grade',
+    path: '/dashboard/quiz_grade',
+    roles: ['ROLE_STUDENT'],
+    icon: getIcon('emojione-monotone:japanese-passing-grade-button'),
+  },
+  {
+    title: 'course_assignments',
+    path: '/dashboard/std_course_assignments',
+    roles: ['ROLE_STUDENT'],
+    icon: getIcon('fluent:quiz-new-20-regular'),
   },
   // {
   //   title: 'product',

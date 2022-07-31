@@ -15,7 +15,7 @@ export default function CourseList({courses, value, ...other}) {
       {courses
         .filter(item => {
           if (!value) return true
-          if (item.name.includes(value) || item.summary.includes(value)) {
+          if (item.fullname.includes(value) || item.summary.includes(value)) {
             return true
           }
         })

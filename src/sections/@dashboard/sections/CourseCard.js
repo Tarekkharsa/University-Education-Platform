@@ -27,7 +27,7 @@ CourseCard.propTypes = {
 }
 
 export default function CourseCard({course}) {
-  const {name, cover, active, category, id} = course
+  const {fullname, cover, active, category, id} = course
 
   return (
     <Card>
@@ -47,7 +47,10 @@ export default function CourseCard({course}) {
             {active ? 'Active' : 'Inactive'}
           </Label>
         )}
-        <CourseImgStyle alt={name} src={`/images/courses/ahmad_course.png`} />
+        <CourseImgStyle
+          alt={fullname}
+          src={`/images/courses/ahmad_course.png`}
+        />
       </Box>
 
       <Stack spacing={2} sx={{p: 3}}>
@@ -58,7 +61,7 @@ export default function CourseCard({course}) {
           component={RouterLink}
         >
           <Typography variant="subtitle2" noWrap>
-            {name}
+            {fullname}
           </Typography>
         </Link>
       </Stack>
