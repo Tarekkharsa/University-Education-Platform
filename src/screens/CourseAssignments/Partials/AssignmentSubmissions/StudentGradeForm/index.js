@@ -42,7 +42,7 @@ export default function StudentGradeForm({user, handleClose}) {
       }),
     {
       onSuccess: data => {
-        queryClient.invalidateQueries('getAssignmentParticipants')
+        queryClient.invalidateQueries('getAssignmentSubmissions')
         handleClose()
         reset()
       },

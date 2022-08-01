@@ -36,7 +36,6 @@ export default function UsersForm({handleClose}) {
     resolver: yupResolver(UsersSchema),
     defaultValues: {user_ids: [], role_id: null},
   })
-  const isTeacher = watch('role_id')?.id === 3
 
   const {mutate, isError, error, isLoading} = useMutation(
     data =>
@@ -90,17 +89,6 @@ export default function UsersForm({handleClose}) {
           control={control}
           handleChange={value => setValue('role_id', value)}
         />
-        {isTeacher && (
-          <Dropdown
-            name={'is_theoretical'}
-            title={'is_theoretical'}
-            options={['true', 'false']}
-            setValue={setValue}
-            errors={errors}
-            control={control}
-            handleChange={value => setValue('is_theoretical', value)}
-          />
-        )}
       </Stack>
       <Stack
         direction="row"

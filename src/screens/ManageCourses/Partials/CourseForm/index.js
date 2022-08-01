@@ -41,19 +41,12 @@ export default function CourseForm() {
   const handleOpen = () => setOpen(true)
 
   const CourseSchema = Yup.object().shape({
-    name: Yup.string().required(),
+    fullname: Yup.string().required(),
     category_id: Yup.object().required(),
     description: Yup.string().required(),
     start_date: Yup.date().required(),
     end_date: Yup.date().required(),
     visible: Yup.boolean().required(),
-    active: Yup.boolean().required(),
-    specification_id: Yup.object().required(),
-    level: Yup.number().required(),
-    grade_max: Yup.number().required(),
-    grade_prac_max: Yup.number().required(),
-    grade_theo_max: Yup.number().required(),
-    grade_passed: Yup.number().required(),
   })
 
   const {
@@ -68,19 +61,12 @@ export default function CourseForm() {
   } = useForm({
     resolver: yupResolver(CourseSchema),
     defaultValues: {
-      name: '',
+      fullname: '',
       category_id: null,
       description: '',
       start_date: null,
       end_date: null,
       visible: false,
-      active: false,
-      specification_id: null,
-      level: null,
-      grade_max: null,
-      grade_theo_max: null,
-      grade_prac_max: null,
-      grade_passed: null,
     },
   })
 
@@ -91,7 +77,7 @@ export default function CourseForm() {
   } = useQuery({
     queryKey: 'course',
     queryFn: () =>
-      client(`course/getCourseById?id=${id}`).then(data => data.data),
+      client(`course/getCourseById?id=${id}`).then(data => data.data[0]),
     enabled: id !== undefined,
   })
 
@@ -104,13 +90,6 @@ export default function CourseForm() {
         end_date: new Date(course.enddate * 1000),
         start_date: new Date(course.startdate * 1000),
         visible: Boolean(course.visible),
-        active: course.active,
-        specification_id: course.specification,
-        level: course.level,
-        grade_max: course.grademax,
-        grade_theo_max: course.gradetheoreticalmax,
-        grade_prac_max: course.gradepracticalmax,
-        grade_passed: course.gradepassed,
       })
     }
   }, [course])
@@ -133,10 +112,10 @@ export default function CourseForm() {
   const onSubmitForm = data => {
     mutate({
       ...data,
+      shortname: data?.fullname,
       start_date: new Date(data.start_date).getTime() / 1000,
       end_date: new Date(data.end_date).getTime() / 1000,
       category_id: data.category_id.id,
-      specification_id: data.specification_id.id,
       visible: data.visible === true ? '1' : '0',
       course_id: id,
       manager_id: user.id,
@@ -152,52 +131,9 @@ export default function CourseForm() {
           {isError ? <Alert severity="error">{error.message}</Alert> : null}
           <CustomInput
             label="name"
-            name="name"
+            name="fullname"
             control={control}
             errors={errors}
-          />
-          <CustomInput
-            label="grade_max"
-            name="grade_max"
-            control={control}
-            errors={errors}
-          />
-          <CustomInput
-            label="grade_theo_max"
-            name="grade_theo_max"
-            control={control}
-            errors={errors}
-          />
-          <CustomInput
-            label="grade_prac_max"
-            name="grade_prac_max"
-            control={control}
-            errors={errors}
-          />
-          <CustomInput
-            label="grade_passed"
-            name="grade_passed"
-            control={control}
-            errors={errors}
-          />
-          <MultiSelect
-            name={'specification_id'}
-            title={'specifications'}
-            optionLable={'name'}
-            optionUrl={'getSpecifications'}
-            errors={errors}
-            control={control}
-            handleChange={value => setValue('specification_id', value)}
-          />
-          <Dropdown
-            name={'level'}
-            title={'level'}
-            optionLable={'name'}
-            options={[1, 2, 3, 4, 5]}
-            setValue={setValue}
-            errors={errors}
-            control={control}
-            handleChange={value => setValue('level', value)}
           />
 
           {getValues('category_id') && (
@@ -231,12 +167,6 @@ export default function CourseForm() {
           <CustomDatePicker
             label="end_date"
             name="end_date"
-            control={control}
-            errors={errors}
-          />
-          <CustomCheckbox
-            label="active"
-            name="active"
             control={control}
             errors={errors}
           />

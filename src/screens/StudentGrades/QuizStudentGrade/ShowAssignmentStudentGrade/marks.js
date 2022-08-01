@@ -4,21 +4,23 @@ import {FaSpinner} from 'react-icons/fa'
 import {useQuery} from 'react-query'
 import {useParams} from 'react-router-dom'
 
-export default function Marks({quiz_id}) {
-  console.log('quiz_id', quiz_id)
+export default function Marks({row}) {
   const {user} = useAuth()
-  const {course_id} = useParams()
+  const {id} = useParams()
   const client = useClient()
   const {isLoading, error, data, refetch} = useQuery({
-    queryKey: `Grades${quiz_id}`,
+    queryKey: `Grades${row?.original?.cmid}`,
     queryFn: () =>
       client(
-        `module/assignment/getGradesAssignmentForStudent?course_id=3&user_id=${user?.id}`,
-      ).then(data => data.data),
+        `module/assignment/getGradesAssignmentForStudent?course_id=${id}&user_id=${user?.id}`,
+      ).then(data => {
+        return data?.data?.filter(item => item?.cmid === row?.original?.cmid)[0]
+          ?.graderaw
+      }),
   })
 
   if (isLoading) {
     return <FaSpinner />
   }
-  return <div>sss</div>
+  return <div>{data}</div>
 }

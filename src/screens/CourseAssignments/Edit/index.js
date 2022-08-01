@@ -8,7 +8,7 @@ import AssignmentForm from '../Partials/AssignmentForm'
 
 export default function EditAssignment() {
   return (
-    <Page title="Course">
+    <Page title="Assignment">
       <Container>
         <Stack
           direction="row"
@@ -17,7 +17,7 @@ export default function EditAssignment() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            <FormattedMessage id="update_course" />
+            <FormattedMessage id="update_assignment" />
           </Typography>
         </Stack>
         <AssignmentForm />

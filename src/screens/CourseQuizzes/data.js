@@ -18,10 +18,11 @@ export const tableColumns = [
     Header: 'actions',
     accessor: 'actions',
     Cell: ({row}) => {
+      console.log('row', row)
       return (
         <IconButton
           component={RouterLink}
-          to={`${row.original.categoryid}/${row.values.id}/show`}
+          to={`${row.original.category}/${row.values.id}/show`}
         >
           <Iconify icon="carbon:view" width={24} height={24} />
         </IconButton>
