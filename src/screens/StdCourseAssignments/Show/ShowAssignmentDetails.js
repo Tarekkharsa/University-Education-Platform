@@ -61,14 +61,14 @@ export default function ShowAssignmentDetails() {
           <div>{data?.assignment?.name}</div>
         </ListItem>
         <Divider variant="inset" component="li" />
-
+        {/* 
         <ListItem button className={classes.li}>
           <ListItemIcon>
             <FormattedMessage id="submissions_enabled" />
           </ListItemIcon>
           <div>{dataGeneralInfo?.submissionsenabled ? 'Yes' : 'No'}</div>
         </ListItem>
-        <Divider variant="inset" component="li" />
+        <Divider variant="inset" component="li" /> */}
 
         <ListItem button className={classes.descLi}>
           <ListItemIcon>

@@ -14,14 +14,14 @@ export const tableColumns = [
       return <span>{value ? 'Yes' : 'No'}</span>
     },
   },
-  {
-    Header: 'actions',
-    accessor: 'actions',
-    Cell: ({row}) => {
-      return row.values.submitted ? <SetGrade user={row?.original?.user} /> : ''
-    },
-    style: {
-      textAlign: 'right',
-    },
-  },
+  // {
+  //   Header: 'actions',
+  //   accessor: 'actions',
+  //   Cell: ({row}) => {
+  //     return row.values.submitted ? <SetGrade user={row?.original?.user} /> : ''
+  //   },
+  //   style: {
+  //     textAlign: 'right',
+  //   },
+  // },
 ]

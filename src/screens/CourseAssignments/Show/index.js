@@ -11,6 +11,7 @@ import {FormattedMessage} from 'react-intl'
 import {useLocation, useParams} from 'react-router-dom'
 import AssignmentParticipants from '../Partials/AssignmentParticipants'
 import Questions from '../Partials/AssignmentParticipants'
+import AssignmentSubmissions from '../Partials/AssignmentSubmissions'
 import TeacherGradesAssignment from '../Partials/TeacherGradesAssignment'
 import ShowAssignmentDetails from './ShowAssignmentDetails'
 
@@ -86,8 +87,12 @@ export default function ShowAssignment() {
                 {...a11yProps(1)}
               />
               <Tab
-                label={<FormattedMessage id="teacher_grades_assignment" />}
+                label={<FormattedMessage id="assignment_Submissions" />}
                 {...a11yProps(2)}
+              />
+              <Tab
+                label={<FormattedMessage id="teacher_grades_assignment" />}
+                {...a11yProps(3)}
               />
             </Tabs>
           </Box>
@@ -98,6 +103,9 @@ export default function ShowAssignment() {
             <AssignmentParticipants />
           </TabPanel>
           <TabPanel value={value} index={2}>
+            <AssignmentSubmissions />
+          </TabPanel>
+          <TabPanel value={value} index={3}>
             <TeacherGradesAssignment />
           </TabPanel>
         </Box>

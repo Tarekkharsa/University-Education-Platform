@@ -110,7 +110,7 @@ export default function QuizInfo() {
         </ListItem>
         <Divider variant="inset" component="li" />
 
-        <ListItem button className={classes.descLi}>
+        {/* <ListItem button className={classes.descLi}>
           <ListItemIcon>
             <FormattedMessage id="time_limit" />
           </ListItemIcon>
@@ -118,7 +118,7 @@ export default function QuizInfo() {
             {data?.timelimit} <FormattedMessage id="minutes" />
           </div>
         </ListItem>
-        <Divider variant="inset" component="li" />
+        <Divider variant="inset" component="li" /> */}
       </List>
       <Container>
         <Stack

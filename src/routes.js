@@ -162,9 +162,9 @@ export default function Router() {
         {path: 'bbb', element: <BigBlueButton />},
         {path: 'bbb/add', element: <AddMeeting />},
         //Course Quizzes
-        {path: 'quiz_grade', element: <StudentGrades />},
+        {path: 'grades', element: <StudentGrades />},
         {
-          path: 'quiz_grade/:id/show',
+          path: 'grades/:id/show',
           element: <ShowGrades />,
         },
 

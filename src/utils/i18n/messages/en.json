@@ -202,5 +202,7 @@
   "choice_three": "Choice Three",
   "choice_four": "Choice Four",
   "choice_five": "Choice Five",
-  "choose_correct_answer": "Choose correct answer"
+  "choose_correct_answer": "Choose correct answer",
+  "assignment_Submissions": "Assignment Submissions",
+  "submissions": "Submissions"
 }

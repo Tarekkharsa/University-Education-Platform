@@ -35,8 +35,8 @@ export default function CourseForm() {
     // grade_pass: Yup.number().required(),
     // time_limit: Yup.number().required(),
     description: Yup.string().required(),
-    // time_start: Yup.date().required(),
-    // time_end: Yup.date().required(),
+    time_start: Yup.date().required(),
+    time_end: Yup.date().required(),
   })
 
   const {
@@ -53,8 +53,8 @@ export default function CourseForm() {
     defaultValues: {
       name: '',
       description: '',
-      // time_start: null,
-      // time_end: null,
+      time_start: null,
+      time_end: null,
       // grade_pass: null,
       // time_limit: null,
     },
@@ -77,8 +77,8 @@ export default function CourseForm() {
       reset({
         ...quiz,
         description: quiz.intro,
-        // time_end: new Date(quiz.time_end * 1000),
-        // time_start: new Date(quiz.time_start * 1000),
+        time_end: new Date(quiz.time_end * 1000),
+        time_start: new Date(quiz.time_start * 1000),
       })
     }
   }, [quiz])
@@ -103,11 +103,11 @@ export default function CourseForm() {
       // ...data,
       name: data?.name,
       description: data?.description,
-      time_start: 0,
-      // time_start: new Date(data.time_start).getTime() / 1000,
-      // time_end: new Date(data.time_end).getTime() / 1000,
+      // time_start: 0,
+      time_start: new Date(data.time_start).getTime() / 1000,
+      time_end: new Date(data.time_end).getTime() / 1000,
       grade_pass: 6,
-      time_end: 0,
+      // time_end: 0,
       time_limit: 0,
       course_id: course_id,
       section_num: '2',
@@ -129,6 +129,12 @@ export default function CourseForm() {
             control={control}
             errors={errors}
           />
+          <CustomInput
+            label="description"
+            name="description"
+            control={control}
+            errors={errors}
+          />
           {/* <CustomInput
             label="grade_pass"
             name="grade_pass"
@@ -140,7 +146,7 @@ export default function CourseForm() {
             name="time_limit"
             control={control}
             errors={errors}
-          />
+          /> */}
           <CustomDatePicker
             label="time_start"
             name="time_start"
@@ -150,12 +156,6 @@ export default function CourseForm() {
           <CustomDatePicker
             label="time_end"
             name="time_end"
-            control={control}
-            errors={errors}
-          /> */}
-          <CustomInput
-            label="description"
-            name="description"
             control={control}
             errors={errors}
           />

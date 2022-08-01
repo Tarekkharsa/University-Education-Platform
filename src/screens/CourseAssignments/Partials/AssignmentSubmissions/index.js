@@ -6,17 +6,16 @@ import {FullPageSpinner} from 'components/lib'
 import Page from 'components/Page'
 import ReactTable from 'components/ReactTable'
 import {useClient} from 'context/auth-context'
-import {useCallback, useMemo, useState} from 'react'
+import {useMemo, useState} from 'react'
 import {FormattedMessage} from 'react-intl'
-import {useMutation, useQuery, useQueryClient} from 'react-query'
-import {Link as RouterLink, useParams} from 'react-router-dom'
+import {useQuery, useQueryClient} from 'react-query'
+import {useParams} from 'react-router-dom'
 import {tableColumns, tableHiddenColumns} from './data'
 
 // ----------------------------------------------------------------------
 
-export default function StdShowCourseQuizzes() {
-  const {id} = useParams()
-
+export default function AssignmentSubmissions() {
+  const {assignment_id} = useParams()
   const columns = useMemo(() => tableColumns, [])
   const hiddenColumns = useMemo(() => tableHiddenColumns, [])
   const [rows, setRows] = useState([])
@@ -24,61 +23,41 @@ export default function StdShowCourseQuizzes() {
 
   const client = useClient()
   const queryClient = useQueryClient()
-  // add modle
+  // add multi choice question
+  const [openMultiChoice, setOpenMultiChoice] = useState(false)
+  const handleOpenMultiChoice = () => setOpenMultiChoice(true)
+  const handleCloseMultiChoice = () => setOpenMultiChoice(false)
+  // add true false question
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
-
+  const search = (nameKey, myArray) => {
+    for (var i = 0; i < myArray.length; i++) {
+      if (myArray[i].name === nameKey) {
+        return myArray[i]
+      }
+    }
+  }
   const {isLoading, error, data, refetch} = useQuery({
-    queryKey: 'quizzes',
+    queryKey: 'getAssignmentSubmissions',
     queryFn: () =>
-      client(`module/quiz/getCourseQuizzes?course_id=${id}`).then(data => {
-        console.log(data?.data)
-        let newData = data?.data
-        let newfiltersArray = newData?.filter(item => {
-          if (
-            new Date().getTime() <= item.timeclose * 1000 &&
-            new Date().getTime() >= item.timeopen * 1000
-          ) {
+      client(
+        `module/assignment/getAssignmentSubmissions?assignment_id=${assignment_id}`,
+      ).then(data => {
+        let newData = data?.data?.filter(item => {
+          if (search('ROLE_TEACHER', item?.user?.roles) === undefined) {
             return item
           }
         })
-        return newfiltersArray
+        return newData
       }),
   })
-
-  const {mutate: handleRemoveClick} = useMutation(
-    data => client(`module/delete`, {method: 'POST', data}),
-    {
-      onSuccess: data => {
-        queryClient.invalidateQueries('quizzes')
-      },
-    },
-  )
-
-  const getSelectedRows = useCallback(({selectedFlatRows}) => {
-    selectedRowsIds = []
-    selectedFlatRows.length > 0 &&
-      selectedFlatRows.map((row, i) => {
-        selectedRowsIds.push(row.values.id)
-      })
-    setRows(selectedRowsIds)
-  }, [])
-
-  const onDelete = selectedRows => {
-    selectedRowsIds = []
-    selectedRows.length > 0 &&
-      selectedRows.map((row, i) => {
-        selectedRowsIds.push(row.values.coursemodule)
-      })
-    handleRemoveClick({module_ids: selectedRowsIds})
-  }
 
   if (isLoading && !data) {
     return <FullPageSpinner />
   }
   return (
-    <Page title="Quizzes">
+    <Page title="Participants">
       <Container>
         <Stack
           direction="row"
@@ -87,7 +66,7 @@ export default function StdShowCourseQuizzes() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            <FormattedMessage id="quizzes" />
+            <FormattedMessage id="submissions" />
           </Typography>
         </Stack>
         <ReactTable

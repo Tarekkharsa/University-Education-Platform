@@ -202,5 +202,7 @@
   "choice_three": "الخيار الثالث",
   "choice_four": "الخيار الرابع",
   "choice_five": "الخيار الخامس",
-  "choose_correct_answer": "اختر الاجابة الصحيحة"
+  "choose_correct_answer": "اختر الاجابة الصحيحة",
+  "assignment_Submissions": "تسليمات التكليف",
+  "submissions": "التسليمات"
 }

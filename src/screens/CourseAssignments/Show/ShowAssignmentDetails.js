@@ -31,7 +31,10 @@ export default function ShowAssignmentDetails() {
     queryFn: () =>
       client(
         `module/assignment/getCourseAssignmentById?course_id=${course_id}&assignment_id=${assignment_id}`,
-      ).then(data => data.data),
+      ).then(data => {
+        localStorage.setItem('tokenfile', JSON.stringify(data?.data?.tokenfile))
+        return data?.data
+      }),
   })
 
   const {

@@ -6,6 +6,7 @@ import {FullPageSpinner} from 'components/lib'
 import Page from 'components/Page'
 import ReactTable from 'components/ReactTable'
 import {useClient} from 'context/auth-context'
+import moment from 'moment'
 import {useCallback, useMemo, useState} from 'react'
 import {FormattedMessage} from 'react-intl'
 import {useMutation, useQuery, useQueryClient} from 'react-query'
@@ -33,7 +34,19 @@ export default function ShowStdCourseAssignments() {
     queryKey: 'assignments',
     queryFn: () =>
       client(`module/assignment/getCourseAssignments?course_id=${id}`).then(
-        data => data?.data,
+        data => {
+          // allowsubmissionsfromdate duedate
+          let newData = data.data.courseAssignments[0].assignments
+          let newfiltersArray = newData?.filter(item => {
+            if (
+              new Date().getTime() <= item.duedate * 1000 &&
+              new Date().getTime() >= item.allowsubmissionsfromdate * 1000
+            ) {
+              return item
+            }
+          })
+          return newfiltersArray
+        },
       ),
   })
   const {mutate: handleRemoveClick} = useMutation(
@@ -78,23 +91,15 @@ export default function ShowStdCourseAssignments() {
           <Typography variant="h4" gutterBottom>
             <FormattedMessage id="assignments" />
           </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to={`/dashboard/course_assignments/${id}/add`}
-            startIcon={<Iconify icon="eva:plus-fill" />}
-          >
-            <FormattedMessage id="new_assignment" />
-          </Button>
         </Stack>
         <ReactTable
           columns={columns}
           hiddenColumns={hiddenColumns}
-          data={data?.courseAssignments[0]?.assignments}
+          data={data}
           getSelectedRows={getSelectedRows}
           onDelete={onDelete}
           loading={isLoading}
-          totalRecords={data?.courseAssignments[0]?.assignments?.length}
+          totalRecords={data?.length}
         />
       </Container>
     </Page>
