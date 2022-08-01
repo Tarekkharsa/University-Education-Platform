@@ -24,7 +24,7 @@ export const tableColumns = [
     Header: 'Quiz Grade',
     accessor: 'actions',
     Cell: ({row}) => {
-      return <Marks quiz_id={row.original.id} />
+      return <Marks quiz_id={row?.original?.id} />
     },
     style: {
       textAlign: 'right',

@@ -189,5 +189,18 @@
   "upload_assignment": "Upload Assignment",
   "grades": "Grades",
   "from_date": "From Date",
-  "to_date": "To Date"
+  "to_date": "To Date",
+  "donot_have_an_account": "Don't have an account ?",
+  "get_started": "Get Started",
+  "have_an_account": "Have an account ?",
+  "register_to_continue": "Register to continue",
+  "marks": "Marks",
+  "mark": "Mark",
+  "check_if_answer_is_true": "Check if answer is true",
+  "choice_one": "Choice One",
+  "choice_two": "Choice Two",
+  "choice_three": "Choice Three",
+  "choice_four": "Choice Four",
+  "choice_five": "Choice Five",
+  "choose_correct_answer": "Choose correct answer"
 }

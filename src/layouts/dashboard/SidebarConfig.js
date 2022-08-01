@@ -89,7 +89,7 @@ const sidebarConfig = [
     icon: getIcon('fluent:quiz-new-20-regular'),
   },
   {
-    title: 'quiz_grade',
+    title: 'quiz_grades',
     path: '/dashboard/quiz_grade',
     roles: ['ROLE_STUDENT'],
     icon: getIcon('emojione-monotone:japanese-passing-grade-button'),

@@ -166,7 +166,9 @@ export default function MultiChoiceQuestionForm({handleClose}) {
           errors={errors}
         />
         <FormControl component="fieldset">
-          <FormLabel component="legend">Choose Correct Answer</FormLabel>
+          <FormLabel component="legend">
+            <FormattedMessage id="choose_correct_answer" />
+          </FormLabel>
           <Controller
             rules={{required: true}}
             control={control}
@@ -176,27 +178,27 @@ export default function MultiChoiceQuestionForm({handleClose}) {
                 <FormControlLabel
                   value="choice_one"
                   control={<Radio />}
-                  label="Choice One"
+                  label={<FormattedMessage id="choice_one" />}
                 />
                 <FormControlLabel
                   value="choice_two"
                   control={<Radio />}
-                  label="Choice Two"
+                  label={<FormattedMessage id="choice_two" />}
                 />
                 <FormControlLabel
                   value="choice_three"
                   control={<Radio />}
-                  label="Choice Three"
+                  label={<FormattedMessage id="choice_three" />}
                 />
                 <FormControlLabel
                   value="choice_four"
                   control={<Radio />}
-                  label="Choice Four"
+                  label="choice_four"
                 />
                 <FormControlLabel
                   value="choice_five"
                   control={<Radio />}
-                  label="Choice Five"
+                  label={<FormattedMessage id="choice_five" />}
                 />
               </RadioGroup>
             )}

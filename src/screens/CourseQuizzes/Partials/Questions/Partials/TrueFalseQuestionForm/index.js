@@ -98,7 +98,7 @@ export default function TrueFalseQuestionForm({handleClose}) {
           errors={errors}
         />
         <CustomCheckbox
-          label="check if answer is true"
+          label="check_if_answer_is_true"
           name="answer"
           control={control}
           errors={errors}

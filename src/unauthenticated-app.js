@@ -51,26 +51,26 @@ function UnauthenticatedApp() {
     <RootStyle title="Login | Minimal-UI">
       {isLogin && (
         <AuthLayout>
-          Don’t have an account? &nbsp;
+          <FormattedMessage id="donot_have_an_account" />
           <Button
             variant="text"
             color="primary"
             onClick={() => setIsLogin(false)}
           >
-            Get started
+            <FormattedMessage id="get_started" />
           </Button>
         </AuthLayout>
       )}
 
       {!isLogin && (
         <AuthLayout>
-          have an account? &nbsp;
+          <FormattedMessage id="have_an_account" />
           <Button
             variant="text"
             color="primary"
             onClick={() => setIsLogin(true)}
           >
-            Login
+            <FormattedMessage id="login" />
           </Button>
         </AuthLayout>
       )}
@@ -86,7 +86,8 @@ function UnauthenticatedApp() {
         <ContentStyle>
           <Stack sx={{mb: 5}}>
             <Typography variant="h4" gutterBottom>
-              <FormattedMessage id="sign_in_to_continue" />
+              {isLogin && <FormattedMessage id="sign_in_to_continue" />}
+              {!isLogin && <FormattedMessage id="register_to_continue" />}
             </Typography>
             <Typography sx={{color: 'text.secondary'}}>
               <FormattedMessage id="enter_your_details_below" />

@@ -98,7 +98,7 @@ export default function RegisterForm({onSubmit}) {
           errors={errors}
         />
         <CustomInput
-          label="Email"
+          label="email"
           name="email"
           control={control}
           errors={errors}

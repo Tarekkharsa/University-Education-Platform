@@ -112,7 +112,7 @@ export default function CourseForm() {
       course_id: course_id,
       section_num: '2',
       visible: 1,
-      quiz_id: quiz_id ? quiz_id : undefined,
+      quiz_id: quiz_id ? quiz?.coursemodule : undefined,
     })
   }
   if (fetchLoading) {

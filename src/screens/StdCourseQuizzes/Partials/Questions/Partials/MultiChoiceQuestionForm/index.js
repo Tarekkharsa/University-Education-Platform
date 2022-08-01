@@ -166,7 +166,9 @@ export default function MultiChoiceQuestionForm({handleClose}) {
           errors={errors}
         />
         <FormControl component="fieldset">
-          <FormLabel component="legend">Choose Correct Answer</FormLabel>
+          <FormLabel component="legend">
+            <FormattedMessage id="choose_correct_answer" />
+          </FormLabel>
           <Controller
             rules={{required: true}}
             control={control}

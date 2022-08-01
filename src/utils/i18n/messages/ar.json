@@ -186,5 +186,21 @@
   "upload_assignment": "تحميل التكليف",
   "grades": "الدرجات",
   "from_date": "من تاريخ",
-  "to_date": "إلى تاريخ"
+  "to_date": "إلى تاريخ",
+  "donot_have_an_account": "ليس لديك حساب؟",
+  "get_started": "البدء",
+  "have_an_account": "لديك حساب؟",
+  "register_to_continue": "سجل للمتابعة",
+  "quiz_details": "تفاصيل الاختبار",
+  "questions": "الأسئلة",
+  "question": "سؤال",
+  "marks": "العلامات",
+  "mark": "علامة",
+  "check_if_answer_is_true": "اختر اذا كانت الاجابة صحيحة",
+  "choice_one": "الخيار الأول",
+  "choice_two": "الخيار الثاني",
+  "choice_three": "الخيار الثالث",
+  "choice_four": "الخيار الرابع",
+  "choice_five": "الخيار الخامس",
+  "choose_correct_answer": "اختر الاجابة الصحيحة"
 }
