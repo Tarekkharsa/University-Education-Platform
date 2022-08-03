@@ -16,13 +16,18 @@ import * as Yup from 'yup'
 // ----------------------------------------------------------------------
 
 export default function MeetingForm({onSubmit}) {
+  const nameRegex = /^[A-Za-z]+$/
+
   const {id} = useParams()
   const client = useClient()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const GroupSchema = Yup.object().shape({
     name: Yup.string().required('Meeting Name is required'),
-    moderator_pw: Yup.string().required('Moderator Password is required'),
+    // moderator_pw: Yup.string().required('Moderator Password is required'),
+    moderator_pw: Yup.string()
+      .matches(nameRegex, 'Only English letters')
+      .required('Moderator Password is required'),
   })
 
   const {
