@@ -23,11 +23,14 @@ export default function MeetingForm({onSubmit}) {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const GroupSchema = Yup.object().shape({
-    name: Yup.string().required('Meeting Name is required'),
-    // moderator_pw: Yup.string().required('Moderator Password is required'),
-    moderator_pw: Yup.string()
-      .matches(nameRegex, 'Only English letters')
-      .required('Moderator Password is required'),
+    name: Yup.string()
+      .matches(nameRegex, 'Only English letters & Only English letters')
+      .required('Meeting Name is required '),
+    // name: Yup.string().required('Meeting Name is required'),
+    moderator_pw: Yup.string().required('Moderator Password is required'),
+    // moderator_pw: Yup.string()
+    //   .matches(nameRegex, 'Only English letters')
+    //   .required('Moderator Password is required'),
   })
 
   const {
