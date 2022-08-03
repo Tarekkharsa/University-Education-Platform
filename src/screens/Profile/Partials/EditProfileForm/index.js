@@ -31,7 +31,7 @@ export default function EditProfileForm() {
       .required('Email is required'),
     firstname: Yup.string().required('First name is required'),
     lastname: Yup.string().required('Last name is required'),
-    phone_number: Yup.string().required('Phone number is required'),
+    phone_number: Yup.number().required('Phone number is required'),
   })
 
   const {

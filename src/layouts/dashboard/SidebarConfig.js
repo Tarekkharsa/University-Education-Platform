@@ -79,7 +79,7 @@ const sidebarConfig = [
   {
     title: 'manage_course_quizzes',
     path: '/dashboard/course_quizzes',
-    roles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_TEACHER'],
+    roles: ['ROLE_MANAGER', 'ROLE_TEACHER'],
     icon: getIcon('fluent:quiz-new-20-regular'),
   },
   {

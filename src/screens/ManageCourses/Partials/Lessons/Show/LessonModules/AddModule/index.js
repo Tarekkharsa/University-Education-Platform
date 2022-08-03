@@ -35,9 +35,9 @@ export default function AddModule({open, handleClose, handleOpen, section}) {
         let newData = data?.data?.filter(
           item => item.title !== 'BigBlueButton' && item.title !== 'Folder',
         )
-        if (checkIfRolesInUserRoles(['ROLE_ADMIN'])) {
-          newData = data?.data?.filter(item => item.title !== 'Choice')
-        }
+        // if (checkIfRolesInUserRoles(['ROLE_ADMIN'])) {
+        //   newData = newData?.filter(item => item.title !== 'Choice')
+        // }
         return newData
       }),
   })

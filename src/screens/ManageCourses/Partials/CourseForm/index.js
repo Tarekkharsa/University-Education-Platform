@@ -136,7 +136,7 @@ export default function CourseForm() {
             errors={errors}
           />
 
-          {getValues('category_id') && (
+          {watch('category_id') && (
             <Chip
               label={getValues('category_id')?.name}
               onDelete={() => {

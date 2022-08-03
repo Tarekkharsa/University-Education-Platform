@@ -68,6 +68,7 @@ import StudentGrades from 'screens/StudentGrades'
 import ShowQuizStudentGrade from 'screens/StudentGrades/QuizStudentGrade'
 import ShowGrades from 'screens/StudentGrades/QuizStudentGrade'
 import FavCourses from 'screens/FavCourses'
+import EditGroup from 'screens/Groups/EditGroup'
 
 // ----------------------------------------------------------------------
 
@@ -157,7 +158,7 @@ export default function Router() {
           ),
         },
         {path: 'groups/add', element: <AddGroup />},
-        // {path: 'groups/:id/edit', element: <EditGroup />},
+        {path: 'groups/:id/edit', element: <EditGroup />},
         {path: 'groups/:id/show', element: <ShowGroup />},
 
         {path: 'std-bbb', element: <StdBigBlueButton />},

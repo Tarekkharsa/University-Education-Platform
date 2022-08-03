@@ -31,9 +31,9 @@ export default function ProfileForm({onSubmit}) {
     lastname: Yup.string().required('Last name is required'),
     username: Yup.string().required('Username is required'),
     father_name: Yup.string().required('Father name is required'),
-    national_id_number: Yup.string().required('National ID is required'),
+    national_id_number: Yup.number().required('National ID is required'),
     mother_name: Yup.string().required('Mother name is required'),
-    phone_number: Yup.string().required('Phone number is required'),
+    phone_number: Yup.number().required('Phone number is required'),
   })
 
   const {
