@@ -3,7 +3,7 @@ import Iconify from 'components/Iconify'
 import {Link as RouterLink} from 'react-router-dom'
 import Marks from './marks'
 
-export const tableHiddenColumns = ['coursemodule']
+export const tableHiddenColumns = ['cmid']
 export const tableColumns = [
   {
     Header: 'ID',

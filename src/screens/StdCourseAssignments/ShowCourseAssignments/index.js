@@ -39,8 +39,9 @@ export default function ShowStdCourseAssignments() {
           let newData = data.data.courseAssignments[0].assignments
           let newfiltersArray = newData?.filter(item => {
             if (
-              new Date().getTime() <= item.duedate * 1000 &&
-              new Date().getTime() >= item.allowsubmissionsfromdate * 1000
+              new Date().getTime() * 1000 <= item.duedate * 1000 &&
+              new Date().getTime() * 1000 >=
+                item.allowsubmissionsfromdate * 1000
             ) {
               return item
             }
@@ -57,24 +58,6 @@ export default function ShowStdCourseAssignments() {
       },
     },
   )
-
-  const getSelectedRows = useCallback(({selectedFlatRows}) => {
-    selectedRowsIds = []
-    selectedFlatRows.length > 0 &&
-      selectedFlatRows.map((row, i) => {
-        selectedRowsIds.push(row.values.id)
-      })
-    setRows(selectedRowsIds)
-  }, [])
-
-  const onDelete = selectedRows => {
-    selectedRowsIds = []
-    selectedRows.length > 0 &&
-      selectedRows.map((row, i) => {
-        selectedRowsIds.push(row.values.cmid)
-      })
-    handleRemoveClick({module_ids: selectedRowsIds})
-  }
 
   if (isLoading && !data) {
     return <FullPageSpinner />
@@ -96,8 +79,6 @@ export default function ShowStdCourseAssignments() {
           columns={columns}
           hiddenColumns={hiddenColumns}
           data={data}
-          getSelectedRows={getSelectedRows}
-          onDelete={onDelete}
           loading={isLoading}
           totalRecords={data?.length}
         />

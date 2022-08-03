@@ -1,7 +1,7 @@
 import CourseAssignmentMoreMenu from 'sections/@dashboard/courses/CourseAssignmentMoreMenu'
 import CourseQuizMoreMenu from 'sections/@dashboard/courses/CourseQuizMoreMenu'
 
-export const tableHiddenColumns = ['coursemodule']
+export const tableHiddenColumns = ['cmid']
 export const tableColumns = [
   {
     Header: 'ID',

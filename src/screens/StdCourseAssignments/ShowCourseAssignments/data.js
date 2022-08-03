@@ -1,6 +1,7 @@
 import CourseAssignmentMoreMenu from 'sections/@dashboard/courses/CourseAssignmentMoreMenu'
+import StdCourseAssignmentMoreMenu from 'sections/@dashboard/courses/StdCourseAssignmentMoreMenu'
 
-export const tableHiddenColumns = ['coursemodule']
+export const tableHiddenColumns = ['cmid']
 export const tableColumns = [
   {
     Header: 'ID',
@@ -21,7 +22,7 @@ export const tableColumns = [
     Header: 'actions',
     accessor: 'actions',
     Cell: ({row}) => {
-      return <CourseAssignmentMoreMenu id={row.original.id} />
+      return <StdCourseAssignmentMoreMenu id={row.original.id} />
     },
     style: {
       textAlign: 'right',

@@ -24,10 +24,29 @@ import {Link as RouterLink, useNavigate, useParams} from 'react-router-dom'
 import useStyles from './styles'
 
 export default function QuizInfo() {
+  const [isAttempting, setIsAttempting] = React.useState(false)
   const navigate = useNavigate()
   const classes = useStyles()
   const {course_id, quiz_id} = useParams()
   const client = useClient()
+  const {
+    isLoading: isLoadingUserAttempts,
+    error: errorUserAttempts,
+    data: dataUserAttempts,
+  } = useQuery({
+    queryKey: 'UserAttempts',
+    queryFn: () =>
+      client(`module/quiz/getUserAttempts?quiz_id=${quiz_id}`).then(data => {
+        console.log('data?.data', data?.data[0]?.attempt)
+        if (data?.data[0] && data?.data[0]?.attempt === 1) {
+          setIsAttempting(false)
+        } else {
+          setIsAttempting(true)
+        }
+        return data?.data
+      }),
+  })
+
   const {isLoading, error, data} = useQuery({
     queryKey: 'quiz',
     queryFn: () =>
@@ -127,24 +146,28 @@ export default function QuizInfo() {
           justifyContent="space-between"
           mb={5}
         >
-          <Typography variant="h4" gutterBottom>
-            <FormattedMessage id="start_quiz" />
-          </Typography>
-          <IconButton
-            onClick={() => mutate()}
-            style={{
-              color: '#fff',
-              padding: '20px',
-              backgroundColor: '#1890FF',
-            }}
-            disabled={isLoadingStart}
-          >
-            {isLoadingStart ? (
-              <FaSpinner />
-            ) : (
-              <Iconify icon="codicon:debug-start" />
-            )}
-          </IconButton>
+          {isAttempting && (
+            <>
+              <Typography variant="h4" gutterBottom>
+                <FormattedMessage id="start_quiz" />
+              </Typography>
+              <IconButton
+                onClick={() => mutate()}
+                style={{
+                  color: '#fff',
+                  padding: '20px',
+                  backgroundColor: '#1890FF',
+                }}
+                disabled={isLoadingStart}
+              >
+                {isLoadingStart ? (
+                  <FaSpinner />
+                ) : (
+                  <Iconify icon="codicon:debug-start" />
+                )}
+              </IconButton>
+            </>
+          )}
         </Stack>
       </Container>
     </>

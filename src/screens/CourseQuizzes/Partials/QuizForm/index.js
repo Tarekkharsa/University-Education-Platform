@@ -77,8 +77,8 @@ export default function CourseForm() {
       reset({
         ...quiz,
         description: quiz.intro,
-        time_end: new Date(quiz.timeopen * 1000),
-        time_start: new Date(quiz.timeclose * 1000),
+        time_end: new Date(quiz.timeclose * 1000),
+        time_start: new Date(quiz.timeopen * 1000),
       })
     }
   }, [quiz])

@@ -6,6 +6,7 @@ import {FullPageSpinner} from 'components/lib'
 import Page from 'components/Page'
 import ReactTable from 'components/ReactTable'
 import {useClient} from 'context/auth-context'
+import moment from 'moment'
 import {useCallback, useMemo, useState} from 'react'
 import {FormattedMessage} from 'react-intl'
 import {useMutation, useQuery, useQueryClient} from 'react-query'
@@ -35,15 +36,16 @@ export default function StdShowCourseQuizzes() {
       client(`module/quiz/getCourseQuizzes?course_id=${id}`).then(data => {
         console.log(data?.data)
         let newData = data?.data
+
         let newfiltersArray = newData?.filter(item => {
           if (
-            new Date().getTime() <= item.timeclose * 1000 &&
-            new Date().getTime() >= item.timeopen * 1000
+            new Date().getTime() * 1000 < item.timeclose * 1000 &&
+            new Date().getTime() * 1000 >= item.timeopen * 1000
           ) {
             return item
           }
         })
-        return newfiltersArray
+        return data?.data
       }),
   })
 
