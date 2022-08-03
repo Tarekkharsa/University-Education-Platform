@@ -5,6 +5,7 @@ import {styled} from '@mui/material/styles'
 import Iconify from 'components/Iconify'
 import {FullPageSpinner, ModalSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
+import useRoles from 'hooks/useRoles'
 import * as React from 'react'
 import {FaSpinner} from 'react-icons/fa'
 import {FormattedMessage} from 'react-intl'
@@ -22,12 +23,23 @@ const Item = styled(Paper)(({theme}) => ({
   cursor: 'pointer',
 }))
 export default function AddModule({open, handleClose, handleOpen, section}) {
+  const {checkIfRolesInUserRoles} = useRoles()
   const client = useClient()
   const classes = useStyles()
   const navigate = useNavigate()
+
   const {isLoading, error, data} = useQuery({
     queryKey: 'course_activities',
-    queryFn: () => client(`course/getCourseActivities`).then(data => data.data),
+    queryFn: () =>
+      client(`course/getCourseActivities`).then(data => {
+        let newData = data?.data?.filter(
+          item => item.title !== 'BigBlueButton' && item.title !== 'Folder',
+        )
+        if (checkIfRolesInUserRoles(['ROLE_ADMIN'])) {
+          newData = data?.data?.filter(item => item.title !== 'Choice')
+        }
+        return newData
+      }),
   })
 
   const icons = {

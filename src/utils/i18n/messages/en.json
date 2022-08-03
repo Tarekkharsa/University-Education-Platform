@@ -206,5 +206,7 @@
   "assignment_Submissions": "Assignment Submissions",
   "submissions": "Submissions",
   "update_assignment": "Update Assignment",
-  "fav_courses": "Fav Courses"
+  "fav_courses": "Fav Courses",
+  "submit": "Submit",
+  "you_already_submitted": "You already submitted"
 }

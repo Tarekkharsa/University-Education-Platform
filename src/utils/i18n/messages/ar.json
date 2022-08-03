@@ -206,5 +206,7 @@
   "assignment_Submissions": "تسليمات التكليف",
   "submissions": "التسليمات",
   "update_assignment": "تحديث التكليف",
-  "fav_courses": "الدورات المفضلة"
+  "fav_courses": "الدورات المفضلة",
+  "submit": "تسليم",
+  "you_already_submitted": "لقد تم تسليمك بالفعل"
 }

@@ -86,6 +86,7 @@ export default function LessonModules({modules, token, section}) {
                     deleteUrl={mutate}
                     id={module?.instance}
                     module_id={module?.id}
+                    dataModule={module}
                   />
                 )
               }
