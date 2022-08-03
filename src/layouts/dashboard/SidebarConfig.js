@@ -61,7 +61,7 @@ const sidebarConfig = [
   {
     title: 'calendar',
     path: '/dashboard/calendar',
-    roles: ['ROLE_STUDENT', 'ROLE_TEACHER'],
+    roles: ['ROLE_STUDENT', 'ROLE_TEACHER', 'ROLE_MANAGER'],
     icon: getIcon('bi:calendar-week'),
   },
   {
