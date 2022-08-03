@@ -67,6 +67,7 @@ import StdShowCourseQuizzes from 'screens/StdCourseQuizzes/StdShowCourseQuizzes'
 import StudentGrades from 'screens/StudentGrades'
 import ShowQuizStudentGrade from 'screens/StudentGrades/QuizStudentGrade'
 import ShowGrades from 'screens/StudentGrades/QuizStudentGrade'
+import FavCourses from 'screens/FavCourses'
 
 // ----------------------------------------------------------------------
 
@@ -105,6 +106,8 @@ export default function Router() {
         {path: 'profile/edit', element: <EditProfile />},
 
         {path: 'calendar', element: <Calendar />},
+
+        {path: 'fav_courses', element: <FavCourses />},
 
         {path: 'courses', element: <Courses />},
         {path: 'courses/:id/show', element: <ShowUserCourse />},

@@ -10,9 +10,8 @@ import Label from '../../../components/Label'
 import ColorPreview from '../../../components/ColorPreview'
 import {mockImgCourse} from 'utils/mockImages'
 import Iconify from 'components/Iconify'
-import {useMutation, useQuery} from 'react-query'
+import {useMutation, useQueryClient} from 'react-query'
 import {useClient} from 'context/auth-context'
-import {useState} from 'react'
 
 // ----------------------------------------------------------------------
 
@@ -26,40 +25,23 @@ const CourseImgStyle = styled('img')({
 
 // ----------------------------------------------------------------------
 
-CourseCard.propTypes = {
+FavCourseCard.propTypes = {
   product: PropTypes.object,
 }
 
-export default function CourseCard({course}) {
-  const [favorite, setFavorite] = useState(false)
+export default function FavCourseCard({course}) {
   const {fullname, cover, active, category, id} = course
   const client = useClient()
-
-  const {
-    isLoading: isLoadingFavCourses,
-    error: errorFavCourses,
-    data: favCourses,
-  } = useQuery({
-    queryKey: 'FavCourses',
-    queryFn: () =>
-      client(`course/feature/getFavCourses`).then(data => {
-        let newDate = data?.data?.filter(item => item.id === id)
-        if (newDate?.length > 0) {
-          setFavorite(true)
-        }
-        return data?.data
-      }),
-  })
-
+  const queryClient = useQueryClient()
   const {mutate, isError, error, isLoading} = useMutation(
     data =>
-      client('course/feature/addCourseToFav', {
+      client('course/feature/deleteCourseFromFav', {
         method: 'POST',
         data: {course_id: id},
       }),
     {
       onSuccess: data => {
-        setFavorite(true)
+        queryClient.invalidateQueries('FavCourses')
       },
     },
   )
@@ -92,12 +74,7 @@ export default function CourseCard({course}) {
           color={'error'}
           onClick={mutate}
         >
-          {isLoadingFavCourses && <Iconify icon="carbon:loading" />}
-          {favorite && !isLoadingFavCourses ? (
-            <Iconify icon="carbon:favorite-filled" />
-          ) : (
-            <Iconify icon="carbon:favorite" />
-          )}
+          <Iconify icon="carbon:favorite-filled" />
         </IconButton>
         <CourseImgStyle
           alt={fullname}
@@ -106,12 +83,7 @@ export default function CourseCard({course}) {
       </Box>
 
       <Stack spacing={2} sx={{p: 3}}>
-        <Link
-          to={`${id}/show`}
-          color="inherit"
-          underline="hover"
-          component={RouterLink}
-        >
+        <Link color="inherit">
           <Typography variant="subtitle2" noWrap>
             {fullname}
           </Typography>

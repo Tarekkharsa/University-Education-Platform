@@ -14,7 +14,7 @@
   "group_info": "Group Info",
   "members": "Members",
   "new_member": "New Member",
-  "users_accounts": "Users| Accounts",
+  "users_accounts": "Users | Accounts",
   "users_roles": "Users| Roles",
   "new_user_account": "New User Account",
   "actions": "Actions",
@@ -205,5 +205,6 @@
   "choose_correct_answer": "Choose correct answer",
   "assignment_Submissions": "Assignment Submissions",
   "submissions": "Submissions",
-  "update_assignment": "Update Assignment"
+  "update_assignment": "Update Assignment",
+  "fav_courses": "Fav Courses"
 }

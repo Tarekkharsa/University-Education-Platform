@@ -53,6 +53,12 @@ const sidebarConfig = [
     icon: getIcon('fluent:learning-app-20-regular'),
   },
   {
+    title: 'fav_courses',
+    path: '/dashboard/fav_courses',
+    roles: ['ROLE_STUDENT'],
+    icon: getIcon('iconoir:favourite-book'),
+  },
+  {
     title: 'calendar',
     path: '/dashboard/calendar',
     roles: ['ROLE_STUDENT', 'ROLE_TEACHER'],

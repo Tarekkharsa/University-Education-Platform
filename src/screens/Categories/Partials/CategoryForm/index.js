@@ -46,7 +46,8 @@ export default function CategoryForm({onSubmit}) {
     data: category,
   } = useQuery({
     queryKey: 'category',
-    queryFn: () => client(`getCategoryById?id=${id}`).then(data => data.data),
+    queryFn: () =>
+      client(`getCategoryById?id=${id}`).then(data => data.data[0]),
     enabled: id !== undefined,
   })
 
@@ -76,7 +77,7 @@ export default function CategoryForm({onSubmit}) {
     mutate({
       name,
       // description,
-      parent_id: state !== null ? state.id : 0,
+      parent_id: state !== null ? state.id : id ? category.parent : 0,
       id: id ? id : undefined,
     })
   }
