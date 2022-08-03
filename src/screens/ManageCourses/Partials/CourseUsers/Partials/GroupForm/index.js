@@ -2,6 +2,7 @@ import {yupResolver} from '@hookform/resolvers/yup' // material
 import {LoadingButton} from '@mui/lab'
 import {Alert, Stack} from '@mui/material'
 import MultiSelect from 'components/Form/components/MultiDropdown'
+import MultiSelectRoles from 'components/Form/components/MultiDropdownRoles'
 import {ModalSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
 import {useForm} from 'react-hook-form'
@@ -71,7 +72,7 @@ export default function GroupForm({handleClose}) {
           control={control}
           handleChange={value => setValue('group_id', value)}
         />
-        <MultiSelect
+        <MultiSelectRoles
           name={'role_id'}
           title={'user_roles'}
           optionLable={'name'}

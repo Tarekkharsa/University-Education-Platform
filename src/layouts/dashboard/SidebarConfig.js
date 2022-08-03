@@ -85,7 +85,7 @@ const sidebarConfig = [
   {
     title: 'manage_course_assignments',
     path: '/dashboard/course_assignments',
-    roles: ['ROLE_TEACHER'],
+    roles: ['ROLE_TEACHER', 'ROLE_MANAGER'],
     icon: getIcon('fluent:quiz-new-20-regular'),
   },
   {

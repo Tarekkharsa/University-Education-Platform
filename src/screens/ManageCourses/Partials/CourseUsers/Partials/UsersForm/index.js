@@ -3,6 +3,7 @@ import {LoadingButton} from '@mui/lab'
 import {Alert, Stack} from '@mui/material'
 import Dropdown from 'components/Form/components/Dropdown'
 import MultiSelect from 'components/Form/components/MultiDropdown'
+import MultiSelectRoles from 'components/Form/components/MultiDropdownRoles'
 import {ModalSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
 import {useForm} from 'react-hook-form'
@@ -80,7 +81,7 @@ export default function UsersForm({handleClose}) {
           handleChange={value => setValue('user_ids', value)}
           multiple
         />
-        <MultiSelect
+        <MultiSelectRoles
           name={'role_id'}
           title={'user_roles'}
           optionLable={'name'}

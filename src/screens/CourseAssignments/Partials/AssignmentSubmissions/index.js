@@ -45,7 +45,10 @@ export default function AssignmentSubmissions() {
         `module/assignment/getAssignmentSubmissions?assignment_id=${assignment_id}`,
       ).then(data => {
         let newData = data?.data?.filter(item => {
-          if (search('ROLE_TEACHER', item?.user?.roles) === undefined) {
+          if (
+            search('ROLE_TEACHER', item?.user?.roles) === undefined &&
+            search('ROLE_MANAGER', item?.user?.roles) === undefined
+          ) {
             return item
           }
         })
