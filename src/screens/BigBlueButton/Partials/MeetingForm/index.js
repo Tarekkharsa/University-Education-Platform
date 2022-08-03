@@ -2,6 +2,7 @@ import {yupResolver} from '@hookform/resolvers/yup' // material
 import {LoadingButton} from '@mui/lab'
 import {Alert, Stack} from '@mui/material'
 import CustomInput from 'components/Form/components/CustomInput'
+import InputPassword from 'components/Form/components/InputPassword'
 import RichText from 'components/Form/components/RichText'
 import {FullPageSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
@@ -77,7 +78,7 @@ export default function MeetingForm({onSubmit}) {
           control={control}
           errors={errors}
         />
-        <CustomInput
+        <InputPassword
           label="meetingPassword"
           name="moderator_pw"
           control={control}
