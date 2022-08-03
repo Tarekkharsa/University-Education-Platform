@@ -17,6 +17,7 @@ import * as Yup from 'yup'
 
 export default function MeetingForm({onSubmit}) {
   const nameRegex = /^[A-Za-z]+$/
+  const passRegex = /^[0-9a-zA-Z]+$/
 
   const {id} = useParams()
   const client = useClient()
@@ -27,10 +28,10 @@ export default function MeetingForm({onSubmit}) {
       .matches(nameRegex, 'Only English letters & Only English letters')
       .required('Meeting Name is required '),
     // name: Yup.string().required('Meeting Name is required'),
-    moderator_pw: Yup.string().required('Moderator Password is required'),
-    // moderator_pw: Yup.string()
-    //   .matches(nameRegex, 'Only English letters')
-    //   .required('Moderator Password is required'),
+    // moderator_pw: Yup.pas().required('Moderator Password is required'),
+    moderator_pw: Yup.string()
+      .matches(passRegex, 'Only English letters and numbers')
+      .required('Moderator Password is required'),
   })
 
   const {
@@ -44,7 +45,7 @@ export default function MeetingForm({onSubmit}) {
     resolver: yupResolver(GroupSchema),
     defaultValues: {name: '', moderator_pw: ''},
   })
-
+  console.log('errors', errors)
   const {mutate, isError, error, isLoading} = useMutation(
     data =>
       client('bigBlueButton/createSession', {
@@ -71,7 +72,7 @@ export default function MeetingForm({onSubmit}) {
       record: false,
       attendee_pw: 'ap',
       duration_in_minute: 0,
-      voice_bridge: 718651,
+      voice_bridge: Math.floor(1000000 + Math.random() * 9000000),
     })
   }
 

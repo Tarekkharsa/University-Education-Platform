@@ -36,8 +36,8 @@ function InputPassword({control, errors, name, label}) {
               </InputAdornment>
             ),
           }}
-          error={Boolean(errors.password && errors.password)}
-          helperText={errors.password && errors.password.message}
+          error={Boolean(errors[name] && errors[name])}
+          helperText={errors[name] && errors[name].message}
         />
       )}
       name={name}
