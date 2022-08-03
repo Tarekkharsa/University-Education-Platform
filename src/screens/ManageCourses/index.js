@@ -33,7 +33,12 @@ export default function ManageCourses() {
         checkIfRolesInUserRoles(['ROLE_ADMIN'])
           ? 'course/getAll'
           : `course/enroll/getUserCourses?user_id=${user.id}`,
-      ).then(data => data.data),
+      ).then(data => {
+        let newData = data?.data?.filter(item => {
+          return item?.id !== 1
+        })
+        return newData
+      }),
   })
 
   const {mutate: handleRemoveClick} = useMutation(
