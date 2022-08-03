@@ -59,24 +59,6 @@ const sidebarConfig = [
     icon: getIcon('iconoir:favourite-book'),
   },
   {
-    title: 'calendar',
-    path: '/dashboard/calendar',
-    roles: ['ROLE_STUDENT', 'ROLE_TEACHER', 'ROLE_MANAGER'],
-    icon: getIcon('bi:calendar-week'),
-  },
-  {
-    title: 'manage_bigbluebutton',
-    path: '/dashboard/bbb',
-    roles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_TEACHER'],
-    icon: getIcon('simple-icons:bigbluebutton'),
-  },
-  {
-    title: 'bigbluebutton',
-    path: '/dashboard/std-bbb',
-    roles: ['ROLE_STUDENT'],
-    icon: getIcon('simple-icons:bigbluebutton'),
-  },
-  {
     title: 'manage_course_quizzes',
     path: '/dashboard/course_quizzes',
     roles: ['ROLE_MANAGER', 'ROLE_TEACHER'],
@@ -105,6 +87,24 @@ const sidebarConfig = [
     path: '/dashboard/std_course_assignments',
     roles: ['ROLE_STUDENT'],
     icon: getIcon('fluent:quiz-new-20-regular'),
+  },
+  {
+    title: 'calendar',
+    path: '/dashboard/calendar',
+    roles: ['ROLE_STUDENT', 'ROLE_TEACHER', 'ROLE_MANAGER'],
+    icon: getIcon('bi:calendar-week'),
+  },
+  {
+    title: 'manage_bigbluebutton',
+    path: '/dashboard/bbb',
+    roles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_TEACHER'],
+    icon: getIcon('simple-icons:bigbluebutton'),
+  },
+  {
+    title: 'bigbluebutton',
+    path: '/dashboard/std-bbb',
+    roles: ['ROLE_STUDENT'],
+    icon: getIcon('simple-icons:bigbluebutton'),
   },
   // {
   //   title: 'product',
