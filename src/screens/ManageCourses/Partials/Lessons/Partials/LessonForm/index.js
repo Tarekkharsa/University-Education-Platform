@@ -16,6 +16,7 @@ import * as Yup from 'yup'
 // ----------------------------------------------------------------------
 
 export default function LessonForm({handleClose, lesson = null}) {
+  console.log('lesson', lesson)
   const {id} = useParams()
   const client = useClient()
   const queryClient = useQueryClient()
@@ -52,8 +53,8 @@ export default function LessonForm({handleClose, lesson = null}) {
     queryKey: `lesson${lesson?.id}`,
     queryFn: () =>
       client(
-        `course/lesson/getLessonById?course_id=${id}&section_num=${lesson.section}`,
-      ).then(data => data.data[0]),
+        `course/getCourseLessonsWithDetailsByLessonId?id=${id}&lesson_id=${lesson?.id}`,
+      ).then(data => data?.data?.lessons[0]),
     enabled: lesson !== null,
   })
 

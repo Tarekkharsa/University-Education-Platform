@@ -5,7 +5,7 @@ import {FullPageSpinner} from 'components/lib'
 // components
 import Page from 'components/Page'
 import ReactTable from 'components/ReactTable'
-import {useClient} from 'context/auth-context'
+import {useAuth, useClient} from 'context/auth-context'
 import {useCallback, useMemo, useState} from 'react'
 import {FormattedMessage} from 'react-intl'
 import {useMutation, useQuery, useQueryClient} from 'react-query'
@@ -20,7 +20,7 @@ import RemoveGroup from './RemoveGroup'
 
 export default function CourseUsers() {
   const {id} = useParams()
-
+  const {user} = useAuth()
   const [openUsersModal, setOpenUsersModal] = useState(false)
   const handleOpenUsersModal = () => setOpenUsersModal(true)
   const handleCloseUsersModal = () => setOpenUsersModal(false)
@@ -44,9 +44,10 @@ export default function CourseUsers() {
   const {isLoading, error, data, refetch} = useQuery({
     queryKey: 'course_users',
     queryFn: () =>
-      client(`course/enroll/getCourseUsers?course_id=${id}`).then(
-        data => data.data,
-      ),
+      client(`course/enroll/getCourseUsers?course_id=${id}`).then(data => {
+        let newData = data?.data?.filter(item => item?.id !== user?.id)
+        return newData
+      }),
   })
 
   const {mutate: handleRemoveClick} = useMutation(

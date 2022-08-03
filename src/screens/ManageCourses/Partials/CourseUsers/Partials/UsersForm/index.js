@@ -4,6 +4,7 @@ import {Alert, Stack} from '@mui/material'
 import Dropdown from 'components/Form/components/Dropdown'
 import MultiSelect from 'components/Form/components/MultiDropdown'
 import MultiSelectRoles from 'components/Form/components/MultiDropdownRoles'
+import MultiSelectUsers from 'components/Form/components/MultiDropdownUsers'
 import {ModalSpinner} from 'components/lib'
 import {useClient} from 'context/auth-context'
 import {useForm} from 'react-hook-form'
@@ -71,7 +72,7 @@ export default function UsersForm({handleClose}) {
     <form noValidate onSubmit={handleSubmit(onSubmitForm)}>
       <Stack spacing={3}>
         {isError ? <Alert severity="error">{error.message}</Alert> : null}
-        <MultiSelect
+        <MultiSelectUsers
           name={'user_ids'}
           title={'users'}
           optionLable={'username'}
